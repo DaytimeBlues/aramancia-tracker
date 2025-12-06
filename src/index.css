@@ -1,0 +1,216 @@
+@import "tailwindcss";
+
+/* Gothic Fantasy Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
+@theme {
+  /* Primary Colors - Emerald Green Accent */
+  --color-accent: #22C55E;
+  --color-accent-glow: #00FF66;
+  --color-accent-dark: #166534;
+
+  /* Background Colors */
+  --color-bg: #0a0a0a;
+  --color-bg-dark: #050505;
+  --color-card: #1a1814;
+  --color-card-elevated: #252019;
+
+  /* Parchment Colors */
+  --color-parchment: #D4B896;
+  --color-parchment-dark: #8B7355;
+  --color-parchment-light: #E8D5B7;
+
+  /* Text Colors */
+  --color-text: #E8D5B7;
+  --color-text-bright: #FFFFFF;
+  --color-muted: #7A6F5D;
+
+  /* Fonts */
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Lora', serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+/* Base Styles */
+body {
+  @apply bg-bg text-text font-body antialiased;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34, 197, 94, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 100% 100%, rgba(139, 115, 85, 0.08) 0%, transparent 40%),
+    linear-gradient(180deg, #0a0a0a 0%, #050505 100%);
+}
+
+/* Spider Web Background Pattern - Using generated image */
+.bg-web-pattern {
+  background-image: url('/assets/textures/spider-web.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-display tracking-wide;
+}
+
+.font-gothic {
+  font-family: 'Cinzel', serif;
+}
+
+/* Parchment Card Style - Using generated texture */
+.card-parchment {
+  @apply rounded-lg;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(26, 24, 20, 0.85) 0%, rgba(37, 32, 25, 0.8) 50%, rgba(26, 24, 20, 0.85) 100%),
+    url('/assets/textures/parchment.png');
+  background-size: cover;
+  border: 2px solid;
+  border-image: linear-gradient(135deg, rgba(139, 115, 85, 0.6), rgba(212, 184, 150, 0.3), rgba(139, 115, 85, 0.6)) 1;
+  box-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(34, 197, 94, 0.05),
+    inset 0 1px 0 rgba(212, 184, 150, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+.card-parchment::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 184, 150, 0.4), transparent);
+}
+
+.card-parchment::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.5), transparent);
+}
+
+/* Glowing Border Effect */
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.3), transparent 50%, rgba(34, 197, 94, 0.2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Fantasy Buttons */
+.btn-fantasy {
+  @apply px-4 py-2 rounded font-display text-sm uppercase tracking-wider;
+  @apply bg-card-elevated border border-parchment-dark/40 text-parchment;
+  @apply transition-all duration-200;
+}
+
+.btn-fantasy:hover {
+  @apply border-accent/50 text-accent;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+}
+
+.btn-primary {
+  @apply px-4 py-2 rounded font-display text-sm uppercase tracking-wider;
+  @apply bg-accent text-bg-dark border border-accent;
+  @apply transition-all duration-200;
+}
+
+.btn-primary:hover {
+  @apply bg-accent-glow;
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.4);
+}
+
+/* Circular Stat Display (for HP, AC) */
+.stat-circle {
+  @apply relative flex items-center justify-center;
+  @apply w-20 h-20 rounded-full;
+  background: radial-gradient(circle, rgba(26, 24, 20, 0.9) 60%, rgba(34, 197, 94, 0.1) 100%);
+  border: 2px solid rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.15);
+}
+
+/* Decorative Header Border */
+.header-ornate {
+  position: relative;
+}
+
+.header-ornate::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.5), transparent);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(26, 24, 20, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 115, 85, 0.5);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.5);
+}
+
+/* Animations */
+@keyframes pulse-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.4);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Green Orb (for spell slots) */
+.orb {
+  @apply w-3 h-3 rounded-full;
+  background: radial-gradient(circle at 30% 30%, #22C55E, #166534);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.orb-empty {
+  @apply w-3 h-3 rounded-full;
+  background: rgba(26, 24, 20, 0.8);
+  border: 1px solid rgba(139, 115, 85, 0.3);
+}

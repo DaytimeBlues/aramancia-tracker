@@ -38,7 +38,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                     <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-accent/40" />
                     <div className="absolute top-2 right-2 w-4 h-4 border-r-2 border-t-2 border-accent/40" />
 
-                    <div className="max-w-md mx-auto px-6 py-4 flex items-center justify-between">
+                    <div className="max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
                         {/* Left: Icon and Title */}
                         <div className="flex items-center gap-4">
                             {/* Glowing Quill Icon */}
@@ -87,7 +87,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
             </header>
 
             {/* Main Content */}
-            <main className="pt-24 px-4 pb-28 max-w-md mx-auto relative z-10">
+            <main className="pt-24 px-4 pb-28 max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto relative z-10">
                 {children}
             </main>
 
@@ -102,19 +102,19 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                     <div className="absolute bottom-2 left-2 w-4 h-4 border-l-2 border-b-2 border-accent/30" />
                     <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-accent/30" />
 
-                    <div className="max-w-md mx-auto px-4 py-3 flex items-center justify-around">
+                    <div className="max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto px-4 py-3 flex items-center justify-around">
                         {navItems.map(({ id, icon: Icon, label }) => (
                             <button
                                 key={id}
                                 onClick={() => onTabChange(id)}
                                 className={`flex flex-col items-center gap-1.5 px-3 py-2 rounded-lg transition-all duration-300 group ${activeTab === id
-                                        ? 'text-accent'
-                                        : 'text-muted hover:text-parchment'
+                                    ? 'text-accent'
+                                    : 'text-muted hover:text-parchment'
                                     }`}
                             >
                                 <div className={`relative p-1 rounded transition-all duration-300 ${activeTab === id
-                                        ? 'bg-accent/10 shadow-[0_0_15px_rgba(34,197,94,0.4)]'
-                                        : 'group-hover:bg-parchment-dark/20'
+                                    ? 'bg-accent/10 shadow-[0_0_15px_rgba(34,197,94,0.4)]'
+                                    : 'group-hover:bg-parchment-dark/20'
                                     }`}>
                                     <Icon size={18} />
                                     {activeTab === id && (

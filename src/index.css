@@ -204,49 +204,58 @@ h6 {
 
 /* ===== Page Transitions ===== */
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slide-up {
-  from { 
+  from {
     opacity: 0;
     transform: translateY(20px);
   }
-  to { 
+
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
 @keyframes slide-down {
-  from { 
+  from {
     opacity: 0;
     transform: translateY(-20px);
   }
-  to { 
+
+  to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
 @keyframes slide-in-right {
-  from { 
+  from {
     opacity: 0;
     transform: translateX(30px);
   }
-  to { 
+
+  to {
     opacity: 1;
     transform: translateX(0);
   }
 }
 
 @keyframes slide-in-left {
-  from { 
+  from {
     opacity: 0;
     transform: translateX(-30px);
   }
-  to { 
+
+  to {
     opacity: 1;
     transform: translateX(0);
   }
@@ -273,25 +282,54 @@ h6 {
 }
 
 /* ===== Staggered Widget Entrance ===== */
-.stagger-1 { animation-delay: 0.05s; opacity: 0; }
-.stagger-2 { animation-delay: 0.1s; opacity: 0; }
-.stagger-3 { animation-delay: 0.15s; opacity: 0; }
-.stagger-4 { animation-delay: 0.2s; opacity: 0; }
-.stagger-5 { animation-delay: 0.25s; opacity: 0; }
+.stagger-1 {
+  animation-delay: 0.05s;
+  opacity: 0;
+}
+
+.stagger-2 {
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.stagger-3 {
+  animation-delay: 0.15s;
+  opacity: 0;
+}
+
+.stagger-4 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.stagger-5 {
+  animation-delay: 0.25s;
+  opacity: 0;
+}
 
 /* ===== Button & Interactive Feedback ===== */
 @keyframes press-down {
-  0% { transform: scale(1); }
-  50% { transform: scale(0.95); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.95);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
-.btn-fantasy, .btn-primary {
+.btn-fantasy,
+.btn-primary {
   position: relative;
   overflow: hidden;
 }
 
-.btn-fantasy:active, .btn-primary:active {
+.btn-fantasy:active,
+.btn-primary:active {
   animation: press-down 0.15s ease-out;
 }
 
@@ -301,6 +339,7 @@ h6 {
     transform: scale(0);
     opacity: 0.4;
   }
+
   100% {
     transform: scale(2.5);
     opacity: 0;
@@ -346,6 +385,7 @@ h6 {
     transform: translateY(100%);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -357,6 +397,7 @@ h6 {
     transform: translateY(0);
     opacity: 1;
   }
+
   to {
     transform: translateY(100%);
     opacity: 0;
@@ -373,17 +414,20 @@ h6 {
 
 /* ===== Skeleton Loading ===== */
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    rgba(26, 24, 20, 0.8) 0%,
-    rgba(45, 40, 35, 0.8) 50%,
-    rgba(26, 24, 20, 0.8) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(26, 24, 20, 0.8) 0%,
+      rgba(45, 40, 35, 0.8) 50%,
+      rgba(26, 24, 20, 0.8) 100%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 4px;
@@ -391,8 +435,15 @@ h6 {
 
 /* ===== Glow Pulse for Interactive Elements ===== */
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 10px rgba(34, 197, 94, 0.2); }
-  50% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.5), 0 0 30px rgba(34, 197, 94, 0.2); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.2);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.5), 0 0 30px rgba(34, 197, 94, 0.2);
+  }
 }
 
 .glow-on-hover:hover {
@@ -401,8 +452,15 @@ h6 {
 
 /* ===== Float Animation (for decorative elements) ===== */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
 }
 
 .animate-float {
@@ -411,8 +469,13 @@ h6 {
 
 /* ===== Spin Animation ===== */
 @keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .animate-spin-slow {
@@ -421,9 +484,26 @@ h6 {
 
 /* ===== Shake Animation (for damage/errors) ===== */
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
-  20%, 40%, 60%, 80% { transform: translateX(4px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-4px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(4px);
+  }
 }
 
 .animate-shake {
@@ -436,6 +516,7 @@ h6 {
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -457,4 +538,153 @@ h6 {
   @apply w-3 h-3 rounded-full;
   background: rgba(26, 24, 20, 0.8);
   border: 1px solid rgba(139, 115, 85, 0.3);
+}
+
+/* ===== RESPONSIVE DESIGN - Android Optimization ===== */
+
+/* Extra small phones (< 360px) - compact layout */
+@media (max-width: 359px) {
+  body {
+    font-size: 14px;
+  }
+
+  .card-parchment {
+    padding: 0.75rem !important;
+  }
+
+  h1 {
+    font-size: 1rem !important;
+  }
+
+  .btn-fantasy,
+  .btn-primary {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.65rem;
+  }
+
+  .stat-circle {
+    @apply w-16 h-16;
+  }
+
+  .orb,
+  .orb-empty {
+    @apply w-2.5 h-2.5;
+  }
+}
+
+/* Small phones (360px - 413px) - standard mobile */
+@media (min-width: 360px) and (max-width: 413px) {
+  body {
+    font-size: 15px;
+  }
+
+  .card-parchment {
+    padding: 0.875rem !important;
+  }
+}
+
+/* Large phones (414px - 479px) - slightly larger widgets */
+@media (min-width: 414px) and (max-width: 479px) {
+  body {
+    font-size: 16px;
+  }
+
+  .stat-circle {
+    @apply w-24 h-24;
+  }
+
+  .btn-fantasy,
+  .btn-primary {
+    padding: 0.625rem 1.25rem;
+  }
+}
+
+/* Tablets portrait (480px - 767px) - 2-column layout potential */
+@media (min-width: 480px) and (max-width: 767px) {
+  body {
+    font-size: 17px;
+  }
+
+  .stat-circle {
+    @apply w-28 h-28;
+  }
+
+  .btn-fantasy,
+  .btn-primary {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  /* Allow wider container on tablets */
+  .max-w-md {
+    max-width: 32rem !important;
+  }
+}
+
+/* Tablets landscape / Desktop (768px+) - full width container */
+@media (min-width: 768px) {
+  body {
+    font-size: 18px;
+  }
+
+  .stat-circle {
+    @apply w-32 h-32;
+  }
+
+  .btn-fantasy,
+  .btn-primary {
+    padding: 0.875rem 1.75rem;
+    font-size: 1rem;
+  }
+
+  /* Even wider container */
+  .max-w-md {
+    max-width: 36rem !important;
+  }
+
+  /* Larger touch targets */
+  nav button {
+    padding: 0.75rem 1rem;
+  }
+}
+
+/* Touch-friendly hover states (disable on touch devices) */
+@media (hover: none) {
+  .card-parchment:hover {
+    transform: none;
+  }
+
+  .glow-on-hover:hover {
+    animation: none;
+  }
+}
+
+/* Safe area insets for notched devices */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  nav {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  header {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Dark mode preference (already dark, but ensure consistency) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

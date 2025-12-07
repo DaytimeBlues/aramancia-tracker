@@ -18,12 +18,12 @@ const navItems = [
 
 export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
     return (
-        <div className="min-h-screen bg-bg text-text relative overflow-x-hidden">
+        <div className="min-h-screen w-full relative z-10 bg-transparent text-text overflow-x-hidden">
             {/* Flame Video Background */}
             <BackgroundVideo />
 
-            {/* Gradient Overlays */}
-            <div className="fixed inset-0 z-0 pointer-events-none">
+            {/* Gradient Overlays - above video */}
+            <div className="fixed inset-0 z-5 pointer-events-none">
                 <div className="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 h-60 bg-gradient-to-t from-bg-dark via-bg-dark/80 to-transparent" />
                 <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-bg-dark/60 to-transparent" />

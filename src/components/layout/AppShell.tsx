@@ -1,5 +1,4 @@
 import { Feather, Shield, Wand2, Skull, BookOpen, User, Settings } from 'lucide-react';
-import { BackgroundVideo } from './BackgroundVideo';
 
 interface AppShellProps {
     children: React.ReactNode;
@@ -19,9 +18,6 @@ const navItems = [
 export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
     return (
         <>
-            {/* Flame Video Background - OUTSIDE main container */}
-            <BackgroundVideo />
-
             <div className="min-h-screen w-full relative z-10 bg-transparent text-text overflow-x-hidden">
                 {/* Gradient Overlays - above video */}
                 <div className="fixed inset-0 z-5 pointer-events-none">

@@ -3,7 +3,7 @@
  * Pure functions for D&D 5e character stat calculations
  */
 
-import type { AbilityKey, AbilityMods, AbilityScores, CharacterData } from '../types';
+import type { AbilityMods, AbilityScores, CharacterData } from '../types';
 
 /**
  * Calculate proficiency bonus by character level

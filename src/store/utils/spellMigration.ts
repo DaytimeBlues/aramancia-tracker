@@ -231,7 +231,9 @@ export const migrateSpell = (legacy: Spell): NormalizedSpell => {
     ],
     concentration: {
       required: isConcentration,
-      maxDuration: isConcentration && duration.amount ? `${duration.amount} ${duration.unit}s` : undefined,
+      maxDuration: isConcentration && duration.amount 
+        ? `${duration.amount} ${duration.unit}${duration.amount > 1 ? 's' : ''}` 
+        : undefined,
     },
   };
   

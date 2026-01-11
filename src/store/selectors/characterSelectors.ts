@@ -104,7 +104,11 @@ const getAbilityMod = (score: number): number => Math.floor((score - 10) / 2);
  * Calculate proficiency bonus from level
  * SRD 5.1: +2 (L1-4), +3 (L5-8), +4 (L9-12), +5 (L13-16), +6 (L17-20)
  */
-const getProfBonus = (level: number): number => Math.floor((level - 1) / 4) + 2;
+const PROFICIENCY_BASE = 2;
+const PROFICIENCY_LEVEL_DIVISOR = 4;
+
+const getProfBonus = (level: number): number => 
+  Math.floor((level - 1) / PROFICIENCY_LEVEL_DIVISOR) + PROFICIENCY_BASE;
 
 /**
  * Memoized ability modifiers

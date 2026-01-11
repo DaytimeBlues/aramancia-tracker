@@ -185,7 +185,9 @@ export const CastModal: React.FC<CastModalProps> = ({ spellId, onClose, onCast }
               <span className="text-white">
                 {spell.duration.type === 'instantaneous'
                   ? 'Instantaneous'
-                  : `${spell.duration.amount} ${spell.duration.unit}${spell.duration.amount! > 1 ? 's' : ''}`}
+                  : spell.duration.amount 
+                    ? `${spell.duration.amount} ${spell.duration.unit}${spell.duration.amount > 1 ? 's' : ''}`
+                    : spell.duration.type}
                 {spell.concentration.required && ' (Concentration)'}
               </span>
             </div>

@@ -21,6 +21,7 @@ import { RestView } from './components/views/RestView';
 import { GrimoireView } from './components/views/GrimoireView';
 import { BiographyView } from './components/views/BiographyView';
 import { SessionPicker } from './components/SessionPicker';
+import { V3DemoView } from './components/v3/V3DemoView';
 import { initialCharacterData } from './data/initialState';
 import { getActiveSession, updateActiveSession } from './utils/sessionStorage';
 import {
@@ -374,6 +375,12 @@ function App() {
               inventory: (prev.inventory || []).filter((_, i) => i !== index)
             }))}
           />
+        </div>
+      )}
+
+      {activeTab === 'v3' && (
+        <div className="animate-fade-in">
+          <V3DemoView />
         </div>
       )}
 

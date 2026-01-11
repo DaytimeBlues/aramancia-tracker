@@ -3,7 +3,7 @@
  * Concentration state and prompt handling
  */
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { ConcentrationState, ConcentrationPrompt } from '../../types/v3';
 
 interface ConcentrationSliceState {

@@ -7,7 +7,6 @@ import React, { useState, useMemo } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import { selectSpellById } from '../../store/selectors/derivedSelectors';
 import { getAvailableSlots, getValidCastLevels, resolveSpellEffect } from '../../store/utils/spellUtils';
-import type { Spell } from '../../types/v3';
 import type { RootState } from '../../store/store';
 
 interface SpellCastModalProps {

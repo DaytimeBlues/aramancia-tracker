@@ -9,7 +9,6 @@ import type { RootState } from '../store';
 
 // Create entity adapter for spells
 export const spellsAdapter = createEntityAdapter<Spell>({
-  selectId: (spell) => spell.id,
   sortComparer: (a, b) => {
     // Sort by level, then by name
     if (a.level !== b.level) return a.level - b.level;

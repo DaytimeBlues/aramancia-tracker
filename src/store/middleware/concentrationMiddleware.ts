@@ -3,7 +3,7 @@
  * Event-driven concentration handling with automatic damage-triggered checks
  */
 
-import { createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
+import { createListenerMiddleware } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 import { showConcentrationPrompt } from '../slices/concentrationSlice';
 
@@ -14,6 +14,7 @@ export interface DamageAction {
     damage: number;
     source?: string;
   };
+  [key: string]: any; // Index signature for Redux compatibility
 }
 
 // Create listener middleware
@@ -36,7 +37,7 @@ concentrationMiddleware.startListening({
       return;
     }
 
-    const damage = action.payload.damage;
+    const { damage, source } = action.payload as { damage: number; source?: string };
     const dc = Math.max(10, Math.floor(damage / 2));
 
     // Check for feat modifiers
@@ -49,7 +50,7 @@ concentrationMiddleware.startListening({
     listenerApi.dispatch(showConcentrationPrompt({
       dc,
       damage,
-      source: action.payload.source,
+      source,
       hasAdvantage: hasWarCaster,
       hasDisadvantage: hasMageSlayer,
       warCaster: hasWarCaster,

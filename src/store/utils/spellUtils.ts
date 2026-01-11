@@ -68,8 +68,13 @@ export function resolveSpellEffect(spell: Spell, castLevel: number): UpcastResul
   let resolvedEffect = formula;
 
   if (mode === 'slot_level') {
-    // Replace {slot_level} with actual cast level
+    // Replace {slot_level} with actual cast level and evaluate arithmetic
     resolvedEffect = resolvedEffect.replace(/{slot_level}/g, String(castLevel));
+    
+    // Evaluate simple arithmetic (e.g., "1+2" -> "3")
+    resolvedEffect = resolvedEffect.replace(/(\d+)\+(\d+)/g, (_match, a, b) => {
+      return String(Number(a) + Number(b));
+    });
     
     // Handle formulas like "1d4+{slot_level}" -> "1d4+3" for level 3
     // Handle formulas like "{slot_level}d6" -> "3d6" for level 3
@@ -85,7 +90,6 @@ export function resolveSpellEffect(spell: Spell, castLevel: number): UpcastResul
     if (match) {
       const baseDice = parseInt(match[1]);
       const baseDie = match[2];
-      const scaleDie = match[3];
       const totalDice = baseDice + levelDiff;
       resolvedEffect = `${totalDice}d${baseDie}`;
     }

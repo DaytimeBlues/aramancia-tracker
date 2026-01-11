@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { setAttribute, setLevel } from '../../store/slices/actorSlice';
-import { selectActor, selectLevel, selectBaseAttributes } from '../../store/selectors/derivedSelectors';
+import { selectLevel, selectBaseAttributes } from '../../store/selectors/derivedSelectors';
 import { DerivedStatsDisplay } from './DerivedStatsDisplay';
 import { SpellCastModal } from './SpellCastModal';
 import { ConcentrationPrompt } from './ConcentrationPrompt';
@@ -15,7 +15,6 @@ import { startConcentration } from '../../store/slices/concentrationSlice';
 
 export const V3DemoView: React.FC = () => {
   const dispatch = useAppDispatch();
-  const actor = useAppSelector(selectActor);
   const level = useAppSelector(selectLevel);
   const attributes = useAppSelector(selectBaseAttributes);
   
@@ -52,7 +51,7 @@ export const V3DemoView: React.FC = () => {
   };
 
   const handleTakeDamage = (damage: number) => {
-    dispatch(takeDamage(damage, 'Goblin Arrow'));
+    dispatch(takeDamage(damage, 'Goblin Arrow') as any);
   };
 
   return (

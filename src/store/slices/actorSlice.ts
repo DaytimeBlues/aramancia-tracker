@@ -3,7 +3,7 @@
  * Actor metadata: level, class, proficiency, etc.
  */
 
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import type { ActorState } from '../../types/v3';
 
 const initialState: ActorState = {
@@ -61,12 +61,12 @@ export const actorSlice = createSlice({
     removeActiveEffect: (state, action: PayloadAction<string>) => {
       state.activeEffectIds = state.activeEffectIds.filter(id => id !== action.payload);
     },
-    setOverride: (state, action: PayloadAction<{ key: keyof ActorState['overrides']; value: number | undefined }>) => {
+    setOverride: (state, action: PayloadAction<{ key: keyof NonNullable<ActorState['overrides']>; value: number | undefined }>) => {
       if (!state.overrides) state.overrides = {};
       if (action.payload.value === undefined) {
         delete state.overrides[action.payload.key];
       } else {
-        state.overrides[action.payload.key] = action.payload.value;
+        (state.overrides as any)[action.payload.key] = action.payload.value;
       }
     },
   },

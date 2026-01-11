@@ -8,9 +8,7 @@ import type { ActiveEffect } from '../../types/v3';
 import type { RootState } from '../store';
 
 // Create entity adapter for effects
-export const effectsAdapter = createEntityAdapter<ActiveEffect>({
-  selectId: (effect) => effect.id,
-});
+export const effectsAdapter = createEntityAdapter<ActiveEffect>();
 
 // Initial state
 const initialState = effectsAdapter.getInitialState();

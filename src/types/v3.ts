@@ -4,7 +4,7 @@
  */
 
 import { z } from 'zod';
-import type { AbilityKey, AbilityScores } from './index';
+import type { AbilityKey } from './index';
 
 // ============================================================================
 // SPELL ENTITIES

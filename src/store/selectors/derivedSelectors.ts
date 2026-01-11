@@ -75,9 +75,8 @@ const getProficiencyBonus = (level: number): number => {
 };
 
 export const selectProficiencyBonus = createSelector(
-  [selectLevel, selectOverrides],
-  (level, overrides) => {
-    // No override for proficiency bonus currently, but pattern is here
+  [selectLevel],
+  (level) => {
     return getProficiencyBonus(level);
   }
 );

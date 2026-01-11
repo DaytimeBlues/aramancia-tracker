@@ -66,6 +66,7 @@ export const actorSlice = createSlice({
       if (action.payload.value === undefined) {
         delete state.overrides[action.payload.key];
       } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (state.overrides as any)[action.payload.key] = action.payload.value;
       }
     },

@@ -41,16 +41,16 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
     return resolveSpellEffect(spell, selectedLevel);
   }, [spell, selectedLevel]);
 
-  if (!spell) {
-    return null;
-  }
-
   // Auto-select base level on mount
   React.useEffect(() => {
     if (validLevels.length > 0 && selectedLevel === null) {
       setSelectedLevel(validLevels[0]);
     }
   }, [validLevels, selectedLevel]);
+
+  if (!spell) {
+    return null;
+  }
 
   const handleCast = () => {
     if (selectedLevel !== null) {

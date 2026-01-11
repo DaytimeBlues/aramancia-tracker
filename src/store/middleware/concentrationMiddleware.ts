@@ -14,6 +14,7 @@ export interface DamageAction {
     damage: number;
     source?: string;
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any; // Index signature for Redux compatibility
 }
 

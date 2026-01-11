@@ -51,6 +51,7 @@ export const V3DemoView: React.FC = () => {
   };
 
   const handleTakeDamage = (damage: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     dispatch(takeDamage(damage, 'Goblin Arrow') as any);
   };
 

@@ -38,10 +38,9 @@ export const V3DemoView: React.FC = () => {
     dispatch(setLevel(newLevel));
   };
 
-  const handleCastSpell = (spellId: string, castLevel: number) => {
-    console.log(`Casting ${spellId} at level ${castLevel}`);
-    
-    // For concentration spells, start concentration
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleCastSpell = (spellId: string, _castLevel: number) => {
+    // TODO: Replace with proper action dispatch that uses castLevel
     if (spellId === 'haste') {
       dispatch(startConcentration({
         spellId: 'haste',

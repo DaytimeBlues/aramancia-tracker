@@ -1,4 +1,4 @@
-import { BarChart2, Zap, Skull, Settings } from 'lucide-react';
+import { BarChart2, Zap, Skull, Settings, Sparkles } from 'lucide-react';
 
 interface DockProps {
     activeTab: string;
@@ -10,6 +10,7 @@ export function Dock({ activeTab, onTabChange }: DockProps) {
         { id: 'home', icon: BarChart2, label: 'Dashboard' },
         { id: 'spells', icon: Zap, label: 'Spells' },
         { id: 'combat', icon: Skull, label: 'Necro' },
+        { id: 'v3', icon: Sparkles, label: 'V3.0' },
         { id: 'settings', icon: Settings, label: 'Settings' },
     ];
 

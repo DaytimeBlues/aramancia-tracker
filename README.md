@@ -14,6 +14,18 @@ A D&D 5e character tracker PWA for tracking HP, AC, spell slots, and combat stat
 - **Attunement** - Max 3 items enforced
 - **Rest System** - Short and Long rest automation
 
+## V3.0 Architecture (New!)
+
+The v3.0 paradigm introduces advanced state management with:
+
+- ✨ **Normalized State** - Redux Toolkit with entity adapters for spells, effects, and actors
+- 🔗 **Relational DAG** - Memoized selectors computing derived stats (spell DC, AC, HP, skill bonuses) with override support
+- 🎯 **Decision-Node Spells** - Upcasting logic with scaling formulas and variant selection
+- ⚡ **Event-Driven Concentration** - Automatic concentration checks triggered by damage events
+- 🎨 **Reactive UI** - Components auto-update when base attributes change
+
+See [V3.0 Architecture Documentation](docs/v3-architecture.md) for details.
+
 ## Tech Stack
 
 - React 19 + TypeScript

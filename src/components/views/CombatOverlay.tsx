@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { castingCancelled, castingCompletedWithSlot } from '../../store/slices/combatSlice';
 import { ResolutionPanel } from '../features/combat/ResolutionPanel';
 import { spells } from '../../data/spells';
+import type { SpellV3 } from '../../schemas/spellSchema';
 
 export const CombatOverlay: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -40,26 +41,42 @@ export const CombatOverlay: React.FC = () => {
                 sides: Number(firstDiceMatch[2]),
                 type: (spell.damageType || 'force').toLowerCase(),
                 // Many wizard damage spells scale by +1 die per slot level.
-                scaling: { type: 'per_slot_level', diceIncreasePerLevel: 1 }
+                scaling: { type: 'per_slot_level' as const, diceIncreasePerLevel: 1 }
             }]
             : undefined;
 
-    const spellV3: any = {
+    // Creating a SpellV3 object for ResolutionPanel with all required fields
+    const onSuccessValue: 'half' | 'special' = damage ? 'half' : 'special';
+    const onFailValue: 'full' | 'special' = damage ? 'full' : 'special';
+    
+    const spellV3: SpellV3 & { desc?: string; decisionTree?: typeof spell.decisionTree } = {
         id: spell.name,
         name: spell.name,
         level: spell.lvl,
+        school: 'Evocation', // Default school, could be parsed from spell data if available
+        ritual: false,
+        castingTime: '1 action',
+        range: 'Self',
+        components: {
+            verbal: true,
+            somatic: true,
+        },
+        duration: {
+            type: 'instantaneous',
+        },
+        description: spell.desc || '',
         requiresAttackRoll,
         requiresSavingThrow,
         damage,
         savingThrowDetails: requiresSavingThrow ? {
-            ability: saveAbility,
-            onSuccess: damage ? 'half' : 'special',
-            onFail: damage ? 'full' : 'special',
+            ability: saveAbility as 'Strength' | 'Dexterity' | 'Constitution' | 'Intelligence' | 'Wisdom' | 'Charisma',
+            onSuccess: onSuccessValue,
+            onFail: onFailValue,
         } : undefined,
+        higherLevelDescription: undefined,
         // Extra fields used by the legacy UI plan
         desc: spell.desc,
         decisionTree: spell.decisionTree,
-        higherLevelDescription: undefined,
     };
 
     return (

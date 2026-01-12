@@ -1,6 +1,7 @@
 import type { Spell } from '../types';
 
 export const spells: Spell[] = [
+    // ========== CANTRIPS (Level 0) ==========
     {
         name: "Toll the Dead",
         lvl: 0,
@@ -22,6 +23,72 @@ export const spells: Spell[] = [
         desc: "Point at one creature you can see within range. The target must succeed on a Wisdom saving throw or take 2d8 necrotic damage. If the target is missing any of its hit points, it instead takes 2d12 necrotic damage. At Level 5, this cantrip deals 2 dice of damage (upgraded from 1 die).",
         incantation: "Mortis Tactus",
         pronunciation: "MOR-tis TAK-toos"
+    },
+    {
+        name: "Fire Bolt",
+        lvl: 0,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "Instantaneous",
+        components: "V, S",
+        effect: "Hurl a mote of fire at a creature or object.",
+        rolls: "Ranged spell Attack vs AC",
+        damage: "2d10",
+        damageType: "Fire",
+        decisionTree: [
+            { level: 1, summary: "Base damage: 1d10 fire." },
+            { level: 5, summary: "Damage scales to 2d10 (current tier)." },
+            { level: 11, summary: "Damage scales to 3d10." },
+            { level: 17, summary: "Damage scales to 4d10." }
+        ],
+        desc: "You hurl a mote of fire at a creature or object within range. Make a ranged spell attack against the target. On a hit, the target takes 2d10 fire damage. A flammable object hit by this spell ignites if it isn't being worn or carried.",
+        incantation: "Ignis Sagitta",
+        pronunciation: "IG-nis sa-GIT-ta"
+    },
+    {
+        name: "Ray of Frost",
+        lvl: 0,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "60 ft",
+        duration: "Instantaneous",
+        components: "V, S",
+        effect: "A frigid beam reduces speed by 10 ft.",
+        rolls: "Ranged spell Attack vs AC",
+        damage: "2d8",
+        damageType: "Cold",
+        decisionTree: [
+            { level: 1, summary: "Base damage: 1d8 cold, -10 ft speed." },
+            { level: 5, summary: "Damage scales to 2d8 (current tier)." },
+            { level: 11, summary: "Damage scales to 3d8." },
+            { level: 17, summary: "Damage scales to 4d8." }
+        ],
+        desc: "A frigid beam of blue-white light streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, it takes 2d8 cold damage, and its speed is reduced by 10 feet until the start of your next turn.",
+        incantation: "Glacies Radius",
+        pronunciation: "GLA-kee-es RA-dee-us"
+    },
+    {
+        name: "Chill Touch",
+        lvl: 0,
+        school: "NECRO",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "1 round",
+        components: "V, S",
+        effect: "Ghostly hand prevents healing and harms undead.",
+        rolls: "Ranged spell Attack vs AC",
+        damage: "2d8",
+        damageType: "Necrotic",
+        decisionTree: [
+            { level: 1, summary: "Base damage: 1d8, target can't regain HP." },
+            { level: 5, summary: "Damage scales to 2d8 (current tier)." },
+            { level: 11, summary: "Damage scales to 3d8." },
+            { level: 17, summary: "Damage scales to 4d8." }
+        ],
+        desc: "You create a ghostly, skeletal hand in the space of a creature within range. Make a ranged spell attack against the creature. On a hit, the target takes 2d8 necrotic damage, and it can't regain hit points until the start of your next turn. If you hit an undead target, it also has disadvantage on attack rolls against you until the end of your next turn.",
+        incantation: "Manus Mortis",
+        pronunciation: "MA-nus MOR-tis"
     },
     {
         name: "Mage Hand",
@@ -89,7 +156,200 @@ export const spells: Spell[] = [
         incantation: "Praestigia Minima",
         pronunciation: "pray-STIH-jee-ah MIN-ih-mah"
     },
+    {
+        name: "Minor Illusion",
+        lvl: 0,
+        school: "ILLU",
+        castTime: "1 Action",
+        range: "30 ft",
+        duration: "1 minute",
+        components: "S, M",
+        effect: "Create a sound or image of an object.",
+        rolls: "Investigation check vs DC",
+        damage: "—",
+        damageType: "Utility",
+        decisionTree: [
+            { level: 1, summary: "Create a sound or static image." },
+            { level: 5, summary: "Use as distraction during combat." },
+            { level: 11, summary: "Craft more convincing distractions." },
+            { level: 17, summary: "Combine with other illusions for layered deception." }
+        ],
+        desc: "You create a sound or an image of an object within range that lasts for the duration. The illusion also ends if you dismiss it as an action or cast this spell again. If you create a sound, its volume can range from a whisper to a scream. If you create an image, it must fit within a 5-foot cube and can't create sensory effects other than sight.",
+        incantation: "Phantasma Minor",
+        pronunciation: "fan-TAZ-ma MI-nor"
+    },
+    {
+        name: "Light",
+        lvl: 0,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "Touch",
+        duration: "1 hour",
+        components: "V, M",
+        effect: "Touch an object to make it shed bright light.",
+        rolls: "DEX save vs DC (if unwilling)",
+        damage: "—",
+        damageType: "Utility",
+        decisionTree: [
+            { level: 1, summary: "Illuminate dark areas without a torch." },
+            { level: 5, summary: "Cast on projectiles or thrown objects." },
+            { level: 11, summary: "Maintain light while casting other spells." },
+            { level: 17, summary: "Light multiple objects for tactical illumination." }
+        ],
+        desc: "You touch one object that is no larger than 10 feet in any dimension. Until the spell ends, the object sheds bright light in a 20-foot radius and dim light for an additional 20 feet. Covering the object blocks the light. The spell ends if you cast it again or dismiss it.",
+        incantation: "Lux Perpetua",
+        pronunciation: "LUKS per-PET-oo-ah"
+    },
 
+    // ========== LEVEL 1 SPELLS ==========
+    {
+        name: "Shield",
+        lvl: 1,
+        school: "ABJ",
+        castTime: "Reaction",
+        range: "Self",
+        duration: "1 round",
+        components: "V, S",
+        effect: "+5 AC until start of next turn, blocks Magic Missile.",
+        rolls: "None (reaction trigger)",
+        damage: "—",
+        damageType: "Defense",
+        decisionTree: [
+            { level: 1, summary: "Reaction: +5 AC, blocks Magic Missile entirely." },
+            { level: 5, summary: "Save for critical hits; conserve slots for emergencies." },
+            { level: 9, summary: "Pair with Mirror Image for layered defense." }
+        ],
+        desc: "An invisible barrier of magical force appears and protects you. Until the start of your next turn, you have a +5 bonus to AC, including against the triggering attack, and you take no damage from magic missile.",
+        incantation: "Scutum Arcanum",
+        pronunciation: "SKOO-tum ar-KAH-num"
+    },
+    {
+        name: "Mage Armor",
+        lvl: 1,
+        school: "ABJ",
+        castTime: "1 Action",
+        range: "Touch",
+        duration: "8 hours",
+        components: "V, S, M",
+        effect: "Target's base AC becomes 13 + DEX modifier.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Defense",
+        decisionTree: [
+            { level: 1, summary: "Base AC 13 + DEX for 8 hours (no armor)." },
+            { level: 5, summary: "Cast before adventuring day; lasts all day." },
+            { level: 9, summary: "Apply to vulnerable allies without natural armor." }
+        ],
+        desc: "You touch a willing creature who isn't wearing armor, and a protective magical force surrounds it until the spell ends. The target's base AC becomes 13 + its Dexterity modifier. The spell ends if the target dons armor or if you dismiss the spell as an action.",
+        incantation: "Lorica Magica",
+        pronunciation: "lo-REE-ka MA-gee-ka"
+    },
+    {
+        name: "Magic Missile",
+        lvl: 1,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "Instantaneous",
+        components: "V, S",
+        effect: "Three darts of magical force hit automatically.",
+        rolls: "Auto-hit (no roll needed)",
+        damage: "3d4+3",
+        damageType: "Force",
+        decisionTree: [
+            { level: 1, summary: "3 darts, 1d4+1 force each (auto-hit)." },
+            { level: 3, summary: "Upcast: +1 dart per slot level above 1st." },
+            { level: 5, summary: "At 3rd level slot: 5 darts total." },
+            { level: 7, summary: "At 4th level slot: 6 darts total." }
+        ],
+        desc: "You create three glowing darts of magical force. Each dart hits a creature of your choice that you can see within range. A dart deals 1d4 + 1 force damage to its target. The darts all strike simultaneously, and you can direct them to hit one creature or several. At Higher Levels: +1 dart per slot level above 1st.",
+        incantation: "Sagitta Magica",
+        pronunciation: "sa-GIT-ta MA-gee-ka"
+    },
+    {
+        name: "Burning Hands",
+        lvl: 1,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "Self (15-foot cone)",
+        duration: "Instantaneous",
+        components: "V, S",
+        effect: "15-foot cone of fire ignites enemies.",
+        rolls: "DEX save vs DC",
+        damage: "3d6",
+        damageType: "Fire",
+        decisionTree: [
+            { level: 1, summary: "3d6 fire, DEX save for half." },
+            { level: 3, summary: "Upcast: +1d6 per slot level above 1st." },
+            { level: 5, summary: "At 3rd level slot: 5d6 fire damage." }
+        ],
+        desc: "As you hold your hands with thumbs touching and fingers spread, a thin sheet of flames shoots forth from your outstretched fingertips. Each creature in a 15-foot cone must make a Dexterity saving throw. A creature takes 3d6 fire damage on a failed save, or half as much damage on a successful one.",
+        incantation: "Manus Ardens",
+        pronunciation: "MA-nus AR-dens"
+    },
+    {
+        name: "Thunderwave",
+        lvl: 1,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "Self (15-foot cube)",
+        duration: "Instantaneous",
+        components: "V, S",
+        effect: "Thunder damage and push creatures 10 ft.",
+        rolls: "CON save vs DC",
+        damage: "2d8",
+        damageType: "Thunder",
+        decisionTree: [
+            { level: 1, summary: "2d8 thunder, push 10 ft on failed save." },
+            { level: 3, summary: "Upcast: +1d8 per slot level above 1st." },
+            { level: 5, summary: "Use to clear space when surrounded." }
+        ],
+        desc: "A wave of thunderous force sweeps out from you. Each creature in a 15-foot cube originating from you must make a Constitution saving throw. On a failed save, a creature takes 2d8 thunder damage and is pushed 10 feet away from you. On a successful save, the creature takes half as much damage and isn't pushed.",
+        incantation: "Tonitrus Unda",
+        pronunciation: "to-NEE-trus UN-da"
+    },
+    {
+        name: "Chromatic Orb",
+        lvl: 1,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "90 ft",
+        duration: "Instantaneous",
+        components: "V, S, M (50gp diamond)",
+        effect: "Hurl a sphere of your chosen element.",
+        rolls: "Ranged spell Attack vs AC",
+        damage: "3d8",
+        damageType: "Acid/Cold/Fire/Lightning/Poison/Thunder",
+        decisionTree: [
+            { level: 1, summary: "Choose damage type: 3d8 on hit." },
+            { level: 3, summary: "Upcast: +1d8 per slot level above 1st." },
+            { level: 5, summary: "Exploit vulnerabilities by choosing type." }
+        ],
+        desc: "You hurl a 4-inch-diameter sphere of energy at a creature that you can see within range. You choose acid, cold, fire, lightning, poison, or thunder for the type of orb you create, and then make a ranged spell attack against the target. On a hit, the creature takes 3d8 damage of the type you chose.",
+        incantation: "Orbis Chromatis",
+        pronunciation: "OR-bis kro-MA-tis"
+    },
+    {
+        name: "Find Familiar",
+        lvl: 1,
+        school: "CONJ",
+        castTime: "1 Hour",
+        range: "10 ft",
+        duration: "Instantaneous",
+        components: "V, S, M (10gp charcoal/incense)",
+        effect: "Summon a spirit in animal form as your familiar.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Summon",
+        decisionTree: [
+            { level: 1, summary: "Choose form: bat, cat, hawk, owl, rat, raven, spider, etc." },
+            { level: 5, summary: "Use familiar for scouting and Help action." },
+            { level: 9, summary: "Deliver touch spells through familiar." }
+        ],
+        desc: "You gain the service of a familiar, a spirit that takes an animal form you choose: bat, cat, crab, frog, hawk, lizard, octopus, owl, poisonous snake, fish, rat, raven, sea horse, spider, or weasel. The familiar acts independently but obeys your commands.",
+        incantation: "Spiritus Familiaris",
+        pronunciation: "SPEE-ree-tus fa-mil-ee-AH-ris"
+    },
     {
         name: "Sleep (2024)",
         lvl: 1,
@@ -99,15 +359,15 @@ export const spells: Spell[] = [
         duration: "1 min (Conc.)",
         components: "V, S, M",
         effect: "Force creatures into magical slumber.",
-        rolls: "WIS save vs DC 14",
+        rolls: "WIS save vs DC",
         damage: "Unconscious",
         damageType: "Condition",
+        concentration: true,
         decisionTree: [
             { level: 1, summary: "Base effect: 5-foot-radius sphere of sleep." },
             { level: 3, summary: "Upcast to affect tougher targets or more creatures." },
             { level: 5, summary: "Upcast again for battlefield-wide control." }
         ],
-        concentration: true,
         desc: "Creatures in a 5-foot-radius sphere must succeed on a Wisdom saving throw or be incapacitated and unconscious for the duration.",
         incantation: "Somnus",
         pronunciation: "SOM-noos"
@@ -124,15 +384,36 @@ export const spells: Spell[] = [
         rolls: "None",
         damage: "—",
         damageType: "Utility",
+        concentration: true,
         decisionTree: [
             { level: 1, summary: "Base detection of magic within 30 feet." },
             { level: 5, summary: "Maintain concentration while moving between rooms." },
             { level: 9, summary: "Use while inspecting multiple targets quickly." }
         ],
-        concentration: true,
         desc: "For the duration, you sense the presence of magic within 30 feet of you. If you sense magic in this way, you can use your action to see a faint aura around any visible creature or object in the area that bears magic, and you learn its school of magic, if any.",
         incantation: "Revelio Magica",
         pronunciation: "reh-VEH-lee-oh MAH-jee-kah"
+    },
+    {
+        name: "Feather Fall",
+        lvl: 1,
+        school: "TRANS",
+        castTime: "Reaction",
+        range: "60 ft",
+        duration: "1 minute",
+        components: "V, M",
+        effect: "Slow falling rate to 60 ft/round, no fall damage.",
+        rolls: "None (reaction)",
+        damage: "—",
+        damageType: "Utility",
+        decisionTree: [
+            { level: 1, summary: "Reaction: up to 5 creatures fall safely." },
+            { level: 5, summary: "Save entire party from cliff edges." },
+            { level: 9, summary: "Use offensively to drop from heights." }
+        ],
+        desc: "Choose up to five falling creatures within range. A falling creature's rate of descent slows to 60 feet per round until the spell ends. If the creature lands before the spell ends, it takes no falling damage and can land on its feet.",
+        incantation: "Pluma Descensus",
+        pronunciation: "PLOO-ma de-SEN-sus"
     },
     {
         name: "Faerie Fire",
@@ -143,15 +424,15 @@ export const spells: Spell[] = [
         duration: "1 min (Conc.)",
         components: "V",
         effect: "Outline targets in light, granting advantage to hit them.",
-        rolls: "DEX save vs DC 14",
+        rolls: "DEX save vs DC",
         damage: "—",
         damageType: "Utility",
+        concentration: true,
         decisionTree: [
             { level: 1, summary: "Base 20-foot cube for advantage marking." },
             { level: 5, summary: "Maintain the glow through key turns in combat." },
             { level: 9, summary: "Sustain focus on priority targets." }
         ],
-        concentration: true,
         desc: "Each object in a 20-foot cube within range is outlined in blue, green, or violet light (your choice). Any creature in the area when the spell is cast is also outlined if it fails a Dexterity saving throw. For the duration, objects and affected creatures shed dim light in a 10-foot radius.",
         incantation: "Lumen Febris",
         pronunciation: "LOO-men FEH-bris"
@@ -177,7 +458,6 @@ export const spells: Spell[] = [
         incantation: "Facies Mutatio",
         pronunciation: "FAH-see-ehs moo-TAH-tee-oh"
     },
-
     {
         name: "Absorb Elements",
         lvl: 1,
@@ -192,15 +472,186 @@ export const spells: Spell[] = [
         damageType: "Acid/Cold/Fire/Lightning/Thunder",
         decisionTree: [
             { level: 1, summary: "Base: resistance + 1d6 bonus damage." },
-            { level: 5, summary: "Use to turn heavy hits into counterattacks." },
-            { level: 9, summary: "Conserve reactions for big elemental bursts." }
+            { level: 3, summary: "Upcast: +1d6 per slot level above 1st." },
+            { level: 5, summary: "Use to turn heavy hits into counterattacks." }
         ],
         desc: "You have resistance to the triggering damage type (acid, cold, fire, lightning, or thunder) until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra 1d6 damage of the triggering type.",
         incantation: "Elementum Scutum",
         pronunciation: "eh-leh-MEN-toom SKOO-toom"
     },
+    {
+        name: "Identify",
+        lvl: 1,
+        school: "DIV",
+        castTime: "1 Minute",
+        range: "Touch",
+        duration: "Instantaneous",
+        components: "V, S, M (100gp pearl)",
+        effect: "Learn properties of a magic item or affected creature.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Utility",
+        decisionTree: [
+            { level: 1, summary: "Learn all magic item properties instantly." },
+            { level: 5, summary: "Identify curses and attunement requirements." },
+            { level: 9, summary: "Detect ongoing spells on creatures." }
+        ],
+        desc: "You choose one object that you must touch throughout the casting of the spell. If it is a magic item or some other magic-imbued object, you learn its properties and how to use them. You also learn any spells affecting the item.",
+        incantation: "Cognitio Arcana",
+        pronunciation: "kog-NEE-tee-oh ar-KAH-na"
+    },
+    {
+        name: "Comprehend Languages",
+        lvl: 1,
+        school: "DIV",
+        castTime: "1 Action",
+        range: "Self",
+        duration: "1 hour",
+        components: "V, S, M",
+        effect: "Understand any spoken or written language.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Utility",
+        decisionTree: [
+            { level: 1, summary: "Understand all languages for 1 hour." },
+            { level: 5, summary: "Read ancient texts and coded messages." },
+            { level: 9, summary: "Comprehend during interrogations." }
+        ],
+        desc: "For the duration, you understand the literal meaning of any spoken language that you hear. You also understand any written language that you see, but you must be touching the surface on which the words are written.",
+        incantation: "Lingua Universalis",
+        pronunciation: "LIN-gwa oo-nee-ver-SAH-lis"
+    },
 
-
+    // ========== LEVEL 2 SPELLS ==========
+    {
+        name: "Darkness",
+        lvl: 2,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "60 ft",
+        duration: "10 min (Conc.)",
+        components: "V, M",
+        effect: "Magical darkness spreads from a point, blocks darkvision.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Control",
+        concentration: true,
+        decisionTree: [
+            { level: 3, summary: "15-ft radius sphere of magical darkness." },
+            { level: 5, summary: "Blocks all darkvision; use for escape." },
+            { level: 9, summary: "Combine with Devil's Sight for advantage." }
+        ],
+        desc: "Magical darkness spreads from a point you choose within range to fill a 15-foot-radius sphere for the duration. The darkness spreads around corners. A creature with darkvision can't see through this darkness, and nonmagical light can't illuminate it.",
+        incantation: "Tenebrae Profundae",
+        pronunciation: "TEN-eh-bray pro-FUN-day"
+    },
+    {
+        name: "Blindness/Deafness",
+        lvl: 2,
+        school: "NECRO",
+        castTime: "1 Action",
+        range: "30 ft",
+        duration: "1 minute",
+        components: "V",
+        effect: "Blind or deafen a creature (no concentration).",
+        rolls: "CON save vs DC",
+        damage: "Blinded/Deafened",
+        damageType: "Condition",
+        decisionTree: [
+            { level: 3, summary: "Target is blinded or deafened for 1 min." },
+            { level: 5, summary: "Upcast: +1 target per slot level above 2nd." },
+            { level: 7, summary: "Blind multiple enemies without concentration." }
+        ],
+        desc: "You can blind or deafen a foe. Choose one creature that you can see within range to make a Constitution saving throw. If it fails, the target is either blinded or deafened (your choice) for the duration. At the end of each of its turns, the target can make a Constitution saving throw. On a success, the spell ends.",
+        incantation: "Oculus Claudere",
+        pronunciation: "OK-oo-lus KLOW-deh-reh"
+    },
+    {
+        name: "Hold Person",
+        lvl: 2,
+        school: "ENCH",
+        castTime: "1 Action",
+        range: "60 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S, M",
+        effect: "Paralyze a humanoid creature.",
+        rolls: "WIS save vs DC",
+        damage: "Paralyzed",
+        damageType: "Condition",
+        concentration: true,
+        decisionTree: [
+            { level: 3, summary: "Target humanoid is paralyzed; auto-crit in 5ft." },
+            { level: 5, summary: "Upcast: +1 target per slot level above 2nd." },
+            { level: 7, summary: "Paralyze multiple humanoids." }
+        ],
+        desc: "Choose a humanoid that you can see within range. The target must succeed on a Wisdom saving throw or be paralyzed for the duration. At the end of each of its turns, the target can make another Wisdom saving throw. On a success, the spell ends on the target.",
+        incantation: "Corpus Immobilis",
+        pronunciation: "KOR-pus im-MO-bi-lis"
+    },
+    {
+        name: "Scorching Ray",
+        lvl: 2,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "Instantaneous",
+        components: "V, S",
+        effect: "Three rays of fire, each requiring an attack roll.",
+        rolls: "Ranged spell Attack vs AC (x3)",
+        damage: "2d6 per ray",
+        damageType: "Fire",
+        decisionTree: [
+            { level: 3, summary: "3 rays, 2d6 fire each. Focus or spread." },
+            { level: 5, summary: "Upcast: +1 ray per slot level above 2nd." },
+            { level: 7, summary: "At 4th level: 5 rays total." }
+        ],
+        desc: "You create three rays of fire and hurl them at targets within range. You can hurl them at one target or several. Make a ranged spell attack for each ray. On a hit, the target takes 2d6 fire damage. At Higher Levels: +1 ray per slot level above 2nd.",
+        incantation: "Radius Ignis",
+        pronunciation: "RAH-dee-us IG-nis"
+    },
+    {
+        name: "Shatter",
+        lvl: 2,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "60 ft",
+        duration: "Instantaneous",
+        components: "V, S, M",
+        effect: "Loud noise damages creatures in a 10-ft radius.",
+        rolls: "CON save vs DC",
+        damage: "3d8",
+        damageType: "Thunder",
+        decisionTree: [
+            { level: 3, summary: "3d8 thunder in 10-ft sphere; CON half." },
+            { level: 5, summary: "Upcast: +1d8 per slot level above 2nd." },
+            { level: 7, summary: "Destroys nonmagical objects." }
+        ],
+        desc: "A sudden loud ringing noise, painfully intense, erupts from a point of your choice within range. Each creature in a 10-foot-radius sphere centered on that point must make a Constitution saving throw. A creature takes 3d8 thunder damage on a failed save, or half as much on a successful one.",
+        incantation: "Fragor Sonus",
+        pronunciation: "FRA-gor SO-nus"
+    },
+    {
+        name: "Blur",
+        lvl: 2,
+        school: "ILLU",
+        castTime: "1 Action",
+        range: "Self",
+        duration: "1 min (Conc.)",
+        components: "V",
+        effect: "Attackers have disadvantage on attack rolls against you.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Defense",
+        concentration: true,
+        decisionTree: [
+            { level: 3, summary: "Disadvantage on attacks against you." },
+            { level: 5, summary: "Combine with Shield for strong defense." },
+            { level: 9, summary: "Maintain while casting other spells." }
+        ],
+        desc: "Your body becomes blurred, shifting and wavering to all who can see you. For the duration, any creature has disadvantage on attack rolls against you. An attacker is immune to this effect if it doesn't rely on sight or can see through illusions.",
+        incantation: "Imago Nebulosa",
+        pronunciation: "ee-MAH-go neb-oo-LO-sa"
+    },
     {
         name: "Phantasmal Force",
         lvl: 2,
@@ -210,15 +661,15 @@ export const spells: Spell[] = [
         duration: "1 min (Conc.)",
         components: "V, S, M",
         effect: "Project an illusion that deals psychic damage each round.",
-        rolls: "INT save vs DC 14",
+        rolls: "INT save vs DC",
         damage: "1d6 per round",
         damageType: "Psychic",
+        concentration: true,
         decisionTree: [
             { level: 3, summary: "Base illusion and 1d6 psychic damage per round." },
             { level: 5, summary: "Sustain damage while repositioning or hiding." },
             { level: 9, summary: "Use to lock down priority threats longer." }
         ],
-        concentration: true,
         desc: "You craft an illusion in a creature's mind. On a failed INT save, you create a phantasmal object (max 10-foot cube). The target takes 1d6 psychic damage each round while within 5 feet of the illusion.",
         incantation: "Mentis Imago",
         pronunciation: "MEN-tis ih-MAH-go"
@@ -232,15 +683,15 @@ export const spells: Spell[] = [
         duration: "8 hours (Conc.)",
         components: "V, M",
         effect: "Magically compel a creature to follow a reasonable course of action.",
-        rolls: "WIS save vs DC 14",
+        rolls: "WIS save vs DC",
         damage: "—",
         damageType: "Charm",
+        concentration: true,
         decisionTree: [
             { level: 3, summary: "Base: 8 hours of compelled action." },
             { level: 7, summary: "Use for extended tactical repositioning." },
             { level: 9, summary: "Pair with social scenes for long-term control." }
         ],
-        concentration: true,
         desc: "You suggest a course of activity (limited to a sentence or two) and magically influence a creature you can see within range that can hear and understand you. Creatures that can't be charmed are immune. The suggestion must be worded in such a manner as to make the course of action sound reasonable.",
         incantation: "Vox Imperium",
         pronunciation: "voks im-PEH-ree-oom"
@@ -267,49 +718,6 @@ export const spells: Spell[] = [
         pronunciation: "SPEH-kyoo-loom TREE-plex"
     },
     {
-        name: "Animate Dead",
-        lvl: 3,
-        school: "NECRO",
-        castTime: "1 Minute",
-        range: "10 ft",
-        duration: "Instantaneous",
-        components: "V, S, M",
-        effect: "Raise skeletal or zombie servants and control them.",
-        rolls: "None",
-        damage: "Varies",
-        damageType: "Summon",
-        decisionTree: [
-            { level: 5, summary: "Base: animate/control up to 4 undead." },
-            { level: 7, summary: "Upcast: control 2 additional undead." },
-            { level: 9, summary: "Upcast: control 4 additional undead." }
-        ],
-        desc: "Create an undead servant (Skeleton from bones, Zombie from corpse). You can control up to 4 creatures at once. The creature remains under your control for 24 hours. Reassert control by casting this spell again.",
-        incantation: "Surgite Mortui",
-        pronunciation: "sur-GEE-teh MOR-too-ee"
-    },
-    {
-        name: "Summon Undead",
-        lvl: 3,
-        school: "NECRO",
-        castTime: "1 Action",
-        range: "90 ft",
-        duration: "1 hr (Conc.)",
-        components: "V, S, M (300gp)",
-        effect: "Call forth a ghostly, putrid, or skeletal spirit.",
-        rolls: "Use summoned stat block",
-        damage: "Varies",
-        damageType: "Necrotic",
-        decisionTree: [
-            { level: 5, summary: "Choose Ghostly, Putrid, or Skeletal spirit." },
-            { level: 7, summary: "Upcast: +1 AC, +10 HP, +1 damage per attack." },
-            { level: 9, summary: "Upcast: +2 AC, +20 HP, +2 damage per attack." }
-        ],
-        concentration: true,
-        desc: "Call forth an undead spirit (Ghostly, Putrid, or Skeletal). The spirit obeys your verbal commands. GHOSTLY: Fly 40ft, Frightening Presence. PUTRID: Poison Aura. SKELETAL: Ranged attacks 150ft.",
-        incantation: "Spiritus Invoco",
-        pronunciation: "SPEE-ree-toos in-VOH-koh"
-    },
-    {
         name: "Web",
         lvl: 2,
         school: "CONJ",
@@ -321,11 +729,11 @@ export const spells: Spell[] = [
         rolls: "DEX save vs DC",
         damage: "Restrained",
         damageType: "Condition",
+        concentration: true,
         decisionTree: [
             { level: 3, summary: "Control space and restrain enemies." },
             { level: 5, summary: "Create choke points in narrow hallways." }
         ],
-        concentration: true,
         desc: "You conjure a mass of thick, sticky web. The webs fill a 20-foot cube. difficult terrain. Creatures starting their turn in the webs or entering them must make a Dexterity save or be restrained.",
         incantation: "Tela Aranea",
         pronunciation: "TEH-lah ah-RAH-neh-ah"
@@ -362,14 +770,209 @@ export const spells: Spell[] = [
         rolls: "None",
         damage: "—",
         damageType: "Utility",
+        concentration: true,
         decisionTree: [
             { level: 3, summary: "Scouting or defensive escape." },
-            { level: 5, summary: "Upcast to target 2 creatures." }
+            { level: 5, summary: "Upcast: +1 creature per slot level above 2nd." }
         ],
-        concentration: true,
         desc: "A creature you touch becomes invisible until the spell ends. Anything the target is wearing or carrying is invisible as long as it is on the target's person. The spell ends for a target that attacks or casts a spell.",
         incantation: "Evanesco",
         pronunciation: "eh-vah-NES-koh"
+    },
+    {
+        name: "Levitate",
+        lvl: 2,
+        school: "TRANS",
+        castTime: "1 Action",
+        range: "60 ft",
+        duration: "10 min (Conc.)",
+        components: "V, S, M",
+        effect: "Cause a creature or object to rise vertically.",
+        rolls: "CON save vs DC (unwilling)",
+        damage: "—",
+        damageType: "Utility",
+        concentration: true,
+        decisionTree: [
+            { level: 3, summary: "Float up to 20 ft/round; max 500 lbs." },
+            { level: 5, summary: "Use on enemies to remove melee threats." },
+            { level: 9, summary: "Float allies over hazards." }
+        ],
+        desc: "One creature or object of your choice that you can see within range rises vertically, up to 20 feet, and remains suspended there for the duration. The spell can levitate a target that weighs up to 500 pounds. An unwilling creature that succeeds on a Constitution saving throw is unaffected.",
+        incantation: "Ascendo Corpus",
+        pronunciation: "ah-SHEN-do KOR-pus"
+    },
+    {
+        name: "Enlarge/Reduce",
+        lvl: 2,
+        school: "TRANS",
+        castTime: "1 Action",
+        range: "30 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S, M",
+        effect: "Double or halve a creature's size.",
+        rolls: "CON save vs DC (unwilling)",
+        damage: "+/-1d4",
+        damageType: "Buff/Debuff",
+        concentration: true,
+        decisionTree: [
+            { level: 3, summary: "Enlarge: +1d4 damage, advantage on STR checks." },
+            { level: 5, summary: "Reduce: -1d4 damage, disadvantage on STR checks." },
+            { level: 9, summary: "Combo with grappling builds." }
+        ],
+        desc: "You cause a creature or an object you can see within range to grow larger or smaller. Enlarge: The target's size doubles, its weight multiplies by eight, and it has advantage on Strength checks. Reduce: The target's size is halved, its weight is reduced to one-eighth, and it has disadvantage on Strength checks.",
+        incantation: "Magnus/Parvus",
+        pronunciation: "MAG-nus / PAR-vus"
+    },
+
+    // ========== LEVEL 3 SPELLS ==========
+    {
+        name: "Fireball",
+        lvl: 3,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "150 ft",
+        duration: "Instantaneous",
+        components: "V, S, M",
+        effect: "20-foot radius explosion of fire.",
+        rolls: "DEX save vs DC",
+        damage: "8d6",
+        damageType: "Fire",
+        decisionTree: [
+            { level: 5, summary: "8d6 fire in 20-ft sphere; DEX half." },
+            { level: 7, summary: "Upcast: +1d6 per slot level above 3rd." },
+            { level: 9, summary: "At 5th level: 10d6 fire damage." }
+        ],
+        desc: "A bright streak flashes from your pointing finger to a point you choose within range and then blossoms with a low roar into an explosion of flame. Each creature in a 20-foot-radius sphere centered on that point must make a Dexterity saving throw. A target takes 8d6 fire damage on a failed save, or half as much damage on a successful one.",
+        incantation: "Ignis Globus",
+        pronunciation: "IG-nis GLO-bus"
+    },
+    {
+        name: "Lightning Bolt",
+        lvl: 3,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "Self (100-foot line)",
+        duration: "Instantaneous",
+        components: "V, S, M",
+        effect: "100-foot line of lightning.",
+        rolls: "DEX save vs DC",
+        damage: "8d6",
+        damageType: "Lightning",
+        decisionTree: [
+            { level: 5, summary: "8d6 lightning in 100-ft line; DEX half." },
+            { level: 7, summary: "Upcast: +1d6 per slot level above 3rd." },
+            { level: 9, summary: "Line up enemies for maximum effect." }
+        ],
+        desc: "A stroke of lightning forming a line 100 feet long and 5 feet wide blasts out from you in a direction you choose. Each creature in the line must make a Dexterity saving throw. A creature takes 8d6 lightning damage on a failed save, or half as much damage on a successful one.",
+        incantation: "Fulmen Recta",
+        pronunciation: "FUL-men REK-ta"
+    },
+    {
+        name: "Counterspell",
+        lvl: 3,
+        school: "ABJ",
+        castTime: "Reaction",
+        range: "60 ft",
+        duration: "Instantaneous",
+        components: "S",
+        effect: "Interrupt a creature casting a spell.",
+        rolls: "DC 10 + spell level (if higher level)",
+        damage: "—",
+        damageType: "Counter",
+        decisionTree: [
+            { level: 5, summary: "Auto-counter spells level 3 or lower." },
+            { level: 7, summary: "At 4th level slot: auto-counter level 4." },
+            { level: 9, summary: "Upcast to guarantee counter higher spells." }
+        ],
+        desc: "You attempt to interrupt a creature in the process of casting a spell. If the creature is casting a spell of 3rd level or lower, its spell fails and has no effect. If it is casting a spell of 4th level or higher, make an ability check using your spellcasting ability (DC = 10 + the spell's level). On a success, the creature's spell fails.",
+        incantation: "Nullum Magica",
+        pronunciation: "NUL-lum MA-gee-ka"
+    },
+    {
+        name: "Dispel Magic",
+        lvl: 3,
+        school: "ABJ",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "Instantaneous",
+        components: "V, S",
+        effect: "End spells on a target creature, object, or area.",
+        rolls: "DC 10 + spell level (if higher level)",
+        damage: "—",
+        damageType: "Utility",
+        decisionTree: [
+            { level: 5, summary: "Auto-dispel spells level 3 or lower." },
+            { level: 7, summary: "Upcast for higher level spell removal." },
+            { level: 9, summary: "Essential for removing enemy buffs." }
+        ],
+        desc: "Choose one creature, object, or magical effect within range. Any spell of 3rd level or lower on the target ends. For each spell of 4th level or higher on the target, make an ability check using your spellcasting ability (DC = 10 + the spell's level). On a successful check, the spell ends.",
+        incantation: "Dissolve Magica",
+        pronunciation: "dis-SOL-veh MA-gee-ka"
+    },
+    {
+        name: "Fear",
+        lvl: 3,
+        school: "ILLU",
+        castTime: "1 Action",
+        range: "Self (30-foot cone)",
+        duration: "1 min (Conc.)",
+        components: "V, S, M",
+        effect: "Creatures in a 30-foot cone become frightened.",
+        rolls: "WIS save vs DC",
+        damage: "Frightened",
+        damageType: "Condition",
+        concentration: true,
+        decisionTree: [
+            { level: 5, summary: "Frightened creatures must Dash away." },
+            { level: 7, summary: "Force enemies to flee combat." },
+            { level: 9, summary: "Control battlefield positioning." }
+        ],
+        desc: "You project a phantasmal image of a creature's worst fears. Each creature in a 30-foot cone must succeed on a Wisdom saving throw or drop whatever it is holding and become frightened for the duration. While frightened, a creature must take the Dash action and move away from you by the safest route.",
+        incantation: "Terror Imago",
+        pronunciation: "TER-ror ee-MAH-go"
+    },
+    {
+        name: "Animate Dead",
+        lvl: 3,
+        school: "NECRO",
+        castTime: "1 Minute",
+        range: "10 ft",
+        duration: "Instantaneous",
+        components: "V, S, M",
+        effect: "Raise skeletal or zombie servants and control them.",
+        rolls: "None",
+        damage: "Varies",
+        damageType: "Summon",
+        decisionTree: [
+            { level: 5, summary: "Base: animate/control up to 4 undead." },
+            { level: 7, summary: "Upcast: control 2 additional undead." },
+            { level: 9, summary: "Upcast: control 4 additional undead." }
+        ],
+        desc: "Create an undead servant (Skeleton from bones, Zombie from corpse). You can control up to 4 creatures at once. The creature remains under your control for 24 hours. Reassert control by casting this spell again.",
+        incantation: "Surgite Mortui",
+        pronunciation: "sur-GEE-teh MOR-too-ee"
+    },
+    {
+        name: "Summon Undead",
+        lvl: 3,
+        school: "NECRO",
+        castTime: "1 Action",
+        range: "90 ft",
+        duration: "1 hr (Conc.)",
+        components: "V, S, M (300gp)",
+        effect: "Call forth a ghostly, putrid, or skeletal spirit.",
+        rolls: "Use summoned stat block",
+        damage: "Varies",
+        damageType: "Necrotic",
+        concentration: true,
+        decisionTree: [
+            { level: 5, summary: "Choose Ghostly, Putrid, or Skeletal spirit." },
+            { level: 7, summary: "Upcast: +1 AC, +10 HP, +1 damage per attack." },
+            { level: 9, summary: "Upcast: +2 AC, +20 HP, +2 damage per attack." }
+        ],
+        desc: "Call forth an undead spirit (Ghostly, Putrid, or Skeletal). The spirit obeys your verbal commands. GHOSTLY: Fly 40ft, Frightening Presence. PUTRID: Poison Aura. SKELETAL: Ranged attacks 150ft.",
+        incantation: "Spiritus Invoco",
+        pronunciation: "SPEE-ree-toos in-VOH-koh"
     },
     {
         name: "Fly",
@@ -383,11 +986,11 @@ export const spells: Spell[] = [
         rolls: "None",
         damage: "—",
         damageType: "Utility",
+        concentration: true,
         decisionTree: [
             { level: 5, summary: "Bypass terrain and melee enemies." },
-            { level: 7, summary: "Upcast to target 2 creatures." }
+            { level: 7, summary: "Upcast: +1 creature per slot level above 3rd." }
         ],
-        concentration: true,
         desc: "You touch a willing creature. The target gains a flying speed of 60 feet for the duration. When the spell ends, the target falls if it is still aloft, unless it can stop the fall.",
         incantation: "Volatus",
         pronunciation: "voh-LAH-toos"
@@ -404,11 +1007,11 @@ export const spells: Spell[] = [
         rolls: "None",
         damage: "Buff",
         damageType: "Utility",
+        concentration: true,
         decisionTree: [
             { level: 5, summary: "Supercharge a martial ally (Minion/Party)." },
             { level: 9, summary: "Vital for chasing down fleeting enemies." }
         ],
-        concentration: true,
         desc: "Choose a willing creature within range. Speed is doubled, gains +2 bonus to AC, advantage on DEX saves, and an additional action on each of its turns (Attack, Dash, Disengage, Hide, or Use Object). When the spell ends, the target can't move or take actions until after its next turn.",
         incantation: "Celeritas",
         pronunciation: "seh-LEH-ree-tas"
@@ -425,11 +1028,11 @@ export const spells: Spell[] = [
         rolls: "WIS save vs DC",
         damage: "Incapacitated",
         damageType: "Condition",
+        concentration: true,
         decisionTree: [
             { level: 5, summary: "Mass crowd control for groups." },
             { level: 9, summary: "Shutdown entire enemy encounters." }
         ],
-        concentration: true,
         desc: "You create a twisting pattern of colors that weaves through the air inside a 30-foot cube within range. Creatures in the area must make a Wisdom saving throw. On a failed save, the creature is charmed for the duration. While charmed, the creature is incapacitated and has a speed of 0.",
         incantation: "Hypnosis",
         pronunciation: "hip-NOH-sis"
@@ -446,15 +1049,81 @@ export const spells: Spell[] = [
         rolls: "WIS save vs DC",
         damage: "Debuff",
         damageType: "Condition",
+        concentration: true,
         decisionTree: [
             { level: 5, summary: "Debuff multiple enemies, ruin caster turns." },
             { level: 9, summary: "Selective targeting avoids friendly fire." }
         ],
-        concentration: true,
         desc: "You alter time around up to six creatures of your choice in a 40-foot cube. Targets must make a Wisdom saving throw. On a failed save: Speed is halved, -2 to AC and DEX saves, and it can't use reactions. On its turn, it can use either an action or a bonus action, not both.",
         incantation: "Tardus Tempus",
         pronunciation: "TAR-doos TEM-poos"
     },
+    {
+        name: "Vampiric Touch",
+        lvl: 3,
+        school: "NECRO",
+        castTime: "1 Action",
+        range: "Self",
+        duration: "1 min (Conc.)",
+        components: "V, S",
+        effect: "Melee spell attack deals necrotic damage and heals you.",
+        rolls: "Melee spell Attack vs AC",
+        damage: "3d6",
+        damageType: "Necrotic",
+        concentration: true,
+        decisionTree: [
+            { level: 5, summary: "3d6 necrotic, heal half on hit each turn." },
+            { level: 7, summary: "Upcast: +1d6 per slot level above 3rd." },
+            { level: 9, summary: "Sustain yourself while in melee." }
+        ],
+        desc: "The touch of your shadow-wreathed hand can siphon life force from others to heal your wounds. Make a melee spell attack. On a hit, the target takes 3d6 necrotic damage, and you regain hit points equal to half the amount of necrotic damage dealt.",
+        incantation: "Tactus Vampiris",
+        pronunciation: "TAK-tus vam-PEE-ris"
+    },
+    {
+        name: "Tongues",
+        lvl: 3,
+        school: "DIV",
+        castTime: "1 Action",
+        range: "Touch",
+        duration: "1 hour",
+        components: "V, M",
+        effect: "Target understands and speaks any language.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Utility",
+        decisionTree: [
+            { level: 5, summary: "Communicate with any creature." },
+            { level: 7, summary: "Essential for diplomacy." },
+            { level: 9, summary: "Use for interrogations and negotiations." }
+        ],
+        desc: "This spell grants the creature you touch the ability to understand any spoken language it hears. Moreover, when the target speaks, any creature that knows at least one language and can hear the target understands what it says.",
+        incantation: "Lingua Omnis",
+        pronunciation: "LIN-gwa OM-nis"
+    },
+    {
+        name: "Magic Circle",
+        lvl: 3,
+        school: "ABJ",
+        castTime: "1 Minute",
+        range: "10 ft",
+        duration: "1 hour",
+        components: "V, S, M (100gp materials)",
+        effect: "Create a cylinder that traps or protects against creature types.",
+        rolls: "CHA save to cross (for trapped creatures)",
+        damage: "—",
+        damageType: "Protection",
+        decisionTree: [
+            { level: 5, summary: "10-ft cylinder protects against chosen type." },
+            { level: 7, summary: "Upcast: +1 hour duration per slot above 3rd." },
+            { level: 9, summary: "Trap powerful fiends or undead." }
+        ],
+        desc: "You create a 10-foot-radius, 20-foot-tall cylinder of magical energy centered on a point on the ground. Choose one or more: celestials, elementals, fey, fiends, or undead. The circle affects a creature of the chosen type in these ways: can't willingly enter, has disadvantage on attacks against targets inside, and can't charm, frighten, or possess targets inside.",
+        incantation: "Circulus Magicus",
+        pronunciation: "SIR-kyoo-lus MA-gee-kus"
+    },
+
+    // ========== LEVEL 4 SPELLS ==========
     {
         name: "Polymorph",
         lvl: 4,
@@ -467,11 +1136,11 @@ export const spells: Spell[] = [
         rolls: "WIS save vs DC",
         damage: "Transformation",
         damageType: "Utility",
+        concentration: true,
         decisionTree: [
             { level: 7, summary: "Turn ally into distinct beast (Giant Ape/T-Rex)." },
             { level: 9, summary: "Remove enemy from fight by turning into snail." }
         ],
-        concentration: true,
         desc: "You transform a creature that you can see within range into a new form. An unwilling creature must make a Wisdom saving throw to avoid the effect. The new form can be any beast whose challenge rating is equal to or less than the target's.",
         incantation: "Mutatio Formae",
         pronunciation: "moo-TAH-tee-oh FOR-may"
@@ -488,13 +1157,408 @@ export const spells: Spell[] = [
         rolls: "CHA save vs DC",
         damage: "Removal",
         damageType: "Utility",
+        concentration: true,
         decisionTree: [
             { level: 7, summary: "Remove key threat from combat instantly." },
-            { level: 9, summary: "Upcast to banish 2 creatures." }
+            { level: 9, summary: "Upcast: +1 creature per slot level above 4th." }
         ],
-        concentration: true,
         desc: "You attempt to send one creature that you can see within range to another plane of existence. The target must succeed on a Charisma saving throw or be banished. If the target is native to the plane of existence you're on, you banish the target to a harmless demiplane.",
         incantation: "Exsilium",
         pronunciation: "ex-SIL-ee-oom"
+    },
+    {
+        name: "Greater Invisibility",
+        lvl: 4,
+        school: "ILLU",
+        castTime: "1 Action",
+        range: "Touch",
+        duration: "1 min (Conc.)",
+        components: "V, S",
+        effect: "Target becomes invisible and stays invisible even when attacking.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Utility",
+        concentration: true,
+        decisionTree: [
+            { level: 7, summary: "Invisible even while attacking/casting." },
+            { level: 9, summary: "Advantage on all attacks, enemies have disadvantage." }
+        ],
+        desc: "You or a creature you touch becomes invisible until the spell ends. Anything the target is wearing or carrying is invisible as long as it is on the target's person. Unlike regular Invisibility, this does not end when the target attacks or casts a spell.",
+        incantation: "Evanesco Magnus",
+        pronunciation: "eh-vah-NES-koh MAG-nus"
+    },
+    {
+        name: "Dimension Door",
+        lvl: 4,
+        school: "CONJ",
+        castTime: "1 Action",
+        range: "500 ft",
+        duration: "Instantaneous",
+        components: "V",
+        effect: "Teleport up to 500 feet with one willing creature.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Utility",
+        decisionTree: [
+            { level: 7, summary: "Teleport yourself + 1 willing creature 500 ft." },
+            { level: 9, summary: "Escape or infiltrate through walls." }
+        ],
+        desc: "You teleport yourself from your current location to any other spot within range. You arrive at exactly the spot desired. You can bring along objects as long as their weight doesn't exceed what you can carry. You can also bring one willing creature of your size or smaller who is carrying gear up to its carrying capacity.",
+        incantation: "Porta Dimensio",
+        pronunciation: "POR-ta di-MEN-see-oh"
+    },
+    {
+        name: "Wall of Fire",
+        lvl: 4,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S, M",
+        effect: "Create a wall of fire that damages creatures near it.",
+        rolls: "DEX save vs DC",
+        damage: "5d8",
+        damageType: "Fire",
+        concentration: true,
+        decisionTree: [
+            { level: 7, summary: "60-ft long, 20-ft high wall of flame." },
+            { level: 9, summary: "Upcast: +1d8 per slot level above 4th." }
+        ],
+        desc: "You create a wall of fire on a solid surface within range. You can make the wall up to 60 feet long, 20 feet high, and 1 foot thick, or a ringed wall up to 20 feet in diameter, 20 feet high, and 1 foot thick. One side of the wall, selected by you, deals 5d8 fire damage to creatures within 10 feet of that side.",
+        incantation: "Murus Ignis",
+        pronunciation: "MOO-rus IG-nis"
+    },
+    {
+        name: "Ice Storm",
+        lvl: 4,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "300 ft",
+        duration: "Instantaneous",
+        components: "V, S, M",
+        effect: "Hail rains down in a 20-foot radius cylinder.",
+        rolls: "DEX save vs DC",
+        damage: "2d8 bludgeoning + 4d6 cold",
+        damageType: "Cold/Bludgeoning",
+        decisionTree: [
+            { level: 7, summary: "2d8 bludgeoning + 4d6 cold; difficult terrain." },
+            { level: 9, summary: "Upcast: +1d8 bludgeoning per slot above 4th." }
+        ],
+        desc: "A hail of rock-hard ice pounds to the ground in a 20-foot-radius, 40-foot-high cylinder centered on a point within range. Each creature in the cylinder must make a Dexterity saving throw. A creature takes 2d8 bludgeoning damage and 4d6 cold damage on a failed save, or half as much on a success. The area becomes difficult terrain until the end of your next turn.",
+        incantation: "Tempestas Glaciei",
+        pronunciation: "tem-PES-tas gla-SEE-ay"
+    },
+    {
+        name: "Arcane Eye",
+        lvl: 4,
+        school: "DIV",
+        castTime: "1 Action",
+        range: "30 ft",
+        duration: "1 hr (Conc.)",
+        components: "V, S, M",
+        effect: "Create an invisible floating eye you can see through.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Utility",
+        concentration: true,
+        decisionTree: [
+            { level: 7, summary: "Scout 30 ft per round through walls." },
+            { level: 9, summary: "Explore dungeons without risking yourself." }
+        ],
+        desc: "You create an invisible, magical eye within range that hovers in the air for the duration. You mentally receive visual information from the eye, which has normal vision and darkvision out to 30 feet. The eye can look in every direction. As an action, you can move the eye up to 30 feet in any direction.",
+        incantation: "Oculus Arcanus",
+        pronunciation: "OK-oo-lus ar-KAH-nus"
+    },
+    {
+        name: "Blight",
+        lvl: 4,
+        school: "NECRO",
+        castTime: "1 Action",
+        range: "30 ft",
+        duration: "Instantaneous",
+        components: "V, S",
+        effect: "Drain moisture and vitality from a creature.",
+        rolls: "CON save vs DC",
+        damage: "8d8",
+        damageType: "Necrotic",
+        decisionTree: [
+            { level: 7, summary: "8d8 necrotic; plants take max damage." },
+            { level: 9, summary: "Upcast: +1d8 per slot level above 4th." }
+        ],
+        desc: "Necromantic energy washes over a creature of your choice that you can see within range, draining moisture and vitality from it. The target must make a Constitution saving throw. The target takes 8d8 necrotic damage on a failed save, or half as much damage on a successful one. This spell has no effect on undead or constructs.",
+        incantation: "Vita Consumens",
+        pronunciation: "VEE-ta kon-SOO-mens"
+    },
+    {
+        name: "Confusion",
+        lvl: 4,
+        school: "ENCH",
+        castTime: "1 Action",
+        range: "90 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S, M",
+        effect: "Creatures in 10-ft sphere act randomly.",
+        rolls: "WIS save vs DC",
+        damage: "—",
+        damageType: "Condition",
+        concentration: true,
+        decisionTree: [
+            { level: 7, summary: "10-ft sphere, roll d10 for random behavior." },
+            { level: 9, summary: "Upcast: +5 ft radius per slot above 4th." }
+        ],
+        desc: "This spell assaults and twists creatures' minds, spawning delusions and provoking uncontrolled action. Each creature in a 10-foot-radius sphere centered on a point you choose within range must succeed on a Wisdom saving throw or be affected. On each turn, affected creatures roll d10 to determine behavior.",
+        incantation: "Confusio Mentis",
+        pronunciation: "kon-FOO-see-oh MEN-tis"
+    },
+    {
+        name: "Phantasmal Killer",
+        lvl: 4,
+        school: "ILLU",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S",
+        effect: "Create a nightmare creature only the target can see.",
+        rolls: "WIS save vs DC",
+        damage: "4d10",
+        damageType: "Psychic",
+        concentration: true,
+        decisionTree: [
+            { level: 7, summary: "Frightened + 4d10 psychic each turn on failed save." },
+            { level: 9, summary: "Upcast: +1d10 per slot level above 4th." }
+        ],
+        desc: "You tap into the nightmares of a creature you can see within range and create an illusory manifestation of its deepest fears, visible only to that creature. The target must make a Wisdom saving throw. On a failed save, the target becomes frightened for the duration. At the end of each of the target's turns, the target must succeed on a Wisdom saving throw or take 4d10 psychic damage.",
+        incantation: "Horror Phantasma",
+        pronunciation: "HOR-ror fan-TAZ-ma"
+    },
+
+    // ========== LEVEL 5 SPELLS ==========
+    {
+        name: "Cone of Cold",
+        lvl: 5,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "Self (60-foot cone)",
+        duration: "Instantaneous",
+        components: "V, S, M",
+        effect: "Blast of cold air in a 60-foot cone.",
+        rolls: "CON save vs DC",
+        damage: "8d8",
+        damageType: "Cold",
+        decisionTree: [
+            { level: 9, summary: "8d8 cold in 60-ft cone; CON half." },
+            { level: 11, summary: "Upcast: +1d8 per slot level above 5th." }
+        ],
+        desc: "A blast of cold air erupts from your hands. Each creature in a 60-foot cone must make a Constitution saving throw. A creature takes 8d8 cold damage on a failed save, or half as much damage on a successful one. A creature killed by this spell becomes a frozen statue until it thaws.",
+        incantation: "Conus Glacialis",
+        pronunciation: "KO-nus gla-see-AH-lis"
+    },
+    {
+        name: "Hold Monster",
+        lvl: 5,
+        school: "ENCH",
+        castTime: "1 Action",
+        range: "90 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S, M",
+        effect: "Paralyze any creature type.",
+        rolls: "WIS save vs DC",
+        damage: "Paralyzed",
+        damageType: "Condition",
+        concentration: true,
+        decisionTree: [
+            { level: 9, summary: "Paralyze any creature; auto-crit within 5 ft." },
+            { level: 11, summary: "Upcast: +1 target per slot level above 5th." }
+        ],
+        desc: "Choose a creature that you can see within range. The target must succeed on a Wisdom saving throw or be paralyzed for the duration. This spell works on any creature type. At the end of each of its turns, the target can make another Wisdom saving throw. On a success, the spell ends on the target.",
+        incantation: "Tenere Monstrum",
+        pronunciation: "teh-NEH-reh MON-strum"
+    },
+    {
+        name: "Wall of Force",
+        lvl: 5,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "10 min (Conc.)",
+        components: "V, S, M",
+        effect: "Create an invisible wall of pure force.",
+        rolls: "None",
+        damage: "—",
+        damageType: "Control",
+        concentration: true,
+        decisionTree: [
+            { level: 9, summary: "Immune to damage; nothing passes through." },
+            { level: 11, summary: "Trap enemies or protect allies." }
+        ],
+        desc: "An invisible wall of force springs into existence at a point you choose within range. The wall appears in any orientation you choose: horizontally, vertically, or diagonally. It can be free floating or resting on a solid surface. The wall is immune to all damage. Dispel Magic can dispel it, but it is immune to Disintegrate.",
+        incantation: "Murus Vis Pura",
+        pronunciation: "MOO-rus VIS POO-ra"
+    },
+    {
+        name: "Animate Objects",
+        lvl: 5,
+        school: "TRANS",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S",
+        effect: "Bring objects to life to fight for you.",
+        rolls: "None",
+        damage: "Varies by size",
+        damageType: "Summon",
+        concentration: true,
+        decisionTree: [
+            { level: 9, summary: "Animate up to 10 Tiny objects (best DPR)." },
+            { level: 11, summary: "Upcast: +2 objects per slot level above 5th." }
+        ],
+        desc: "Objects come to life at your command. Choose up to ten nonmagical objects within range that are not being worn or carried. Medium targets count as two objects, Large targets count as four objects, Huge targets count as eight objects. The animated objects act immediately after you in initiative order and obey your verbal commands.",
+        incantation: "Anima Objecta",
+        pronunciation: "AH-nee-ma ob-YEK-ta"
+    },
+    {
+        name: "Bigby's Hand",
+        lvl: 5,
+        school: "EVO",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S, M",
+        effect: "Create a Large hand of force to attack or grapple.",
+        rolls: "Contest or melee spell Attack",
+        damage: "4d8",
+        damageType: "Force",
+        concentration: true,
+        decisionTree: [
+            { level: 9, summary: "4 modes: Clenched Fist, Forceful Hand, Grasping Hand, Interposing Hand." },
+            { level: 11, summary: "Upcast: +2d8 damage per slot level above 5th." }
+        ],
+        desc: "You create a Large hand of shimmering, translucent force in an unoccupied space that you can see within range. The hand lasts for the spell's duration, and it moves at your command. CLENCHED FIST: Melee attack, 4d8 force. FORCEFUL HAND: Push creature 5 ft + 5 ft per STR mod. GRASPING HAND: Grapple. INTERPOSING HAND: Half cover.",
+        incantation: "Manus Potens",
+        pronunciation: "MA-nus PO-tens"
+    },
+    {
+        name: "Cloudkill",
+        lvl: 5,
+        school: "CONJ",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "10 min (Conc.)",
+        components: "V, S",
+        effect: "Create a 20-foot-radius sphere of poisonous fog.",
+        rolls: "CON save vs DC",
+        damage: "5d8",
+        damageType: "Poison",
+        concentration: true,
+        decisionTree: [
+            { level: 9, summary: "5d8 poison; fog moves 10 ft away each turn." },
+            { level: 11, summary: "Upcast: +1d8 per slot level above 5th." }
+        ],
+        desc: "You create a 20-foot-radius sphere of poisonous, yellow-green fog centered on a point you choose within range. The fog spreads around corners. It lasts for the duration or until strong wind disperses the fog. When a creature enters the spell's area for the first time on a turn or starts its turn there, that creature must make a Constitution saving throw.",
+        incantation: "Nubes Mortis",
+        pronunciation: "NOO-bes MOR-tis"
+    },
+    {
+        name: "Dominate Person",
+        lvl: 5,
+        school: "ENCH",
+        castTime: "1 Action",
+        range: "60 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S",
+        effect: "Charm a humanoid and control their actions.",
+        rolls: "WIS save vs DC",
+        damage: "—",
+        damageType: "Charm",
+        concentration: true,
+        decisionTree: [
+            { level: 9, summary: "Charmed humanoid obeys telepathic commands." },
+            { level: 11, summary: "6th level: 10 min. 7th level: 1 hour. 8th level: 8 hours." }
+        ],
+        desc: "You attempt to beguile a humanoid that you can see within range. It must succeed on a Wisdom saving throw or be charmed by you for the duration. While charmed, you have a telepathic link with it. You can use this telepathic link to issue commands to the creature while you are conscious.",
+        incantation: "Imperium Mentis",
+        pronunciation: "im-PEH-ree-um MEN-tis"
+    },
+    {
+        name: "Telekinesis",
+        lvl: 5,
+        school: "TRANS",
+        castTime: "1 Action",
+        range: "60 ft",
+        duration: "10 min (Conc.)",
+        components: "V, S",
+        effect: "Move creatures or objects with your mind.",
+        rolls: "STR check contested (for creatures)",
+        damage: "—",
+        damageType: "Control",
+        concentration: true,
+        decisionTree: [
+            { level: 9, summary: "Move up to 1000 lbs 30 ft per round." },
+            { level: 11, summary: "Restrain creatures or hurl objects as weapons." }
+        ],
+        desc: "You gain the ability to move or manipulate creatures or objects by thought. When you cast the spell, and as your action each round for the duration, you can exert your will on one creature or object that you can see within range. You can try to move a Huge or smaller creature. Make an ability check with your spellcasting ability contested by the creature's Strength check.",
+        incantation: "Vis Mentis Movens",
+        pronunciation: "VIS MEN-tis MO-vens"
+    },
+    {
+        name: "Synaptic Static",
+        lvl: 5,
+        school: "ENCH",
+        castTime: "1 Action",
+        range: "120 ft",
+        duration: "Instantaneous",
+        components: "V, S",
+        effect: "Psychic explosion that debuffs Intelligence-based creatures.",
+        rolls: "INT save vs DC",
+        damage: "8d6",
+        damageType: "Psychic",
+        decisionTree: [
+            { level: 9, summary: "8d6 psychic + muddled thoughts (-1d6 to rolls)." },
+            { level: 11, summary: "Devastating against casters and intelligent enemies." }
+        ],
+        desc: "You choose a point within range and cause psychic energy to explode there. Each creature in a 20-foot-radius sphere centered on that point must make an Intelligence saving throw. A creature takes 8d6 psychic damage on a failed save, or half as much damage on a successful one. After a failed save, the target has muddled thoughts for 1 minute.",
+        incantation: "Explosio Synaptis",
+        pronunciation: "ex-PLO-see-oh si-NAP-tis"
+    },
+    {
+        name: "Steel Wind Strike",
+        lvl: 5,
+        school: "CONJ",
+        castTime: "1 Action",
+        range: "30 ft",
+        duration: "Instantaneous",
+        components: "S, M (melee weapon worth 1sp)",
+        effect: "Teleport and strike up to 5 creatures.",
+        rolls: "Melee spell Attack vs AC (x5)",
+        damage: "6d10",
+        damageType: "Force",
+        decisionTree: [
+            { level: 9, summary: "Attack up to 5 targets, teleport to one." },
+            { level: 11, summary: "6d10 force per hit; excellent for skirmishing." }
+        ],
+        desc: "You flourish the weapon used in the casting and then vanish to strike like the wind. Choose up to five creatures you can see within range. Make a melee spell attack against each target. On a hit, a target takes 6d10 force damage. You can then teleport to an unoccupied space you can see within 5 feet of one of the targets you hit or missed.",
+        incantation: "Ventus Ferrum",
+        pronunciation: "VEN-tus FER-rum"
+    },
+    {
+        name: "Scrying",
+        lvl: 5,
+        school: "DIV",
+        castTime: "10 Minutes",
+        range: "Self",
+        duration: "10 min (Conc.)",
+        components: "V, S, M (1000gp focus)",
+        effect: "See and hear a creature on the same plane.",
+        rolls: "WIS save vs DC (modified)",
+        damage: "—",
+        damageType: "Utility",
+        concentration: true,
+        decisionTree: [
+            { level: 9, summary: "Spy on creatures anywhere on the same plane." },
+            { level: 11, summary: "Familiarity modifies save DC." }
+        ],
+        desc: "You can see and hear a particular creature you choose that is on the same plane of existence as you. The target must make a Wisdom saving throw, which is modified by how well you know the target and the sort of physical connection you have to it. If a target knows you're casting this spell, it can fail the saving throw voluntarily.",
+        incantation: "Visio Longinqua",
+        pronunciation: "VEE-see-oh lon-GIN-kwa"
     }
 ];

@@ -1,7 +1,7 @@
 import { X, Trash2, Skull, Biohazard, Minus, Plus } from 'lucide-react';
-import type { Minion } from '../../types';
 import { useAppDispatch } from '../../store/hooks';
 import { minionAdded, minionRemoved, minionUpdated, allMinionsCleared } from '../../store/slices/combatSlice';
+import type { Minion } from '../../store/slices/combatSlice';
 import { undeadStats } from '../../data/undeadStats';
 
 interface MinionDrawerProps {

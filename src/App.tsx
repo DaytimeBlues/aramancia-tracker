@@ -44,12 +44,14 @@ function App() {
     return inv
       .map((entry): InventoryItem | null => {
         if (typeof entry === 'string') return { name: entry };
-        if (entry && typeof entry === 'object' && typeof (entry as Record<string, unknown>).name === 'string') {
+        if (entry && typeof entry === 'object') {
           const maybe = entry as Record<string, unknown>;
-          return {
-            name: maybe.name as string,
-            spells: Array.isArray(maybe.spells) ? maybe.spells.filter((s: unknown) => typeof s === 'string') : undefined,
-          };
+          if (typeof maybe.name === 'string') {
+            return {
+              name: maybe.name,
+              spells: Array.isArray(maybe.spells) ? maybe.spells.filter((s: unknown) => typeof s === 'string') : undefined,
+            };
+          }
         }
         return null;
       })

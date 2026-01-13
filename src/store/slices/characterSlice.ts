@@ -8,7 +8,8 @@
  * Persistence is handled by the persistenceMiddleware which saves
  * to sessionStorage on every action.
  */
-import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
+import { createSlice, createSelector } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import type { CharacterData, AbilityKey, InventoryItem, Minion } from '../../types';
 import { initialCharacterData } from '../../data/initialState';
 import { getActiveSession } from '../../utils/sessionStorage';

@@ -1,4 +1,5 @@
-import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { z } from 'zod';
 import { SpellSchema } from '../../schemas/spellSchema';
 

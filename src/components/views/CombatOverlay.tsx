@@ -40,11 +40,13 @@ export const CombatOverlay: React.FC = () => {
                 sides: Number(firstDiceMatch[2]),
                 type: (spell.damageType || 'force').toLowerCase(),
                 // Many wizard damage spells scale by +1 die per slot level.
-                scaling: { type: 'per_slot_level', diceIncreasePerLevel: 1 }
+                scaling: { type: 'per_slot_level' as const, diceIncreasePerLevel: 1 }
             }]
             : undefined;
 
-    const spellV3: any = {
+    // Adapter: legacy Spell -> partial SpellV3-like object for ResolutionPanel
+    // Type assertion needed as we're providing a subset of SpellV3 fields that ResolutionPanel actually uses
+    const spellV3 = {
         id: spell.name,
         name: spell.name,
         level: spell.lvl,
@@ -53,20 +55,20 @@ export const CombatOverlay: React.FC = () => {
         damage,
         savingThrowDetails: requiresSavingThrow ? {
             ability: saveAbility,
-            onSuccess: damage ? 'half' : 'special',
-            onFail: damage ? 'full' : 'special',
+            onSuccess: damage ? 'half' as const : 'special' as const,
+            onFail: damage ? 'full' as const : 'special' as const,
         } : undefined,
         // Extra fields used by the legacy UI plan
         desc: spell.desc,
         decisionTree: spell.decisionTree,
         higherLevelDescription: undefined,
-    };
+    } as Record<string, unknown>;
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in zoom-in duration-200">
             <div className="w-full max-w-lg">
                 <ResolutionPanel
-                    spell={spellV3}
+                    spell={spellV3 as Parameters<typeof ResolutionPanel>[0]['spell']}
                     slotLevel={casting.slotLevel || spell.lvl}
                     onHit={() => {
                         // Logic to apply damage to target minion would go here

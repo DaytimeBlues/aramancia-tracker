@@ -44,10 +44,10 @@ function App() {
     return inv
       .map((entry): InventoryItem | null => {
         if (typeof entry === 'string') return { name: entry };
-        if (entry && typeof entry === 'object' && typeof (entry as any).name === 'string') {
-          const maybe = entry as any;
+        if (entry && typeof entry === 'object' && typeof (entry as Record<string, unknown>).name === 'string') {
+          const maybe = entry as Record<string, unknown>;
           return {
-            name: maybe.name,
+            name: maybe.name as string,
             spells: Array.isArray(maybe.spells) ? maybe.spells.filter((s: unknown) => typeof s === 'string') : undefined,
           };
         }
@@ -59,7 +59,7 @@ function App() {
   const normalizeCharacterData = useCallback((d: CharacterData): CharacterData => {
     return {
       ...d,
-      inventory: normalizeInventory((d as any).inventory),
+      inventory: normalizeInventory((d as unknown as Record<string, unknown>).inventory),
     };
   }, [normalizeInventory]);
 

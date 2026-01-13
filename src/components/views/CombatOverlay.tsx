@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { castingCancelled, castingCompletedWithSlot } from '../../store/slices/combatSlice';
 import { ResolutionPanel } from '../features/combat/ResolutionPanel';
 import { spells } from '../../data/spells';
+import type { SpellV3 } from '../../types';
 
 export const CombatOverlay: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -40,11 +41,11 @@ export const CombatOverlay: React.FC = () => {
                 sides: Number(firstDiceMatch[2]),
                 type: (spell.damageType || 'force').toLowerCase(),
                 // Many wizard damage spells scale by +1 die per slot level.
-                scaling: { type: 'per_slot_level', diceIncreasePerLevel: 1 }
+                scaling: { type: 'per_slot_level' as const, diceIncreasePerLevel: 1 }
             }]
             : undefined;
 
-    const spellV3: any = {
+    const spellV3 = {
         id: spell.name,
         name: spell.name,
         level: spell.lvl,
@@ -53,14 +54,14 @@ export const CombatOverlay: React.FC = () => {
         damage,
         savingThrowDetails: requiresSavingThrow ? {
             ability: saveAbility,
-            onSuccess: damage ? 'half' : 'special',
-            onFail: damage ? 'full' : 'special',
+            onSuccess: damage ? 'half' as const : 'special' as const,
+            onFail: damage ? 'full' as const : 'special' as const,
         } : undefined,
         // Extra fields used by the legacy UI plan
         desc: spell.desc,
         decisionTree: spell.decisionTree,
         higherLevelDescription: undefined,
-    };
+    } as SpellV3 & { desc?: string; decisionTree?: typeof spell.decisionTree };
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in zoom-in duration-200">

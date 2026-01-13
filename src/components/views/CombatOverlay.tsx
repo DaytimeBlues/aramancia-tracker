@@ -44,7 +44,7 @@ export const CombatOverlay: React.FC = () => {
             }]
             : undefined;
 
-    const spellV3: any = {
+    const spellV3: Record<string, unknown> = {
         id: spell.name,
         name: spell.name,
         level: spell.lvl,

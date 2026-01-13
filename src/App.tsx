@@ -14,12 +14,14 @@ import { InitiativeWidget } from './components/widgets/InitiativeWidget';
 import { ProficiencyWidget } from './components/widgets/ProficiencyWidget';
 import { SavingThrowsWidget } from './components/widgets/SavingThrowsWidget';
 import { CharacterEditor } from './components/widgets/CharacterEditor';
+import { CombatHUD } from './components/widgets/CombatHUD';
 import SpellsView from './components/views/SpellsView';
 import { CombatView } from './components/views/CombatView';
 import { CombatOverlay } from './components/views/CombatOverlay';
 import { RestView } from './components/views/RestView';
 import { GrimoireView } from './components/views/GrimoireView';
 import { BiographyView } from './components/views/BiographyView';
+import { StatsView } from './components/views/StatsView';
 import { SessionPicker } from './components/SessionPicker';
 import { initialCharacterData } from './data/initialState';
 import { spells } from './data/spells';
@@ -378,6 +380,17 @@ function App() {
 
       {activeTab === 'grimoire' && <div className="animate-fade-in"><GrimoireView /></div>}
 
+      {activeTab === 'abilities' && (
+        <div className="animate-fade-in">
+          <StatsView
+            abilities={data.abilities}
+            abilityMods={data.abilityMods}
+            skills={data.skills}
+            profBonus={data.profBonus}
+          />
+        </div>
+      )}
+
       {activeTab === 'bio' && (
         <div className="animate-fade-in">
           <BiographyView />
@@ -466,6 +479,16 @@ function App() {
 
       {/* Combat Overlay System */}
       <CombatOverlay />
+
+      {activeTab !== 'home' && activeTab !== 'settings' && (
+        <CombatHUD
+          baseAC={data.baseAC}
+          dexMod={data.abilityMods.dex}
+          mageArmour={data.mageArmour}
+          hasShield={data.shield}
+          concentrationSpell={data.concentration}
+        />
+      )}
 
       {/* Toast */}
       {

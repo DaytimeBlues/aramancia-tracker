@@ -10,7 +10,6 @@ interface DecisionTreeEntry {
 }
 
 interface ExtendedSpellV3 extends SpellV3 {
-    description?: string;
     decisionTree?: DecisionTreeEntry[];
 }
 

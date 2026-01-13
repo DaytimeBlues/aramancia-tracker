@@ -44,10 +44,10 @@ function App() {
     return inv
       .map((entry): InventoryItem | null => {
         if (typeof entry === 'string') return { name: entry };
-        if (entry && typeof entry === 'object' && typeof (entry as any).name === 'string') {
-          const maybe = entry as any;
+        if (entry && typeof entry === 'object' && typeof (entry as Record<string, unknown>).name === 'string') {
+          const maybe = entry as Record<string, unknown>;
           return {
-            name: maybe.name,
+            name: maybe.name as string,
             spells: Array.isArray(maybe.spells) ? maybe.spells.filter((s: unknown) => typeof s === 'string') : undefined,
           };
         }
@@ -57,9 +57,11 @@ function App() {
   }, []);
 
   const normalizeCharacterData = useCallback((d: CharacterData): CharacterData => {
+    // Type assertion needed because we're accessing inventory which may not be properly typed in stored data
+    const dataWithInventory = d as unknown as { inventory: unknown };
     return {
       ...d,
-      inventory: normalizeInventory((d as any).inventory),
+      inventory: normalizeInventory(dataWithInventory.inventory),
     };
   }, [normalizeInventory]);
 

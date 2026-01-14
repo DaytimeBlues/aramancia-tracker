@@ -36,7 +36,7 @@ export function MinionDrawer({
             id: crypto.randomUUID(),
             name: `${type} ${count}`,
             type: minionType,
-            hp: parseInt(stats.hp.split(' ')[0]) || 1, // Extract "13" from "13 (2d8+4)"
+            hp: parseInt(stats.hp.split(' ')[0]) || 1,
             maxHp: parseInt(stats.hp.split(' ')[0]) || 1,
             ac: parseInt(stats.ac.split(' ')[0]) || 10,
             speed: parseInt(stats.speed.split(' ')[0]) || 30,
@@ -50,7 +50,6 @@ export function MinionDrawer({
             })),
             conditions: [],
             controlExpiresRound: undefined,
-            // Store traits in notes if available, or just action summaries
             notes: stats.traits ? stats.traits.map(t => t.name).join(', ') : ''
         };
 

@@ -16,7 +16,7 @@ export const calculateConcentrationDC = (damage: number): number => {
 const concentrationMiddleware = createListenerMiddleware();
 
 concentrationMiddleware.startListening({
-  predicate: (action): action is { type: string; payload: any } => {
+  predicate: (action): action is { type: string; payload: TakeDamagePayload | CastSpellPayload } => {
     return action.type === 'game/takeDamage' || action.type === 'game/castSpell';
   },
   effect: (action, listenerApi) => {

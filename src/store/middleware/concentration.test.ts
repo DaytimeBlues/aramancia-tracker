@@ -1,13 +1,26 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, AnyAction } from '@reduxjs/toolkit';
 import minionReducer from '../../features/minions/minionSlice';
 import { concentrationMiddlewareInstance, calculateConcentrationDC } from './concentrationMiddleware';
+
+interface ConcentrationState {
+  activeSpell: string | null;
+  isCheckingConcentration: boolean;
+}
+
+interface UiState {
+  concentrationModal: {
+    isOpen: boolean;
+    spellName: string | null;
+    dc: number | null;
+  };
+}
 
 function createTestStore() {
   return configureStore({
     reducer: combineReducers({
       minions: minionReducer,
-      concentration: (state = { activeSpell: null, isCheckingConcentration: false }, action: any) => {
+      concentration: (state: ConcentrationState = { activeSpell: null, isCheckingConcentration: false }, action: AnyAction) => {
         switch (action.type) {
           case 'concentration/setSpell':
             return { ...state, activeSpell: action.payload };
@@ -19,7 +32,7 @@ function createTestStore() {
             return state;
         }
       },
-      ui: (state = { concentrationModal: { isOpen: false, spellName: null, dc: null } }, action: any) => {
+      ui: (state: UiState = { concentrationModal: { isOpen: false, spellName: null, dc: null } }, action: AnyAction) => {
         switch (action.type) {
           case 'ui/openConcentrationModal':
             return {
@@ -87,9 +100,9 @@ describe('concentration.test.ts - Logic & Race Conditions', () => {
   });
 
   it('The DC Math: Verify damage of 0 results in no modal dispatch', () => {
-    const dispatchedActions: any[] = [];
+    const dispatchedActions: AnyAction[] = [];
     const originalDispatch = store.dispatch;
-    store.dispatch = vi.fn((action) => {
+    (store as { dispatch: unknown }).dispatch = vi.fn((action: AnyAction) => {
       dispatchedActions.push(action);
       return originalDispatch(action);
     });
@@ -103,7 +116,27 @@ describe('concentration.test.ts - Logic & Race Conditions', () => {
 
     expect(modalAction).toBeUndefined();
 
-    store.dispatch = originalDispatch;
+    (store as { dispatch: unknown }).dispatch = originalDispatch;
+  });
+
+  it('Concentration: When not concentrating, taking damage does NOT dispatch modal', () => {
+    const dispatchedActions: AnyAction[] = [];
+    const originalDispatch = store.dispatch;
+    (store as { dispatch: unknown }).dispatch = vi.fn((action: AnyAction) => {
+      dispatchedActions.push(action);
+      return originalDispatch(action);
+    });
+
+    store.dispatch({ type: 'concentration/clearSpell' });
+    store.dispatch({ type: 'game/takeDamage', payload: { damage: 25 } });
+
+    const modalAction = dispatchedActions.find(
+      (action) => action.type === 'ui/openConcentrationModal'
+    );
+
+    expect(modalAction).toBeUndefined();
+
+    (store as { dispatch: unknown }).dispatch = originalDispatch;
   });
 
   it('The DC Math: Verify damage of 19 results in DC 10 (floor division)', () => {
@@ -119,26 +152,6 @@ describe('concentration.test.ts - Logic & Race Conditions', () => {
   it('The DC Math: Verify damage of 21 results in DC 10 (floor division)', () => {
     const dc = calculateConcentrationDC(21);
     expect(dc).toBe(10);
-  });
-
-  it('Concentration: When not concentrating, taking damage does NOT dispatch modal', () => {
-    const dispatchedActions: any[] = [];
-    const originalDispatch = store.dispatch;
-    store.dispatch = vi.fn((action) => {
-      dispatchedActions.push(action);
-      return originalDispatch(action);
-    });
-
-    store.dispatch({ type: 'concentration/clearSpell' });
-    store.dispatch({ type: 'game/takeDamage', payload: { damage: 25 } });
-
-    const modalAction = dispatchedActions.find(
-      (action) => action.type === 'ui/openConcentrationModal'
-    );
-
-    expect(modalAction).toBeUndefined();
-
-    store.dispatch = originalDispatch;
   });
 
   it('Concentration: Cast spell without concentration does not set active spell', () => {

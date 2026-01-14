@@ -1,10 +1,23 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, combineReducers, AnyAction } from '@reduxjs/toolkit';
 import minionReducer from '../features/minions/minionSlice';
 import { concentrationMiddlewareInstance } from './middleware/concentrationMiddleware';
 
+interface ConcentrationState {
+  activeSpell: string | null;
+  isCheckingConcentration: boolean;
+}
+
+interface UiState {
+  concentrationModal: {
+    isOpen: boolean;
+    spellName: string | null;
+    dc: number | null;
+  };
+}
+
 const rootReducer = combineReducers({
   minions: minionReducer,
-  concentration: (state = { activeSpell: null, isCheckingConcentration: false }, action: any) => {
+  concentration: (state: ConcentrationState = { activeSpell: null, isCheckingConcentration: false }, action: AnyAction) => {
     switch (action.type) {
       case 'concentration/setSpell':
         return { ...state, activeSpell: action.payload };
@@ -16,7 +29,7 @@ const rootReducer = combineReducers({
         return state;
     }
   },
-  ui: (state = { concentrationModal: { isOpen: false, spellName: null, dc: null } }, action: any) => {
+  ui: (state: UiState = { concentrationModal: { isOpen: false, spellName: null, dc: null } }, action: AnyAction) => {
     switch (action.type) {
       case 'ui/openConcentrationModal':
         return {

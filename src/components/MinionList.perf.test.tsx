@@ -13,20 +13,26 @@ vi.mock('@tanstack/react-virtual', async () => {
   };
 });
 
+interface MockVirtualRow {
+  index: number;
+  start: number;
+  size: 50;
+}
+
 const mockMinions: Minion[] = Array.from({ length: 1000 }, (_, i) => ({
   id: `minion-${i}`,
   type: i % 2 === 0 ? 'Skeleton' : 'Zombie',
   name: `Minion ${i + 1}`,
-  hp: { current: i % 13 + 1, max: i % 13 + 1 },
+  hp: i % 13 + 1,
+  maxHp: i % 13 + 1,
   ac: i % 15 + 8,
   notes: `Test notes for minion ${i + 1}`,
 }));
 
-const createMockVirtualRow = (index: number) => ({
+const createMockVirtualRow = (index: number): MockVirtualRow => ({
   index,
   start: index * 50,
   size: 50,
-  measureRef: vi.fn(),
 });
 
 function MinionList({ minions }: { minions: Minion[] }) {
@@ -58,7 +64,7 @@ function MinionList({ minions }: { minions: Minion[] }) {
           position: 'relative',
         }}
       >
-        {virtualRows.map((virtualRow: any) => {
+        {virtualRows.map((virtualRow) => {
           const minion = minions[virtualRow.index];
           return (
             <div
@@ -107,7 +113,7 @@ describe('MinionList.perf.test.tsx - Virtualization Verification', () => {
       getTotalSize: vi.fn(() => 1000 * 50),
       scrollToIndex: vi.fn(),
       measureElement: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useVirtualizer>);
 
     const { container } = render(<MinionList minions={mockMinions} />);
 
@@ -129,7 +135,7 @@ describe('MinionList.perf.test.tsx - Virtualization Verification', () => {
       getTotalSize: vi.fn(() => 1000 * 50),
       scrollToIndex: vi.fn(),
       measureElement: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useVirtualizer>);
 
     render(<MinionList minions={mockMinions} />);
 
@@ -146,7 +152,7 @@ describe('MinionList.perf.test.tsx - Virtualization Verification', () => {
       getTotalSize: vi.fn(() => 1000 * 50),
       scrollToIndex: vi.fn(),
       measureElement: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useVirtualizer>);
 
     const { container } = render(<MinionList minions={mockMinions} />);
 
@@ -167,7 +173,7 @@ describe('MinionList.perf.test.tsx - Virtualization Verification', () => {
       getTotalSize: vi.fn(() => 1000 * 50),
       scrollToIndex: vi.fn(),
       measureElement: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useVirtualizer>);
 
     const { container } = render(<MinionList minions={mockMinions.slice(0, 3)} />);
 
@@ -186,11 +192,11 @@ describe('MinionList.perf.test.tsx - Virtualization Verification', () => {
       getTotalSize: vi.fn(() => 1000 * 50),
       scrollToIndex: vi.fn(),
       measureElement: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useVirtualizer>);
 
     render(<MinionList minions={mockMinions.slice(0, 2)} />);
 
-    const mockVirtualizer = vi.mocked(useVirtualizer).mock.results[0].value as any;
+    const mockVirtualizer = vi.mocked(useVirtualizer).mock.results[0].value as unknown as ReturnType<typeof useVirtualizer>;
     expect(mockVirtualizer.measureElement).toHaveBeenCalled();
   });
 
@@ -204,7 +210,7 @@ describe('MinionList.perf.test.tsx - Virtualization Verification', () => {
       getTotalSize: vi.fn(() => mockTotalSize),
       scrollToIndex: vi.fn(),
       measureElement: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useVirtualizer>);
 
     render(<MinionList minions={mockMinions} />);
 
@@ -220,7 +226,7 @@ describe('MinionList.perf.test.tsx - Virtualization Verification', () => {
       getTotalSize: vi.fn(() => 1000 * 50),
       scrollToIndex: vi.fn(),
       measureElement: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useVirtualizer>);
 
     render(<MinionList minions={mockMinions} />);
 
@@ -230,14 +236,14 @@ describe('MinionList.perf.test.tsx - Virtualization Verification', () => {
   });
 
   it('Verify empty minion list renders correctly', () => {
-    const virtualRows: any[] = [];
+    const virtualRows: MockVirtualRow[] = [];
     
     vi.mocked(useVirtualizer).mockReturnValue({
       getVirtualItems: vi.fn(() => virtualRows),
       getTotalSize: vi.fn(() => 0),
       scrollToIndex: vi.fn(),
       measureElement: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useVirtualizer>);
 
     const { container } = render(<MinionList minions={[]} />);
 
@@ -253,7 +259,7 @@ describe('MinionList.perf.test.tsx - Virtualization Verification', () => {
       getTotalSize: vi.fn(() => 1000 * 50),
       scrollToIndex: vi.fn(),
       measureElement: vi.fn(),
-    } as any);
+    } as unknown as ReturnType<typeof useVirtualizer>);
 
     render(<MinionList minions={mockMinions} />);
 

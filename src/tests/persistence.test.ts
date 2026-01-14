@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 interface LoadResult {
   success: boolean;
-  state?: any;
+  state?: unknown;
   error?: string;
 }
 
@@ -23,16 +23,16 @@ describe('Persistence - Storage Failures', () => {
     };
 
     Object.defineProperty(window, 'localStorage', {
-      value: mockStorage as any,
+      value: mockStorage as unknown as Storage,
       writable: true,
     });
   });
 
-  const saveToStorage = (key: string, data: any): LoadResult => {
+  const saveToStorage = (key: string, data: unknown): LoadResult => {
     try {
       mockStorage.setItem(key, JSON.stringify(data));
       return { success: true, state: data };
-    } catch (error: any) {
+    } catch (error) {
       return { success: false, error: (error as Error).message };
     }
   };
@@ -43,7 +43,7 @@ describe('Persistence - Storage Failures', () => {
       if (!item) return { success: true, state: null };
       const state = JSON.parse(item);
       return { success: true, state };
-    } catch (error: any) {
+    } catch (error) {
       return { success: false, error: (error as Error).message };
     }
   };
@@ -96,7 +96,7 @@ describe('Persistence - Partial Corruption', () => {
     };
 
     Object.defineProperty(window, 'localStorage', {
-      value: mockStorage as any,
+      value: mockStorage as unknown as Storage,
       writable: true,
     });
   });
@@ -107,16 +107,17 @@ describe('Persistence - Partial Corruption', () => {
       if (!item) return { success: true, state: null };
       const state = JSON.parse(item);
       return { success: true, state };
-    } catch (error: any) {
+    } catch (error) {
       return { success: false, error: (error as Error).message };
     }
   };
 
-  const isValidState = (state: any): boolean => {
-    if (!state) return false;
-    const hasRequired = state.hp && typeof state.hp === 'object' &&
-      'current' in state.hp && 'max' in state.hp &&
-      'slots' in state && typeof state.slots === 'object';
+  const isValidState = (state: unknown): boolean => {
+    if (!state || typeof state !== 'object') return false;
+    const s = state as Record<string, unknown>;
+    const hasRequired = s.hp && typeof s.hp === 'object' &&
+      'current' in s.hp && 'max' in s.hp &&
+      'slots' in s && typeof s.slots === 'object';
     return hasRequired ? true : false;
   };
 

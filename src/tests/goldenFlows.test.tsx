@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 
 interface RootState {
   minions: {
     ids: string[];
-    entities: Record<string, any>;
+    entities: Record<string, MinionEntity>;
   };
   concentration: {
     activeSpell: string | null;
@@ -32,6 +32,15 @@ interface RootState {
     current: number;
     max: number;
   };
+}
+
+interface MinionEntity {
+  id: string;
+  type: string;
+  name: string;
+  hp: { current: number; max: number };
+  ac: number;
+  notes: string;
 }
 
 let mockStore: RootState;

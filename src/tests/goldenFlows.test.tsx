@@ -197,7 +197,7 @@ describe('Golden Flow: Level 6 Necromancer Combat Round', () => {
     expect(loadedState.level).toBe(6);
     expect(loadedState.hp.current).toBeGreaterThan(0);
     expect(loadedState.hitDice.current).toBe(5);
-    expect(loadedState.minions.length).toBe(3);
+    expect(loadedState.minions.ids.length).toBe(3);
     expect(loadedState.slots[1].used).toBe(0);
     expect(loadedState.slots[3].used).toBe(0);
 

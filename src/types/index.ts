@@ -202,6 +202,5 @@ export interface Session {
     date: string;
     label?: string;
     characterData: CharacterData;
-    minions: Minion[];
     lastModified: string;
 }

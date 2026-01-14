@@ -15,6 +15,7 @@ export interface Minion {
     attacks: MinionAttack[];
     conditions: string[];
     controlExpiresRound?: number;
+    notes?: string;
 }
 
 export interface MinionAttack {

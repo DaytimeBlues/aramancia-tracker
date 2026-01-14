@@ -5,6 +5,75 @@ import { ResolutionPanel } from '../features/combat/ResolutionPanel';
 import { spells } from '../../data/spells';
 import { SpellV3 } from '../../schemas/spellSchema';
 
+const SCHOOL_MAP: Record<string, SpellV3['school']> = {
+    ABJ: 'Abjuration',
+    CONJ: 'Conjuration',
+    DIV: 'Divination',
+    ENCH: 'Enchantment',
+    EVO: 'Evocation',
+    ILLU: 'Illusion',
+    NECRO: 'Necromancy',
+    TRANS: 'Transmutation',
+};
+
+const mapCastingTime = (value?: string): SpellV3['castingTime'] => {
+    const normalized = value?.toLowerCase().trim();
+    switch (normalized) {
+        case '1 action':
+            return '1 action';
+        case '1 bonus action':
+            return '1 bonus action';
+        case '1 reaction':
+            return '1 reaction';
+        case '1 minute':
+            return '1 minute';
+        case '10 minutes':
+            return '10 minutes';
+        case '1 hour':
+            return '1 hour';
+        case '24 hours':
+            return '24 hours';
+        case 'special':
+            return 'special';
+        default:
+            return '1 action';
+    }
+};
+
+const mapRange = (value?: string): SpellV3['range'] => {
+    const normalized = value?.toLowerCase().trim() ?? '';
+    if (normalized === 'self') return 'Self';
+    if (normalized === 'touch') return 'Touch';
+    if (normalized === 'sight') return 'Sight';
+    if (normalized === 'unlimited') return 'Unlimited';
+    if (normalized === 'special') return 'Special';
+    const feetMatch = normalized.match(/^(\d+)\s*ft/);
+    if (feetMatch) {
+        const feet = feetMatch[1];
+        const withFeet = `${feet} feet`;
+        return withFeet as SpellV3['range'];
+    }
+    if (normalized.endsWith('mile')) return '1 mile';
+    return 'Self';
+};
+
+const mapDuration = (value?: string): SpellV3['duration'] => {
+    const normalized = value?.toLowerCase().trim() ?? '';
+    if (normalized.includes('instant')) {
+        return { type: 'instantaneous' };
+    }
+    if (normalized.includes('special')) {
+        return { type: 'special', value };
+    }
+    if (normalized.includes('concentration')) {
+        return { type: 'concentration', value };
+    }
+    if (normalized) {
+        return { type: 'timed', value };
+    }
+    return { type: 'instantaneous' };
+};
+
 // Define the shape expected by ResolutionPanel
 type SpellAdapter = SpellV3 & {
     desc?: string;
@@ -48,7 +117,7 @@ export const CombatOverlay: React.FC = () => {
                 sides: Number(firstDiceMatch[2]),
                 type: (spell.damageType || 'force').toLowerCase(),
                 // Many wizard damage spells scale by +1 die per slot level.
-                scaling: { type: 'per_slot_level', diceIncreasePerLevel: 1 }
+                scaling: { type: 'per_slot_level' as const, diceIncreasePerLevel: 1 }
             }]
             : undefined;
 
@@ -56,6 +125,17 @@ export const CombatOverlay: React.FC = () => {
         id: spell.name,
         name: spell.name,
         level: spell.lvl,
+        school: SCHOOL_MAP[spell.school] ?? 'Evocation',
+        ritual: false,
+        castingTime: mapCastingTime(spell.castTime),
+        range: mapRange(spell.range),
+        components: {
+            verbal: spell.components?.includes('V') ?? false,
+            somatic: spell.components?.includes('S') ?? false,
+            material: spell.components?.includes('M') ? 'material component' : undefined,
+        },
+        duration: mapDuration(spell.duration),
+        description: spell.effect || spell.desc || '',
         requiresAttackRoll,
         requiresSavingThrow,
         damage,

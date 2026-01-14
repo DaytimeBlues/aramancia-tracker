@@ -27,13 +27,10 @@ export const QuickActionsWidget: React.FC = () => {
 
     // CON modifier for concentration check (from character)
     const conMod = useAppSelector(state => {
-        const conScore = state.character.abilities.constitution;
+        const conScore = state.character.abilities.con;
         return Math.floor((conScore - 10) / 2);
     });
-    const profBonus = useAppSelector(state => state.character.proficiencyBonus);
-
-    // War Caster feat gives advantage on concentration checks
-    const hasWarCaster = useAppSelector(state => state.character.feats.includes('War Caster'));
+    const profBonus = useAppSelector(state => state.character.profBonus);
 
     const handleTriggerConcentrationCheck = () => {
         const damage = parseInt(damageInput, 10);
@@ -108,11 +105,6 @@ export const QuickActionsWidget: React.FC = () => {
                         <div className="text-sm text-stone-400">
                             Your modifier: d20 + {conMod + profBonus} (CON {conMod >= 0 ? `+${conMod}` : conMod} + Prof +{profBonus})
                         </div>
-                        {hasWarCaster && (
-                            <div className="mt-2 text-xs text-green-400">
-                                ✓ War Caster: Roll with Advantage
-                            </div>
-                        )}
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">

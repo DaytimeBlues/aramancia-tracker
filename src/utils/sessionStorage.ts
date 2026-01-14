@@ -1,8 +1,8 @@
 import type { Session, CharacterData, Minion } from '../types';
 import { initialCharacterData } from '../data/initialState';
 
-const SESSIONS_KEY = 'aramancia-sessions';
-const ACTIVE_SESSION_KEY = 'aramancia-active-session';
+const SESSIONS_KEY = 'fuyuki-sessions';
+const ACTIVE_SESSION_KEY = 'fuyuki-active-session';
 
 /**
  * Schema version for localStorage data migrations.
@@ -38,6 +38,32 @@ function migrateSession(session: unknown): Session {
     }
 
     return sessionRecord as unknown as Session;
+    // Type guard for session object
+    if (!session || typeof session !== 'object') {
+        throw new Error('Invalid session data');
+    }
+
+    const sessionObj = session as Record<string, unknown>;
+
+    // If no version or version < 2.0
+    const version = parseFloat((sessionObj.version as string) || '1.0');
+
+    if (version < 2.0) {
+        // Migration to 2.0: Ensure minions have speed and lowercase types
+        if (Array.isArray(sessionObj.minions)) {
+            sessionObj.minions = sessionObj.minions.map((m: unknown) => {
+                const minionObj = m as Record<string, unknown>;
+                return {
+                    ...minionObj,
+                    speed: (minionObj.speed as number) ?? 30, // Default speed if missing
+                    type: minionObj.type ? String(minionObj.type).toLowerCase() : 'skeleton' // Normalizing type to lowercase
+                };
+            });
+        }
+        sessionObj.version = '2.0';
+    }
+
+    return sessionObj as unknown as Session;
 }
 
 /**

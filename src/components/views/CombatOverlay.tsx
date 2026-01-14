@@ -75,7 +75,13 @@ const mapDuration = (value?: string): SpellV3['duration'] => {
 };
 
 // Define the shape expected by ResolutionPanel
-type SpellAdapter = SpellV3 & {
+// Using Partial since we're adapting from legacy spell format and don't have all V3 fields
+type SpellAdapter = Partial<SpellV3> & {
+    id: string;
+    name: string;
+    level: number;
+    requiresAttackRoll?: boolean;
+    requiresSavingThrow?: boolean;
     desc?: string;
     decisionTree?: { level: number; summary: string }[];
     higherLevelDescription?: string;

@@ -29,6 +29,7 @@ import { RestView } from './components/views/RestView';
 import { GrimoireView } from './components/views/GrimoireView';
 import { BiographyView } from './components/views/BiographyView';
 import { StatsView } from './components/views/StatsView';
+import { InventoryView } from './components/views/InventoryView';
 import { SessionPicker } from './components/SessionPicker';
 import { spells } from './data/spells';
 import { getActiveSession } from './utils/sessionStorage';
@@ -71,6 +72,7 @@ function App() {
   // --- REDUX SELECTORS ---
   const character = useAppSelector(selectCharacter);
   const toast = useAppSelector(selectToast);
+  // NOTE: minions are now managed in CombatView via combatSlice
 
   // Clear toast after 2 seconds
   useEffect(() => {
@@ -224,6 +226,12 @@ function App() {
             skills={character.skills}
             profBonus={character.profBonus}
           />
+        </div>
+      )}
+
+      {activeTab === 'inventory' && (
+        <div className="animate-fade-in">
+          <InventoryView />
         </div>
       )}
 

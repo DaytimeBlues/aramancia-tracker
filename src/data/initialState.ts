@@ -3,6 +3,7 @@
  * Level 5 Fiend Warlock for testing
  */
 import type { CharacterData } from '../types';
+import { getSpellSlotsWithUsed } from '../utils/srdRules';
 
 export const initialCharacterData: CharacterData = {
     // Core stats
@@ -57,6 +58,10 @@ export const initialCharacterData: CharacterData = {
         { name: 'Leather Armor' },
         { name: "Dungeoneer's Pack" }
     ],
+    slots: getSpellSlotsWithUsed(5),
+    mageArmour: false,
+    shield: false,
+    preparedSpells: [],
 
     // === WARLOCK-SPECIFIC ===
     pactSlots: {

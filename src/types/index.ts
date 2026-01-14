@@ -78,6 +78,13 @@ export interface InventoryItem {
     description?: string;
 }
 
+export interface SpellSlot {
+    used: number;
+    max: number;
+}
+
+export type SpellSlots = Record<number, SpellSlot>;
+
 // Re-export Schema types
 export { SpellSchema } from '../schemas/spellSchema';
 export type { SpellV3 } from '../schemas/spellSchema';
@@ -163,6 +170,10 @@ export interface CharacterData {
     concentration: string | null;
     attunement: string[];
     inventory: InventoryItem[];
+    slots: SpellSlots;
+    mageArmour: boolean;
+    shield: boolean;
+    preparedSpells: string[];
 
     // === WARLOCK-SPECIFIC ===
     /** Pact Magic slots (1-3 at levels 1-5, short rest recharge) */
@@ -191,6 +202,6 @@ export interface Session {
     date: string;
     label?: string;
     characterData: CharacterData;
+    minions: Minion[];
     lastModified: string;
 }
-

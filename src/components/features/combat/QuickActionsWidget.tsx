@@ -55,6 +55,9 @@ export const QuickActionsWidget: React.FC = () => {
     };
 
 
+    // War Caster feat gives advantage on concentration checks
+    // TODO: Add feats support to CharacterState when needed
+    // const hasWarCaster = false; // Reserved for future implementation
 
     const handleTriggerConcentrationCheck = () => {
         const damage = parseInt(damageInput, 10);

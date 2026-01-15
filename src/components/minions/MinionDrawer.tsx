@@ -1,17 +1,9 @@
-<<<<<<< HEAD
 import { useState } from 'react';
 import { X, Trash2, Skull, Biohazard, Minus, Plus, Ghost, Play } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { minionAdded, minionRemoved, minionUpdated, allMinionsCleared, concentrationSet, slotUsed } from '../../store/slices/characterSlice';
 import { selectCharacter, selectSpellAttackBonus } from '../../store/slices/characterSlice';
 import { createAnimateDead, createSummonUndead } from '../../utils/necromancy';
-=======
-import { X, Trash2, Skull, Biohazard, Minus, Plus } from 'lucide-react';
-import type { Minion } from '../../store/slices/combatSlice';
-import { useAppDispatch } from '../../store/hooks';
-import { minionAdded, minionRemoved, minionUpdated, allMinionsCleared } from '../../store/slices/combatSlice';
-import { undeadStats } from '../../data/undeadStats';
->>>>>>> origin/copilot/sub-pr-54
 
 interface MinionDrawerProps {
     isOpen: boolean;

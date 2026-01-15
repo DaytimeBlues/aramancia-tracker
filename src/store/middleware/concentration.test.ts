@@ -21,7 +21,7 @@ describe('concentration middleware', () => {
         const store = setupStore();
 
         store.dispatch(concentrationStarted({ spellId: 'spell-1', spellName: 'Shield of Faith' }));
-        store.dispatch(hpChanged(13)); // 35 -> 13 damage = 22
+        store.dispatch(hpChanged(10)); // 32 -> 10 damage = 22
 
         const state = store.getState();
         expect(state.combat.concentrationCheckDC).toBe(11);
@@ -41,17 +41,17 @@ describe('concentration middleware', () => {
     it('calculates DC values correctly for damage thresholds', () => {
         const storeHigh = setupStore();
         storeHigh.dispatch(concentrationStarted({ spellId: 'spell-1', spellName: 'Haste' }));
-        storeHigh.dispatch(hpChanged(13)); // 35 -> 13 damage = 22
+        storeHigh.dispatch(hpChanged(10)); // 32 -> 10 damage = 22
         expect(storeHigh.getState().combat.concentrationCheckDC).toBe(11);
 
         const storeLow = setupStore();
         storeLow.dispatch(concentrationStarted({ spellId: 'spell-1', spellName: 'Haste' }));
-        storeLow.dispatch(hpChanged(31)); // 35 -> 31 damage = 4
+        storeLow.dispatch(hpChanged(28)); // 32 -> 28 damage = 4
         expect(storeLow.getState().combat.concentrationCheckDC).toBe(10);
 
         const storeNone = setupStore();
         storeNone.dispatch(concentrationStarted({ spellId: 'spell-1', spellName: 'Haste' }));
-        storeNone.dispatch(hpChanged(35)); // 35 -> 35 damage = 0
+        storeNone.dispatch(hpChanged(32)); // 32 -> 32 damage = 0
         expect(storeNone.getState().combat.concentrationCheckDC).toBeNull();
     });
 });

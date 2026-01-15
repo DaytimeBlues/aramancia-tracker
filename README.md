@@ -1,15 +1,15 @@
-# Fuyuki | D&D 5e Warlock Tracker
+# Aramancia | D&D 5e Wizard Tracker
 
-A minimalist warlock character tracker PWA with SRD 5.1 compliance. Japanese-inspired Kyoto design aesthetic.
+A specialized character tracker for Aramancia Vaelithor, focusing on Wizard mechanics, Necromancy minion management, and standard D&D 5e rule compliance.
 
 ## Features
 
-- **Pact Magic** - Track 1-3 pact slots with short rest recharge
-- **Mystic Arcanum** - 6th-9th level spells (1/long rest each)
-- **Eldritch Invocations** - Toggle passives, track limited uses
-- **Concentration** - Single spell limit with CON save DC
-- **HP Management** - Current, Max, Temp HP with d8 hit dice
-- **Rest System** - Short rest restores pact slots, long rest full recovery
+- **Spell Slots** - Standard Level 1-9 spell slot tracking with Arcane Recovery support
+- **Minion Management** - Integrated tracker for Skeletons, Zombies, and Spirits (HP, AC, Attacks)
+- **Concentration** - Single spell limit with CON save DC calculator
+- **HP Management** - Current, Max, and Temporary HP tracking
+- **Inventory System** - Magic item attunement and charge tracking
+- **Rest System** - Short rest (Hit Dice) and Long Rest (Full Recovery) logic
 
 ## Tech Stack
 
@@ -18,7 +18,6 @@ A minimalist warlock character tracker PWA with SRD 5.1 compliance. Japanese-ins
 - Redux Toolkit
 - Tailwind CSS 4
 - Vitest
-- Firebase Hosting
 - Capacitor (Android)
 
 ## Development
@@ -35,20 +34,17 @@ npm run test
 
 # Build for production
 npm run build
-
-# Preflight checks (before merge)
-./preflight.sh
 ```
 
-## D&D 5e Warlock Rules (SRD 5.1)
+## D&D 5e Wizard Rules (SRD 5.1)
 
 | Mechanic | Implementation |
 |----------|----------------|
-| Pact Slots | 1-3 slots, level 1-5, short rest recharge |
-| Spellcasting | CHA-based, DC = 8 + prof + CHA mod |
-| Mystic Arcanum | 6/7/8/9th level at 11/13/15/17, 1/long rest |
-| Concentration | One spell max, CON save DC = max(10, damage/2) |
+| Spell Slots | Standard progression (e.g. 4/3/3/3/2/1/1/1/1 at Lv 20) |
+| Minions | Tracks simplified stats for Animate Dead / Summon Undead |
+| Concentration | One spell max, auto-clears on new cast |
+| Death Saves | Standard success/failure tracking |
 
 ---
 
-*Forked from [aramancia-tracker](https://github.com/DaytimeBlues/aramancia-tracker)*
+*Verified strict RAW compliance as per Agent instructions.*

@@ -237,7 +237,7 @@ export const characterSlice = createSlice({
             state.minions.push(action.payload);
             state.toast = `Raised ${action.payload.type}`;
         },
-        minionHpChanged: (state, action: PayloadAction<{ id: string; hp: number }>) => {
+        minionUpdated: (state, action: PayloadAction<{ id: string; hp: number }>) => {
             const minion = state.minions.find(m => m.id === action.payload.id);
             if (minion) {
                 minion.hp = Math.max(0, action.payload.hp);
@@ -338,7 +338,7 @@ export const {
     inventoryItemUpdated,
     itemChargeConsumed,
     minionAdded,
-    minionHpChanged,
+    minionUpdated,
     minionRemoved,
     allMinionsCleared,
     toastShown,

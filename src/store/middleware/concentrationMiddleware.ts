@@ -1,52 +1,37 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
+import { hpChanged } from '../slices/characterSlice';
+import { concentrationCheckRequired } from '../slices/combatSlice';
 
-export interface TakeDamagePayload {
-  damage: number;
-}
+export const createConcentrationMiddleware = () => {
+    const listenerMiddleware = createListenerMiddleware();
 
-export interface CastSpellPayload {
-  spellName: string;
-  requiresConcentration: boolean;
-}
+    listenerMiddleware.startListening({
+        actionCreator: hpChanged,
+        effect: (action, listenerApi) => {
+            const previousState = listenerApi.getOriginalState() as {
+                character: { hp: { current: number } };
+                combat: { activeConcentration: unknown };
+            };
+            const currentState = listenerApi.getState() as {
+                character: { hp: { current: number } };
+                combat: { activeConcentration: unknown };
+            };
 
-export const calculateConcentrationDC = (damage: number): number => {
-  return Math.max(10, Math.floor(damage / 2));
+            if (!currentState.combat.activeConcentration) {
+                return;
+            }
+
+            const previousHp = previousState.character.hp.current;
+            const currentHp = currentState.character.hp.current;
+            const damage = Math.max(0, previousHp - currentHp);
+
+            if (damage <= 0 || currentHp <= 0) {
+                return;
+            }
+
+            listenerApi.dispatch(concentrationCheckRequired({ damage }));
+        },
+    });
+
+    return listenerMiddleware;
 };
-
-const concentrationMiddleware = createListenerMiddleware();
-
-concentrationMiddleware.startListening({
-  predicate: (action): action is { type: string; payload: TakeDamagePayload | CastSpellPayload } => {
-    return action.type === 'game/takeDamage' || action.type === 'game/castSpell';
-  },
-  effect: (action, listenerApi) => {
-    const state = listenerApi.getState() as { concentration: { activeSpell: string | null } };
-    const concentrationState = state.concentration;
-    
-    if (action.type === 'game/takeDamage') {
-      const { damage } = action.payload as TakeDamagePayload;
-      
-      if (concentrationState.activeSpell && damage > 0) {
-        const dc = calculateConcentrationDC(damage);
-        listenerApi.dispatch({
-          type: 'ui/openConcentrationModal',
-          payload: {
-            spellName: concentrationState.activeSpell,
-            dc,
-          },
-        } as const);
-      }
-    } else if (action.type === 'game/castSpell') {
-      const { spellName, requiresConcentration } = action.payload as CastSpellPayload;
-      
-      if (requiresConcentration) {
-        listenerApi.dispatch({
-          type: 'concentration/setSpell',
-          payload: spellName,
-        } as const);
-      }
-    }
-  },
-});
-
-export const concentrationMiddlewareInstance = concentrationMiddleware.middleware;

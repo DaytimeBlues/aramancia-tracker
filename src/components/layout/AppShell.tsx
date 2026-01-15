@@ -1,6 +1,10 @@
 import { useState } from 'react';
-import { Feather, Shield, Wand2, Skull, BookOpen, User, Settings, Brain, Backpack } from 'lucide-react';
+import { Feather, Shield, Brain, User, Settings, Skull, Wand2, BookOpen, Backpack } from 'lucide-react'; // Added Backpack, Removed X
 import { BackgroundVideo } from './BackgroundVideo';
+import { useAppSelector } from '../../store/hooks';
+import { selectCharacter } from '../../store/slices/characterSlice';
+import { MinionDrawer } from '../minions/MinionDrawer';
+import { WandDrawer } from '../widgets/WandDrawer';
 
 interface AppShellProps {
     children: React.ReactNode;
@@ -21,6 +25,11 @@ const navItems = [
 
 export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
     const [imgError, setImgError] = useState(false);
+    // const location = useLocation(); // Unused
+    const activeMinions = useAppSelector(state => state.character.minions);
+    const character = useAppSelector(selectCharacter);
+    const [isMinionDrawerOpen, setIsMinionDrawerOpen] = useState(false);
+    const [isWandDrawerOpen, setIsWandDrawerOpen] = useState(false);
     return (
         <>
             {/* Background Image - OUTSIDE main container */}
@@ -139,7 +148,45 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                         </div>
                     </div>
                 </nav>
-            </div>
+
+                {/* Minion Drawer - Triggered via FAB or state */}
+                {/* We need a way to open this. For now, let's add a FAB in the bottom right corner if there are minions or necromancy is relevant */}
+                <div className="fixed bottom-24 right-4 flex flex-col gap-3 z-40">
+                    {/* Wand Trigger */}
+                    {character.inventory.some(i => i.name.toLowerCase().includes('wand')) && (
+                        <button
+                            onClick={() => setIsWandDrawerOpen(true)}
+                            className="bg-card-elevated hover:bg-card-elevated/80 text-purple-300 border border-purple-500/30 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all animate-in zoom-in slide-in-from-bottom-4 active:scale-95"
+                        >
+                            <Wand2 size={24} />
+                        </button>
+                    )}
+
+                    {/* Minion Drawer Trigger */}
+                    <button
+                        onClick={() => setIsMinionDrawerOpen(true)}
+                        className="bg-card-elevated hover:bg-card-elevated/80 text-parchment border border-white/20 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all animate-in zoom-in slide-in-from-bottom-4 active:scale-95"
+                    >
+                        <Skull size={24} />
+                        {activeMinions.length > 0 && (
+                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border border-card shadow-sm font-bold">
+                                {activeMinions.length}
+                            </span>
+                        )}
+                    </button>
+                </div>
+
+                <MinionDrawer
+                    isOpen={isMinionDrawerOpen}
+                    onClose={() => setIsMinionDrawerOpen(false)}
+                />
+
+                <WandDrawer
+                    isOpen={isWandDrawerOpen}
+                    onClose={() => setIsWandDrawerOpen(false)}
+                />
+
+            </div >
 
             {/* Hide scrollbar but keep functionality */}
             <style>{`

@@ -1,58 +1,65 @@
-import { createSlice, type PayloadAction, createEntityAdapter } from '@reduxjs/toolkit';
-import type { Minion } from './minionSchema';
+import { createEntityAdapter, createSlice, type EntityState, type PayloadAction } from '@reduxjs/toolkit';
+import { MINION_AC_MAX, MINION_NAME_MAX, type Minion } from './minionSchema';
 
-export const minionsAdapter = createEntityAdapter<Minion>();
+export interface MinionState extends EntityState<Minion> { }
 
-const initialState = minionsAdapter.getInitialState({
-  isLoading: false,
-});
+const minionAdapter = createEntityAdapter<Minion>();
+
+const sanitizeNumber = (value: unknown, fallback = 0) => {
+  const numeric = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(numeric) ? numeric : fallback;
+};
+
+const sanitizeName = (name: unknown) => {
+  const raw = typeof name === 'string' ? name : String(name ?? '');
+  const trimmed = raw.trim();
+  const safe = trimmed.length > 0 ? trimmed : 'Minion';
+  return safe.slice(0, MINION_NAME_MAX);
+};
+
+const sanitizeMinion = (input: Partial<Minion> & { id: string }): Minion => {
+  const hp = Math.max(0, sanitizeNumber(input.hp, 0));
+  const ac = Math.min(MINION_AC_MAX, Math.max(0, sanitizeNumber(input.ac, 0)));
+
+  return {
+    id: input.id,
+    name: sanitizeName(input.name ?? 'Minion'),
+    hp,
+    ac,
+  };
+};
 
 export const minionSlice = createSlice({
   name: 'minions',
-  initialState,
+  initialState: minionAdapter.getInitialState(),
   reducers: {
-    addMinion: (state, action: PayloadAction<Omit<Minion, 'id'>>) => {
-      const id = crypto.randomUUID();
-      const newMinion: Minion = {
-        ...action.payload,
-        id,
-      };
-      minionsAdapter.addOne(state, newMinion);
+    minionAdded: (state, action: PayloadAction<Partial<Minion> & { id: string }>) => {
+      minionAdapter.addOne(state, sanitizeMinion(action.payload));
     },
-    removeMinion: (state, action: PayloadAction<string>) => {
-      minionsAdapter.removeOne(state, action.payload);
+    minionUpserted: (state, action: PayloadAction<Partial<Minion> & { id: string }>) => {
+      minionAdapter.upsertOne(state, sanitizeMinion(action.payload));
     },
-    updateMinion: (state, action: PayloadAction<{ id: string; changes: Partial<Minion> }>) => {
-      const { id, changes } = action.payload;
-      const existingMinion = minionsAdapter.getSelectors().selectById(state, id);
-      
-      if (!existingMinion) return;
+    minionUpdated: (state, action: PayloadAction<{ id: string; changes: Partial<Minion> }>) => {
+      const existing = state.entities[action.payload.id];
+      if (!existing) return;
 
-      const sanitizedChanges: Partial<Minion> = {};
-
-      if (changes.hp) {
-        sanitizedChanges.hp = {
-          current: Math.max(0, Math.min(9999, changes.hp.current)),
-          max: Math.max(1, Math.min(9999, changes.hp.max)),
-        };
-      }
-
-      if (changes.ac !== undefined) {
-        sanitizedChanges.ac = Math.max(0, Math.min(30, changes.ac));
-      }
-
-      if (changes.name !== undefined && changes.name !== '') {
-        sanitizedChanges.name = changes.name.slice(0, 50);
-      }
-
-      minionsAdapter.updateOne(state, { id, changes: sanitizedChanges });
+      const next = sanitizeMinion({ ...existing, ...action.payload.changes, id: action.payload.id });
+      minionAdapter.upsertOne(state, next);
     },
-    clearMinions: (state) => {
-      minionsAdapter.removeAll(state);
-    },
+    minionRemoved: minionAdapter.removeOne,
+    minionsCleared: minionAdapter.removeAll,
   },
 });
 
-export const { addMinion, removeMinion, updateMinion, clearMinions } = minionSlice.actions;
-export const minionSelectors = minionsAdapter.getSelectors();
+export const {
+  minionAdded,
+  minionUpserted,
+  minionUpdated,
+  minionRemoved,
+  minionsCleared,
+} = minionSlice.actions;
+
+export const minionSelectors = minionAdapter.getSelectors<{ minions: MinionState }>(
+  (state) => state.minions,
+);
 export default minionSlice.reducer;

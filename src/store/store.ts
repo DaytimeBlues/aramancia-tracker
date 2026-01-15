@@ -1,54 +1,29 @@
-import { configureStore, combineReducers, AnyAction } from '@reduxjs/toolkit';
-import minionReducer from '../features/minions/minionSlice';
-import { concentrationMiddlewareInstance } from './middleware/concentrationMiddleware';
+/**
+ * Redux Store Configuration
+ * 
+ * WHY: Central state store with persistence middleware for automatic sessionStorage sync.
+ * The character slice is the single source of truth for all character data.
+ */
+import { configureStore } from '@reduxjs/toolkit';
+import characterReducer from './slices/characterSlice';
+import spellbookReducer from './slices/spellbookSlice';
+import combatReducer from './slices/combatSlice';
+import { persistenceMiddleware } from './slices/persistenceMiddleware';
+import { createConcentrationMiddleware } from './middleware/concentrationMiddleware';
 
-interface ConcentrationState {
-  activeSpell: string | null;
-  isCheckingConcentration: boolean;
-}
-
-interface UiState {
-  concentrationModal: {
-    isOpen: boolean;
-    spellName: string | null;
-    dc: number | null;
-  };
-}
-
-const rootReducer = combineReducers({
-  minions: minionReducer,
-  concentration: (state: ConcentrationState = { activeSpell: null, isCheckingConcentration: false }, action: AnyAction) => {
-    switch (action.type) {
-      case 'concentration/setSpell':
-        return { ...state, activeSpell: action.payload };
-      case 'concentration/clearSpell':
-        return { ...state, activeSpell: null };
-      case 'concentration/failed':
-        return { ...state, activeSpell: null };
-      default:
-        return state;
-    }
-  },
-  ui: (state: UiState = { concentrationModal: { isOpen: false, spellName: null, dc: null } }, action: AnyAction) => {
-    switch (action.type) {
-      case 'ui/openConcentrationModal':
-        return {
-          ...state,
-          concentrationModal: { isOpen: true, spellName: action.payload.spellName, dc: action.payload.dc }
-        };
-      case 'ui/closeConcentrationModal':
-        return { ...state, concentrationModal: { isOpen: false, spellName: null, dc: null } };
-      default:
-        return state;
-    }
-  },
-});
-
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppDispatch = typeof store.dispatch;
+const concentrationMiddleware = createConcentrationMiddleware();
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    character: characterReducer,
+    spellbook: spellbookReducer,
+    combat: combatReducer,
+  },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(concentrationMiddlewareInstance),
+    getDefaultMiddleware()
+      .prepend(concentrationMiddleware.middleware)
+      .concat(persistenceMiddleware),
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

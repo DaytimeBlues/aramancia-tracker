@@ -56,7 +56,13 @@ export const initialCharacterData: CharacterData = {
     inventory: [
         { name: 'Spellbook' },
         { name: 'Arcane Focus (Crystal)' },
-        { name: 'Scholar\'s Pack' }
+        { name: 'Scholar\'s Pack' },
+        {
+            name: 'Wand',
+            charges: { current: 7, max: 7 },
+            spells: ['Magic Missile', 'Web', 'Fly'],
+            description: 'A mysterious wand with 7 charges.'
+        }
     ],
     // Wizard Spell Slots (Level 5: 4/3/2)
     slots: getSpellSlotsWithUsed(5),
@@ -69,7 +75,9 @@ export const initialCharacterData: CharacterData = {
         'Misty Step',
         'Counterspell',
         'Fireball',
-        'Animate Dead'
+        'Animate Dead',
+        'Web', // Concentration
+        'Fly'  // Concentration
     ],
     defaultMinion: {
         skeleton: {

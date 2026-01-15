@@ -6,7 +6,9 @@ import {
     concentrationBroken
 } from '../../../store/slices/combatSlice';
 import { slotsRestored } from '../../../store/slices/spellbookSlice';
-import { Brain, Moon, Sun, AlertTriangle, Check, X } from 'lucide-react';
+import { Brain, Moon, Sun, AlertTriangle, Check, X, ChevronRight } from 'lucide-react';
+import { concentrationSet } from '../../../store/slices/characterSlice';
+import { spells as allSpells } from '../../../data/spells';
 
 /**
  * Global quick actions widget providing:
@@ -26,11 +28,31 @@ export const QuickActionsWidget: React.FC = () => {
     const [damageInput, setDamageInput] = useState('');
 
     // CON modifier for concentration check (from character)
-    const conMod = useAppSelector(state => {
-        const conScore = state.character.abilities.con;
-        return Math.floor((conScore - 10) / 2);
+    const { conMod, profBonus } = useAppSelector(state => ({
+        conMod: Math.floor((state.character.abilities.con - 10) / 2),
+        profBonus: state.character.profBonus
+    }));
+    const [showConcentrationPicker, setShowConcentrationPicker] = useState(false);
+
+    // Select prepared spells that require concentration
+    const preparedConcentrationSpells = useAppSelector(state => {
+        const prepared = state.character.preparedSpells;
+        // Filter against full spell list
+        // Note: In a real app we'd map names to spell objects first. 
+        // For now, assume we import 'spells' to check metadata.
+        // We'll need to import 'spells' at top of file.
+        return prepared.filter(name => {
+            // Dynamic import or passed prop would be better, but we can import the data file directly
+            // See imports below
+            const spellData = allSpells.find(s => s.name === name);
+            return spellData?.concentration;
+        });
     });
-    const profBonus = useAppSelector(state => state.character.profBonus);
+
+    const handleSetConcentration = (spellName: string) => {
+        dispatch(concentrationSet(spellName));
+        setShowConcentrationPicker(false);
+    };
 
 
 
@@ -168,6 +190,17 @@ export const QuickActionsWidget: React.FC = () => {
                     </div>
                 )}
 
+                {/* Set Concentration Button */}
+                {!activeConcentration && (
+                    <button
+                        onClick={() => setShowConcentrationPicker(true)}
+                        className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 bg-purple-900/20 hover:bg-purple-900/30 border border-purple-500/30 rounded text-purple-300 font-display transition-colors"
+                    >
+                        <Brain className="w-4 h-4" />
+                        Set Concentration
+                    </button>
+                )}
+
                 {/* Rest Buttons */}
                 <button
                     onClick={handleShortRest}
@@ -184,6 +217,42 @@ export const QuickActionsWidget: React.FC = () => {
                     Long Rest
                 </button>
             </div>
+
+            {/* Concentration Picker Modal */}
+            {showConcentrationPicker && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                    <div className="bg-card w-full max-w-sm border border-white/20 rounded-xl shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                        <div className="p-4 border-b border-white/10 flex justify-between items-center">
+                            <h3 className="font-display text-lg text-parchment-light">Concentrate On...</h3>
+                            <button onClick={() => setShowConcentrationPicker(false)} className="text-muted hover:text-white">
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="p-4 max-h-[60vh] overflow-y-auto space-y-2">
+                            {preparedConcentrationSpells.length === 0 ? (
+                                <p className="text-center text-muted italic py-4">No concentration spells prepared.</p>
+                            ) : (
+                                preparedConcentrationSpells.map(spellName => (
+                                    <button
+                                        key={spellName}
+                                        onClick={() => handleSetConcentration(spellName)}
+                                        className="w-full flex items-center justify-between p-3 rounded-lg bg-card-elevated hover:bg-white/5 border border-white/10 group transition-all"
+                                    >
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-8 h-8 rounded-full bg-purple-900/40 text-purple-300 flex items-center justify-center border border-purple-500/30">
+                                                <Brain size={16} />
+                                            </div>
+                                            <span className="font-display text-white group-hover:text-purple-200">{spellName}</span>
+                                        </div>
+                                        <ChevronRight size={16} className="text-white/20 group-hover:text-white/50" />
+                                    </button>
+                                ))
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
+

@@ -127,7 +127,7 @@ export const CombatOverlay: React.FC = () => {
             }]
             : undefined;
 
-    const spellV3: SpellAdapter = {
+    const spellV3 = {
         id: spell.name,
         name: spell.name,
         level: spell.lvl,
@@ -154,7 +154,7 @@ export const CombatOverlay: React.FC = () => {
         desc: spell.desc,
         decisionTree: spell.decisionTree,
         higherLevelDescription: undefined,
-    };
+    } as unknown as SpellAdapter;
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in zoom-in duration-200">

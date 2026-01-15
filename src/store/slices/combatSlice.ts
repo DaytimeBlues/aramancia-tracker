@@ -1,11 +1,18 @@
 import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { AppDispatch, RootState } from '../index';
 import { slotExpended } from './spellbookSlice';
+<<<<<<< HEAD
 import type { Minion, MinionAttack } from '../../types';
 
 // Re-export for consumers that need it
 export type { Minion, MinionAttack };
 
+=======
+import type { Minion } from '../../types';
+
+// Re-export Minion type for consumers of this slice
+export type { Minion } from '../../types';
+>>>>>>> 5b0877a (fix: restore build and tests (resolve type errors, missing imports, syntax issue))
 
 // Concentration state
 export interface ConcentrationState {

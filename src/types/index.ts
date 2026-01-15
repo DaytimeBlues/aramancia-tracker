@@ -1,3 +1,132 @@
+<<<<<<< HEAD
+=======
+export type AbilityKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha';
+
+export type AbilityScores = Record<AbilityKey, number>;
+export type AbilityMods = Record<AbilityKey, number>;
+
+export interface Skill {
+    name: string;
+    attr: AbilityKey;
+    prof: boolean;
+}
+
+export interface Spell {
+    name: string;
+    lvl: number;
+    school: string;
+    castTime: string;
+    range: string;
+    duration: string;
+    components: string;
+    effect: string;
+    rolls: string;
+    damage: string;
+    damageType: string;
+    decisionTree: SpellDecision[];
+    concentration?: boolean;
+    desc: string;
+    incantation?: string;
+    pronunciation?: string;
+}
+
+export interface SpellDecision {
+    level: number;
+    summary: string;
+}
+
+export interface MinionStats {
+    hp: number;
+    ac: number;
+    notes: string;
+}
+
+export interface MinionAttack {
+    name: string;
+    toHit: number;
+    damage: string; // e.g., "1d6+2"
+    damageType: string;
+}
+
+/**
+ * Minion type for Animate Dead / Summon Undead creatures
+ */
+export interface Minion {
+    id: string;
+    name: string;
+    type: 'skeleton' | 'zombie' | 'undead_spirit';
+    form?: 'ghostly' | 'putrid' | 'skeletal'; // For Summon Undead
+    hp: number;
+    maxHp: number;
+    ac: number;
+    speed: number;
+    attacks: MinionAttack[];
+    conditions: string[];
+    controlExpiresRound?: number;
+    notes?: string;
+}
+
+export interface InventoryItem {
+    name: string;
+    /**
+     * Optional list of spells that can be cast via this item (e.g., wand/staff).
+     * These are spell *names* that should match entries in `src/data/spells.ts`.
+     */
+    spells?: string[];
+    /**
+     * Optional charges for items like wands.
+     */
+    charges?: {
+        current: number;
+        max: number;
+    };
+    description?: string;
+}
+
+// Re-export Schema types
+export { SpellSchema } from '../schemas/spellSchema';
+export type { SpellV3 } from '../schemas/spellSchema';
+
+export interface HitDice {
+    current: number;  // Available to spend
+    max: number;      // Equal to character level
+    size: number;     // Die size (6 for d6, 8 for d8, etc.)
+}
+
+export interface CharacterData {
+    hp: { current: number; max: number; temp: number };
+    hitDice: HitDice;
+    baseAC: number;
+    mageArmour: boolean;
+    shield: boolean;
+    dc: number;
+    profBonus: number;
+    level: number;
+    savingThrowProficiencies: AbilityKey[];
+    deathSaves: { successes: number; failures: number };
+    /**
+     * Base (editable) ability scores.
+     * Derived (calculated) modifiers are stored separately in `abilityMods`.
+     */
+    abilities: AbilityScores;
+    /** Derived (calculated) ability modifiers */
+    abilityMods: AbilityMods;
+    skills: {
+        [key: string]: Skill;
+    };
+    slots: {
+        [level: number]: { used: number; max: number };
+    };
+    defaultMinion: {
+        [key: string]: MinionStats;
+    };
+    concentration: string | null; // Currently concentrating on this spell
+    attunement: string[]; // Max 3 attuned magic items
+    inventory: InventoryItem[]; // General inventory items (supports spellcasting items)
+    preparedSpells: string[]; // Spell names from SRD that are currently prepared
+}
+
+>>>>>>> 5b0877a (fix: restore build and tests (resolve type errors, missing imports, syntax issue))
 export interface Session {
     id: string;
     sessionNumber: number;

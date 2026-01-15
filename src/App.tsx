@@ -115,6 +115,7 @@ function App() {
     dispatch(deathSaveChanged({ type, value }));
   }, [dispatch]);
 
+
   const handleCastFromInventory = useCallback((spellName: string) => {
     const spell = spells.find(s => s.name === spellName) ||
       spells.find(s => s.name.toLowerCase() === spellName.toLowerCase());

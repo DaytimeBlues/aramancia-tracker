@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice, type EntityState, type PayloadAction } from '@reduxjs/toolkit';
 import { MINION_AC_MAX, MINION_NAME_MAX, type Minion } from './minionSchema';
 
-export interface MinionState extends EntityState<Minion> { }
+export type MinionState = EntityState<Minion>;
 
 const minionAdapter = createEntityAdapter<Minion>();
 

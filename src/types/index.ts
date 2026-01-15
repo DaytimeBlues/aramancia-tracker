@@ -43,8 +43,7 @@ export interface Minion {
     id: string;
     type: 'Skeleton' | 'Zombie';
     name: string;
-    hp: number;
-    maxHp: number;
+    hp: { current: number; max: number };
     ac: number;
     notes: string;
 }

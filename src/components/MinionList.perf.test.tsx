@@ -23,8 +23,7 @@ const mockMinions: Minion[] = Array.from({ length: 1000 }, (_, i) => ({
   id: `minion-${i}`,
   type: i % 2 === 0 ? 'Skeleton' : 'Zombie',
   name: `Minion ${i + 1}`,
-  hp: i % 13 + 1,
-  maxHp: i % 13 + 1,
+  hp: { current: i % 13 + 1, max: i % 13 + 1 },
   ac: i % 15 + 8,
   notes: `Test notes for minion ${i + 1}`,
 }));

@@ -18,22 +18,33 @@ export function generateSessionId(): string {
  * Migrates session data from older versions to the current schema.
  */
 function migrateSession(session: unknown): Session {
+    // Type guard to ensure session is an object
+    if (!session || typeof session !== 'object') {
+        throw new Error('Invalid session data');
+    }
+    
+    const sessionObj = session as Record<string, unknown>;
+    
     // If no version or version < 2.0
-    const version = parseFloat(session.version || '1.0');
+    const version = parseFloat((sessionObj.version as string) || '1.0');
 
     if (version < 2.0) {
         // Migration to 2.0: Ensure minions have speed
-        if (Array.isArray(session.minions)) {
-            session.minions = session.minions.map((m: unknown) => ({
-                ...m,
-                speed: m.speed ?? 30, // Default speed if missing
-                type: m.type ? m.type.toLowerCase() : 'skeleton' // Normalizing type to lowercase
-            }));
+        if (Array.isArray(sessionObj.minions)) {
+            sessionObj.minions = sessionObj.minions.map((m: unknown) => {
+                if (!m || typeof m !== 'object') return m;
+                const minion = m as Record<string, unknown>;
+                return {
+                    ...minion,
+                    speed: minion.speed ?? 30, // Default speed if missing
+                    type: minion.type ? String(minion.type).toLowerCase() : 'skeleton' // Normalizing type to lowercase
+                };
+            });
         }
-        session.version = '2.0';
+        sessionObj.version = '2.0';
     }
 
-    return session as Session;
+    return sessionObj as unknown as Session;
 }
 
 /**

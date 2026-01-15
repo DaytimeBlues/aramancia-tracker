@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Feather, Shield, Wand2, Skull, BookOpen, User, Settings, Brain, Backpack } from 'lucide-react';
 import { BackgroundVideo } from './BackgroundVideo';
 
@@ -19,6 +20,7 @@ const navItems = [
 ];
 
 export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
+    const [imgError, setImgError] = useState(false);
     return (
         <>
             {/* Background Image - OUTSIDE main container */}
@@ -71,15 +73,17 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                                     <p className="text-[10px] text-muted">Necromancer</p>
                                 </div>
                                 {/* Character Portrait */}
-                                <div className="w-10 h-10 rounded-full border-2 border-white/30 overflow-hidden bg-card-elevated shadow-[0_0_15px_rgba(0,0,0,0.5)]">
-                                    <img
-                                        src="/assets/aramancia-portrait.jpg"
-                                        alt="Aramancia"
-                                        className="w-full h-full object-cover"
-                                        onError={(e) => {
-                                            e.currentTarget.style.display = 'none';
-                                        }}
-                                    />
+                                <div className="w-10 h-10 rounded-full border-2 border-white/30 overflow-hidden bg-card-elevated shadow-[0_0_15px_rgba(0,0,0,0.5)] flex items-center justify-center">
+                                    {imgError ? (
+                                        <User size={20} className="text-white/50" />
+                                    ) : (
+                                        <img
+                                            src="/assets/aramancia-portrait.jpg"
+                                            alt="Aramancia"
+                                            className="w-full h-full object-cover"
+                                            onError={() => setImgError(true)}
+                                        />
+                                    )}
                                 </div>
                             </div>
                         </div>

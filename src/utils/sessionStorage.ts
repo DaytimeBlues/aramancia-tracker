@@ -19,51 +19,27 @@ export function generateSessionId(): string {
  */
 function migrateSession(session: unknown): Session {
     const sessionRecord = (session && typeof session === 'object' ? session : {}) as Record<string, unknown>;
-    const versionValue = typeof sessionRecord.version === 'string' ? sessionRecord.version : '1.0';
-    const version = parseFloat(versionValue);
+
+    // Parse version, default to 1.0 if missing
+    const version = parseFloat((sessionRecord.version as string) || '1.0');
 
     if (version < 2.0) {
-        // Migration to 2.0: Ensure minions have speed
+        // Migration to 2.0: Ensure minions have speed and valid type
         if (Array.isArray(sessionRecord.minions)) {
             sessionRecord.minions = sessionRecord.minions.map((m: unknown) => {
                 const minionRecord = (m && typeof m === 'object' ? m : {}) as Record<string, unknown>;
                 return {
                     ...minionRecord,
-                    speed: minionRecord.speed ?? 30, // Default speed if missing
-                    type: typeof minionRecord.type === 'string' ? minionRecord.type.toLowerCase() : 'skeleton', // Normalizing type to lowercase
+                    speed: (typeof minionRecord.speed === 'number') ? minionRecord.speed : 30, // Default speed
+                    type: (typeof minionRecord.type === 'string') ? minionRecord.type.toLowerCase() : 'skeleton', // Normalize type
                 };
             });
         }
         sessionRecord.version = '2.0';
     }
 
+    // Return casted session
     return sessionRecord as unknown as Session;
-    // Type guard for session object
-    if (!session || typeof session !== 'object') {
-        throw new Error('Invalid session data');
-    }
-
-    const sessionObj = session as Record<string, unknown>;
-
-    // If no version or version < 2.0
-    const version = parseFloat((sessionObj.version as string) || '1.0');
-
-    if (version < 2.0) {
-        // Migration to 2.0: Ensure minions have speed and lowercase types
-        if (Array.isArray(sessionObj.minions)) {
-            sessionObj.minions = sessionObj.minions.map((m: unknown) => {
-                const minionObj = m as Record<string, unknown>;
-                return {
-                    ...minionObj,
-                    speed: (minionObj.speed as number) ?? 30, // Default speed if missing
-                    type: minionObj.type ? String(minionObj.type).toLowerCase() : 'skeleton' // Normalizing type to lowercase
-                };
-            });
-        }
-        sessionObj.version = '2.0';
-    }
-
-    return sessionObj as unknown as Session;
 }
 
 /**

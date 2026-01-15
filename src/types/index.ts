@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-=======
+
 export type AbilityKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha';
 
 export type AbilityScores = Record<AbilityKey, number>;
@@ -126,7 +125,6 @@ export interface CharacterData {
     preparedSpells: string[]; // Spell names from SRD that are currently prepared
 }
 
->>>>>>> 5b0877a (fix: restore build and tests (resolve type errors, missing imports, syntax issue))
 export interface Session {
     id: string;
     sessionNumber: number;

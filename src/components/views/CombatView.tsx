@@ -5,7 +5,6 @@ import { undeadStats } from '../../data/undeadStats';
 import type { UndeadStatBlock } from '../../data/undeadStats';
 import { Skull, Shield, Sword, Info, X, Users, Ghost, Biohazard, Bone, ChevronDown, ChevronUp } from 'lucide-react';
 import { useAppSelector } from '../../store/hooks';
-import { MathStrip } from '../features/combat/MathStrip';
 import { minionSelectors } from '../../store/slices/combatSlice';
 
 // No props needed now!

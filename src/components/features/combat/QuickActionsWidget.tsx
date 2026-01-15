@@ -32,14 +32,7 @@ export const QuickActionsWidget: React.FC = () => {
     });
     const profBonus = useAppSelector(state => state.character.profBonus);
 
-    // War Caster feat gives advantage on concentration checks
-<<<<<<< HEAD
-    // TODO: Add feats support to CharacterState when needed
-    const hasWarCaster = false;
-=======
-    // Feats not currently implemented in CharacterData
-    const hasWarCaster = false; // useAppSelector(state => state.character.feats.includes('War Caster'));
->>>>>>> 5b0877a (fix: restore build and tests (resolve type errors, missing imports, syntax issue))
+
 
     const handleTriggerConcentrationCheck = () => {
         const damage = parseInt(damageInput, 10);

@@ -40,7 +40,7 @@ export const makeStore = (preloadedState?: RootState) => {
           case 'minions/removeOne':
             return { ...s, ids: s.ids.filter((id: string) => id !== action.payload), entities: { ...s.entities, [action.payload]: undefined }, isLoading: false };
           case 'minions/updateOne':
-            return { ...s, entities: { ...s.entities, [action.payload.id]: { ...s.entities[action.payload.id], ...action.payload.changes } }, isLoading: false };
+            return { ...s, entities: { ...s.entities, [action.payload.id]: { ...(s.entities as Record<string, unknown>)[action.payload.id] as object, ...action.payload.changes } }, isLoading: false };
           case 'minions/removeAll':
             return { ids: [], entities: {}, isLoading: false };
           default:

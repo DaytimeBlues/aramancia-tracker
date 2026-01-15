@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { MinionDrawer } from '../components/minions/MinionDrawer';
-import type { Minion } from '../types';
+import type { Minion } from '../store/slices/combatSlice';
 
 vi.mock('react-redux', async (importOriginal) => {
   const mod = await importOriginal<typeof import('react-redux')>();
@@ -23,20 +23,26 @@ describe('MinionDrawer', () => {
   const mockMinions: Minion[] = [
     {
       id: '1',
-      type: 'Skeleton',
+      type: 'skeleton',
       name: 'Skeleton 1',
       hp: 10,
       maxHp: 13,
       ac: 13,
+      speed: 30,
+      attacks: [],
+      conditions: [],
       notes: 'Test notes',
     },
     {
       id: '2',
-      type: 'Zombie',
+      type: 'zombie',
       name: 'Zombie 1',
       hp: 22,
       maxHp: 22,
       ac: 8,
+      speed: 20,
+      attacks: [],
+      conditions: [],
       notes: 'Test notes',
     },
   ];

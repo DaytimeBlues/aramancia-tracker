@@ -186,6 +186,7 @@ When working with minions, be aware of this discrepancy. Do not modify these int
 - **Tests fail?** Ensure components using Redux hooks are wrapped in `<Provider>`
 - **Type errors?** Don't use `any` - use proper types from `src/types/index.ts`
 - **Capacitor warnings?** Expected on Node 20, safe to ignore unless targeting Android build
+- **Type discrepancy** Check the known issue about Minion type mismatch if working on combat features.
 
 ### File Organization Convention
 - **Components:** One component per file, named exports for main component

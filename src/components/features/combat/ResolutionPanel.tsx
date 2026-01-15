@@ -25,10 +25,8 @@ interface ResolutionPanelProps {
 
 /**
  * Central panel displaying the resolution flow based on spell mode.
- * 
- * Physical Dice Mode: Shows formulas for the user to roll, then records outcome.
- * 
- * SRD 5.1 Resolution Patterns:
+ * * Physical Dice Mode: Shows formulas for the user to roll, then records outcome.
+ * * SRD 5.1 Resolution Patterns:
  * - Attack: "make a spell attack" → d20 + spell attack bonus vs AC
  * - Save: "target makes a saving throw" → target rolls vs Spell Save DC
  * - Automatic: No attack/save mentioned → effect applies directly
@@ -63,7 +61,7 @@ export const ResolutionPanel: React.FC<ResolutionPanelProps> = ({
 
         // Apply scaling for upcasting
         if (dmg.scaling?.type === 'per_slot_level' && dmg.scaling.diceIncreasePerLevel) {
-            const extraDice = (slotLevel - spell.level) * dmg.scaling.diceIncreasePerLevel;
+            const extraDice = (slotLevel - (spell.level ?? 0)) * dmg.scaling.diceIncreasePerLevel;
             diceCount += extraDice;
         }
 
@@ -77,7 +75,7 @@ export const ResolutionPanel: React.FC<ResolutionPanelProps> = ({
             {/* Header */}
             <div className="px-4 py-3 border-b border-white/10">
                 <h3 className="text-lg font-display text-parchment-light">{spell.name}</h3>
-                {slotLevel > 0 && slotLevel > spell.level && (
+                {slotLevel > 0 && slotLevel > (spell.level ?? 0) && (
                     <span className="text-xs text-parchment-light/80 font-display">Upcast to Level {slotLevel}</span>
                 )}
             </div>

@@ -7,7 +7,7 @@ export const createConcentrationMiddleware = () => {
 
     listenerMiddleware.startListening({
         actionCreator: hpChanged,
-        effect: (action, listenerApi) => {
+        effect: (_action, listenerApi) => {
             const previousState = listenerApi.getOriginalState() as {
                 character: { hp: { current: number } };
                 combat: { activeConcentration: unknown };

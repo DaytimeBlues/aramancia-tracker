@@ -1,7 +1,7 @@
 import { X, Trash2, Skull, Biohazard, Minus, Plus } from 'lucide-react';
-import type { Minion } from '../../types';
 import { useAppDispatch } from '../../store/hooks';
 import { minionAdded, minionRemoved, minionUpdated, allMinionsCleared } from '../../store/slices/combatSlice';
+import type { Minion } from '../../store/slices/combatSlice';
 import { undeadStats } from '../../data/undeadStats';
 
 interface MinionDrawerProps {
@@ -154,7 +154,9 @@ export function MinionDrawer({
                                         <span className="font-display text-parchment-light">{minion.name}</span>
                                         <span className="text-xs text-muted">AC {minion.ac}</span>
                                     </div>
-                                    <p className="text-xs text-muted/70 truncate max-w-[150px] ml-6">{minion.notes}</p>
+                                    {minion.notes && (
+                                        <p className="text-xs text-muted/70 truncate max-w-[150px] ml-6">{minion.notes}</p>
+                                    )}
                                 </div>
 
                                 <div className="flex items-center gap-3">

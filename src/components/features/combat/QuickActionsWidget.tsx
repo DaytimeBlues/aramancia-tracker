@@ -109,11 +109,6 @@ export const QuickActionsWidget: React.FC = () => {
                         <div className="text-sm text-stone-400">
                             Your modifier: d20 + {conMod + profBonus} (CON {conMod >= 0 ? `+${conMod}` : conMod} + Prof +{profBonus})
                         </div>
-                        {hasWarCaster && (
-                            <div className="mt-2 text-xs text-green-400">
-                                ✓ War Caster: Roll with Advantage
-                            </div>
-                        )}
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">

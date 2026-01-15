@@ -9,5 +9,17 @@ export default defineConfig({
     environment: 'jsdom',
     root: '.',
     setupFiles: path.resolve(__dirname, 'src/test/setup.ts'),
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+      include: ['src/**/*.ts', 'src/**/*.tsx'],
+      thresholds: {
+        lines: 80,
+        functions: 80,
+        branches: 75,
+        'src/features/minions/minionSlice.ts': { branches: 90 },
+        'src/store/middleware/concentrationMiddleware.ts': { branches: 95 },
+      },
+    },
   },
 })

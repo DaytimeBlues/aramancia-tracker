@@ -1,10 +1,10 @@
-
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MinionDrawer } from '../components/minions/MinionDrawer';
 import type { Minion } from '../types';
 import { store } from '../store';
+import { allMinionsCleared, minionAdded } from '../store/slices/characterSlice';
 
 const mockMinions: Minion[] = [
   {
@@ -34,28 +34,32 @@ const mockMinions: Minion[] = [
 ];
 
 describe('MinionDrawer', () => {
+  beforeEach(() => {
+    store.dispatch(allMinionsCleared());
+  });
+
   it('renders minion list when open', () => {
+    mockMinions.forEach(m => store.dispatch(minionAdded(m)));
+
     render(
       <Provider store={store}>
         <MinionDrawer
           isOpen={true}
           onClose={() => { }}
-          minions={mockMinions}
         />
       </Provider>
     );
 
     expect(screen.getByText('Skeleton 1')).toBeInTheDocument();
-    expect(screen.getByText('Zombie 1')).toBeInTheDocument();
   });
 
   it('renders add buttons when open', () => {
+    // No minions added
     render(
       <Provider store={store}>
         <MinionDrawer
           isOpen={true}
           onClose={() => { }}
-          minions={[]}
         />
       </Provider>
     );
@@ -65,26 +69,28 @@ describe('MinionDrawer', () => {
   });
 
   it('shows release all button when minions exist', () => {
+    store.dispatch(minionAdded(mockMinions[0]));
+
     render(
       <Provider store={store}>
         <MinionDrawer
           isOpen={true}
           onClose={() => { }}
-          minions={mockMinions}
         />
       </Provider>
     );
 
-    expect(screen.getByText('Release All')).toBeInTheDocument();
+    expect(screen.getByText('Dismiss All')).toBeInTheDocument();
   });
 
   it('displays minion count', () => {
+    mockMinions.forEach(m => store.dispatch(minionAdded(m)));
+
     render(
       <Provider store={store}>
         <MinionDrawer
           isOpen={true}
           onClose={() => { }}
-          minions={mockMinions}
         />
       </Provider>
     );

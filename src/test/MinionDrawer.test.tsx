@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { MinionDrawer } from '../components/minions/MinionDrawer';
 import type { Minion } from '../types';
 import { store } from '../store';
-import { allMinionsCleared, minionAdded } from '../store/slices/characterSlice';
+import { allMinionsCleared, minionAdded } from '../store/slices/combatSlice';
 
 const mockMinions: Minion[] = [
   {

@@ -3,6 +3,7 @@ import { Feather, Shield, Brain, User, Settings, Skull, Wand2, BookOpen, Backpac
 import { BackgroundVideo } from './BackgroundVideo';
 import { useAppSelector } from '../../store/hooks';
 import { selectCharacter } from '../../store/slices/characterSlice';
+import { selectAllMinions } from '../../store/slices/combatSlice';
 import { MinionDrawer } from '../minions/MinionDrawer';
 import { WandDrawer } from '../widgets/WandDrawer';
 
@@ -26,7 +27,7 @@ const navItems = [
 export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
     const [imgError, setImgError] = useState(false);
     // const location = useLocation(); // Unused
-    const activeMinions = useAppSelector(state => state.character.minions);
+    const activeMinions = useAppSelector(selectAllMinions);
     const character = useAppSelector(selectCharacter);
     const [isMinionDrawerOpen, setIsMinionDrawerOpen] = useState(false);
     const [isWandDrawerOpen, setIsWandDrawerOpen] = useState(false);

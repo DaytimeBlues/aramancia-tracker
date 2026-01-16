@@ -60,7 +60,7 @@ import {
   toastCleared,
   hydrate,
 } from './store/slices/characterSlice';
-import { castingStarted, slotConfirmed } from './store/slices/combatSlice';
+import { castingStarted, slotConfirmed, minionsHydrated } from './store/slices/combatSlice';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -84,7 +84,8 @@ function App() {
 
   // --- SESSION HANDLING ---
   const handleSessionSelected = (session: Session) => {
-    dispatch(hydrate({ characterData: session.characterData, minions: session.minions }));
+    dispatch(hydrate({ characterData: session.characterData }));
+    dispatch(minionsHydrated(session.minions));
     setShowSessionPicker(false);
   };
 

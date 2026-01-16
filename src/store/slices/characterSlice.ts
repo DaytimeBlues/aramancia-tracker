@@ -9,15 +9,13 @@
  * to sessionStorage on every action.
  */
 import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import type { CharacterData, AbilityKey, InventoryItem, Minion } from '../../types';
+import type { CharacterData, AbilityKey, InventoryItem } from '../../types';
 import { initialCharacterData } from '../../data/initialState';
 import { getActiveSession } from '../../utils/sessionStorage';
 import { recalculateDerivedCharacterData } from '../../utils/srdRules';
 
 // --- STATE INTERFACE ---
-// Extends CharacterData with session-level data (minions)
 export interface CharacterState extends CharacterData {
-    minions: Minion[];
     // Toast message (ephemeral UI state, OK to keep here for simplicity)
     toast: string | null;
 }
@@ -29,13 +27,11 @@ function getInitialState(): CharacterState {
     if (session) {
         return {
             ...session.characterData,
-            minions: session.minions || [],
             toast: null,
         };
     }
     return {
         ...initialCharacterData,
-        minions: [],
         toast: null,
     };
 }
@@ -50,9 +46,8 @@ export const characterSlice = createSlice({
         /**
          * Hydrate state from sessionStorage (called on app mount or session switch)
          */
-        hydrate: (state, action: PayloadAction<{ characterData: CharacterData; minions: Minion[] }>) => {
+        hydrate: (state, action: PayloadAction<{ characterData: CharacterData }>) => {
             Object.assign(state, action.payload.characterData);
-            state.minions = action.payload.minions;
         },
 
         // --- HP ACTIONS ---
@@ -233,26 +228,6 @@ export const characterSlice = createSlice({
             }
         },
 
-        // --- MINIONS ---
-        minionAdded: (state, action: PayloadAction<Minion>) => {
-            state.minions.push(action.payload);
-            state.toast = `Raised ${action.payload.type}`;
-        },
-        minionUpdated: (state, action: PayloadAction<{ id: string; hp: number }>) => {
-            const minion = state.minions.find(m => m.id === action.payload.id);
-            if (minion) {
-                minion.hp = Math.max(0, action.payload.hp);
-            }
-        },
-        minionRemoved: (state, action: PayloadAction<string>) => {
-            state.minions = state.minions.filter(m => m.id !== action.payload);
-            state.toast = "Minion Destroyed";
-        },
-        allMinionsCleared: (state) => {
-            state.minions = [];
-            state.toast = "All Minions Released";
-        },
-
         // --- TOAST ---
         toastShown: (state, action: PayloadAction<string>) => {
             state.toast = action.payload;
@@ -283,7 +258,6 @@ export const selectCharacter = (state: StateWithCharacter) => state.character;
 export const selectHp = (state: StateWithCharacter) => state.character.hp;
 export const selectSlots = (state: StateWithCharacter) => state.character.slots;
 export const selectConcentration = (state: StateWithCharacter) => state.character.concentration;
-export const selectMinions = (state: StateWithCharacter) => state.character.minions;
 export const selectToast = (state: StateWithCharacter) => state.character.toast;
 
 export const selectAbilityModifier = createSelector(
@@ -338,10 +312,6 @@ export const {
     inventoryItemRemoved,
     inventoryItemUpdated,
     itemChargeConsumed,
-    minionAdded,
-    minionUpdated,
-    minionRemoved,
-    allMinionsCleared,
     toastShown,
     toastCleared,
     spellPrepared,

@@ -24,16 +24,24 @@ export function WandDrawer({ isOpen, onClose }: WandDrawerProps) {
     );
     const wand = character.inventory[wandItemIndex];
 
-    const handleCast = (spellName: string) => {
-        if (!wand || !wand.charges || wand.charges.current <= 0) return;
+    const handleCast = (spellName: string, cost: number) => {
+        if (!wand || !wand.charges || wand.charges.current < cost) return;
 
         // Consume Charge
-        dispatch(itemChargeConsumed(wandItemIndex));
+        dispatch(itemChargeConsumed({ index: wandItemIndex, amount: cost }));
+
+        // Parse spell name for concentration check "Kenaz (Heat Metal)" -> "Heat Metal"
+        const actualSpellName = spellName.includes('(')
+            ? spellName.match(/\((.*?)\)/)?.[1] || spellName
+            : spellName;
 
         // Check if spell requires concentration
-        const spellData = allSpells.find(s => s.name === spellName);
+        // Try exact match first, then case-insensitive
+        const spellData = allSpells.find(s => s.name === actualSpellName) ||
+            allSpells.find(s => s.name.toLowerCase() === actualSpellName.toLowerCase());
+
         if (spellData?.concentration) {
-            dispatch(concentrationSet(`${spellName} (Wand)`));
+            dispatch(concentrationSet(`${actualSpellName} (Wand)`));
         }
     };
 
@@ -62,7 +70,7 @@ export function WandDrawer({ isOpen, onClose }: WandDrawerProps) {
                             <Wand2 size={24} className="text-purple-400" />
                             <div>
                                 <h2 className="font-display text-lg text-parchment-light tracking-wider">{wand.name}</h2>
-                                <p className="text-xs text-muted">{wand.description}</p>
+                                <p className="text-xs text-muted max-w-[250px] truncate">{wand.description}</p>
                             </div>
                         </div>
                         <button
@@ -89,16 +97,24 @@ export function WandDrawer({ isOpen, onClose }: WandDrawerProps) {
 
                     {/* Spells List */}
                     <div className="space-y-3">
-                        <h3 className="font-display text-sm text-muted uppercase tracking-wider mb-2">Imbued Spells</h3>
-                        {wand.spells?.map((spellName) => {
-                            const spellData = allSpells.find(s => s.name === spellName);
+                        <h3 className="font-display text-sm text-muted uppercase tracking-wider mb-2">Imbued Runes</h3>
+                        {wand.spells?.map((spellObj: string | { name: string; cost: number }) => {
+                            // Handle both string[] (legacy) and object[] (new)
+                            const spellName = typeof spellObj === 'string' ? spellObj : spellObj.name;
+                            const cost = typeof spellObj === 'string' ? 1 : spellObj.cost;
+
+                            const actualSpellName = spellName.includes('(')
+                                ? spellName.match(/\((.*?)\)/)?.[1] || spellName
+                                : spellName;
+
+                            const spellData = allSpells.find(s => s.name.toLowerCase() === actualSpellName.toLowerCase());
                             const isConcentration = spellData?.concentration;
-                            const canCast = (wand.charges?.current || 0) > 0;
+                            const canCast = (wand.charges?.current || 0) >= cost;
 
                             return (
                                 <button
                                     key={spellName}
-                                    onClick={() => handleCast(spellName)}
+                                    onClick={() => handleCast(spellName, cost)}
                                     disabled={!canCast}
                                     className="w-full flex items-center justify-between bg-card-elevated hover:bg-white/5 border border-white/10 p-4 rounded-xl group disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                                 >
@@ -110,12 +126,17 @@ export function WandDrawer({ isOpen, onClose }: WandDrawerProps) {
                                             <div className="font-display text-white group-hover:text-purple-200 transition-colors">
                                                 {spellName}
                                             </div>
-                                            {isConcentration && (
-                                                <div className="text-xs text-orange-300 flex items-center gap-1">
-                                                    <span className="w-1 h-1 bg-orange-400 rounded-full" />
-                                                    Concentration
-                                                </div>
-                                            )}
+                                            <div className="flex gap-2">
+                                                <span className="text-xs text-purple-400 font-mono">
+                                                    {cost} Charge{cost > 1 ? 's' : ''}
+                                                </span>
+                                                {isConcentration && (
+                                                    <div className="text-xs text-orange-300 flex items-center gap-1">
+                                                        <span className="w-1 h-1 bg-orange-400 rounded-full" />
+                                                        Concentration
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                     <ChevronRight size={18} className="text-white/20 group-hover:text-white/60" />

@@ -95,6 +95,9 @@ export const SpellSchema = z.object({
 
     // Tags for filtering and searching
     tags: z.array(z.string()).optional(), // e.g., ["control", "damage", "summoning", "utility"]
+
+    // Tactical advice or example scenarios
+    usageTips: z.string().optional(),
 });
 
 // Export the inferred TypeScript type

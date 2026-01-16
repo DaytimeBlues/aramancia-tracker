@@ -34,7 +34,7 @@ export const InventoryView: React.FC = () => {
     };
 
     const handleUseCharge = (index: number) => {
-        dispatch(itemChargeConsumed(index));
+        dispatch(itemChargeConsumed({ index }));
     };
 
     const handleDelete = (index: number) => {

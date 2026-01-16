@@ -222,13 +222,14 @@ export const characterSlice = createSlice({
                 state.inventory[action.payload.index] = action.payload.item;
             }
         },
-        itemChargeConsumed: (state, action: PayloadAction<number>) => {
-            const item = state.inventory[action.payload];
-            if (item && item.charges && item.charges.current > 0) {
-                item.charges.current -= 1;
-                state.toast = `Used charge on ${item.name}`;
+        itemChargeConsumed: (state, action: PayloadAction<{ index: number; amount?: number }>) => {
+            const { index, amount = 1 } = action.payload;
+            const item = state.inventory[index];
+            if (item && item.charges && item.charges.current >= amount) {
+                item.charges.current -= amount;
+                state.toast = `Used ${amount} charge(s) on ${item.name}`;
             } else if (item) {
-                state.toast = `${item.name} has no charges left!`;
+                state.toast = `${item.name} has insufficient charges!`;
             }
         },
 

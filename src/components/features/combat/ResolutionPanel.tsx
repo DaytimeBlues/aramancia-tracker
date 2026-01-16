@@ -10,6 +10,7 @@ type SpellDetailsLike = Partial<SpellV3> & {
     level: number;
     desc?: string;
     decisionTree?: SpellDecision[];
+    usageTips?: string;
 };
 
 interface ResolutionPanelProps {
@@ -82,24 +83,35 @@ export const ResolutionPanel: React.FC<ResolutionPanelProps> = ({
 
             {/* Resolution Mode Content */}
             <div className="p-4 space-y-4">
-                {/* Spell Description + Decision Tree */}
-                {(longDescription || decisionTree.length > 0 || spell.higherLevelDescription) && (
-                    <details className="bg-card-elevated/60 border border-white/10 rounded-lg p-3">
-                        <summary className="cursor-pointer text-xs text-muted font-display tracking-wider uppercase">
-                            Spell details
+                {/* Spell Description + Usage Tips */}
+                {(longDescription || decisionTree.length > 0 || spell.higherLevelDescription || spell.usageTips) && (
+                    <details className="bg-card-elevated/60 border border-white/10 rounded-lg p-3 group">
+                        <summary className="cursor-pointer flex items-center justify-between text-xs text-muted font-display tracking-wider uppercase hover:text-parchment transition-colors">
+                            <span>Spell Details & Usage</span>
+                            <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity">Expand</span>
                         </summary>
-                        <div className="mt-3 space-y-3">
+                        <div className="mt-3 space-y-4">
+                            {/* Usage Tips Section */}
+                            {spell.usageTips && (
+                                <div className="bg-purple-900/20 border-l-2 border-purple-500 pl-3 py-2 text-sm text-purple-200 italic">
+                                    <span className="font-bold not-italic text-purple-400 text-xs uppercase tracking-wide block mb-1">Tactical Advice</span>
+                                    {spell.usageTips}
+                                </div>
+                            )}
+
                             {longDescription && (
-                                <p className="text-sm text-parchment leading-relaxed whitespace-pre-wrap">
+                                <p className="text-sm text-parchment leading-relaxed whitespace-pre-wrap border-b border-white/5 pb-2">
                                     {longDescription}
                                 </p>
                             )}
+
                             {spell.higherLevelDescription && (
                                 <div className="text-xs text-muted">
                                     <span className="font-display text-parchment-light">At Higher Levels:</span>{' '}
                                     <span className="text-parchment">{spell.higherLevelDescription}</span>
                                 </div>
                             )}
+
                             {decisionTree.length > 0 && (
                                 <div className="space-y-1">
                                     <div className="text-[10px] text-muted uppercase tracking-wider font-display">

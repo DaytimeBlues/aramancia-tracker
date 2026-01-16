@@ -3,7 +3,8 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { initialSpellsV3 } from '../../../data/spellsV3';
 import { SpellCard } from './SpellCard';
 import { spellPrepared, spellUnprepared } from '../../../store/slices/spellbookSlice';
-import { slotUsed, selectSlots, concentrationSet } from '../../../store/slices/characterSlice';
+import { selectSlots, concentrationSet } from '../../../store/slices/characterSlice';
+import { castingStarted, slotConfirmed } from '../../../store/slices/combatSlice';
 import { CastModal } from './CastModal';
 import { SpellV3 } from '../../../schemas/spellSchema';
 
@@ -28,6 +29,9 @@ export const SpellList: React.FC = () => {
 
     // UI State
     const [filterLevel, setFilterLevel] = useState<number | 'all'>('all');
+    const [filterSchool, setFilterSchool] = useState<string>('all');
+    const [filterDamage, setFilterDamage] = useState<string>('all');
+    const [searchQuery, setSearchQuery] = useState('');
     const [showPreparedOnly, setShowPreparedOnly] = useState(false);
     const [castingSpell, setCastingSpell] = useState<SpellV3 | null>(null);
 
@@ -43,6 +47,23 @@ export const SpellList: React.FC = () => {
             spells = spells.filter(s => s.level === filterLevel);
         }
 
+        if (filterSchool !== 'all') {
+            spells = spells.filter(s => s.school === filterSchool);
+        }
+
+        if (filterDamage !== 'all') {
+            spells = spells.filter(s => s.damage?.some(d => d.type === filterDamage));
+        }
+
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase();
+            spells = spells.filter(s =>
+                s.name.toLowerCase().includes(query) ||
+                s.school.toLowerCase().includes(query) ||
+                s.tags?.some(t => t.toLowerCase().includes(query))
+            );
+        }
+
         // Group by level
         const groups: Record<number, typeof spells> = {};
         spells.forEach(spell => {
@@ -53,7 +74,7 @@ export const SpellList: React.FC = () => {
         });
 
         return groups;
-    }, [filterLevel, showPreparedOnly, preparedSpells]);
+    }, [filterLevel, filterSchool, filterDamage, searchQuery, showPreparedOnly, preparedSpells]);
 
     const handlePrepareToggle = (spellId: string) => {
         if (preparedSpells.includes(spellId)) {
@@ -65,13 +86,19 @@ export const SpellList: React.FC = () => {
 
     const handleCastConfirm = (slotLevel: number) => {
         if (castingSpell) {
-            // 1. Consume Slot
-            if (slotLevel > 0) { // Cantrips match slot 0 but don't consume? Actually logic handles cantrips by not confirming with >0 usually. 
-                // But wait, cantrips don't use slots. 
-                dispatch(slotUsed({ level: slotLevel }));
-            }
+            // Determine resolution mode
 
-            // 2. Set Concentration
+            const resolutionMode: 'attack' | 'save' | 'automatic' =
+                castingSpell.requiresAttackRoll ? 'attack' :
+                    castingSpell.requiresSavingThrow ? 'save' : 'automatic';
+
+            // 1. Start Combat/Casting Flow
+            dispatch(castingStarted({ spellId: castingSpell.id }));
+
+            // 2. Confirm Slot & Mode (Trigger Resolution Panel)
+            dispatch(slotConfirmed({ slotLevel, resolutionMode }));
+
+            // 3. Set Concentration if needed
             if (castingSpell.duration.type === 'concentration') {
                 dispatch(concentrationSet(castingSpell.name));
             }
@@ -86,22 +113,78 @@ export const SpellList: React.FC = () => {
     return (
         <div className="space-y-6">
             {/* Filters */}
-            <div className="flex items-center gap-4 p-4 rounded-lg bg-stone-950 border border-stone-900 sticky top-0 z-10 shadow-xl backdrop-blur-md bg-stone-950/90">
-                <div className="flex items-center gap-2">
-                    <span className="text-xs text-stone-500 uppercase tracking-wider font-bold">Show:</span>
-                    <button
-                        onClick={() => setShowPreparedOnly(!showPreparedOnly)}
-                        className={`px-3 py-1 text-xs rounded border transition-colors ${showPreparedOnly
-                            ? 'bg-yellow-900/20 text-yellow-500 border-yellow-900/50'
-                            : 'bg-stone-900 text-stone-400 border-stone-800 hover:border-stone-700'
-                            }`}
-                    >
-                        Prepared Only
-                    </button>
+            <div className="flex flex-col gap-4 p-4 rounded-lg bg-stone-950 border border-stone-900 sticky top-0 z-10 shadow-xl backdrop-blur-md bg-stone-950/90">
+
+                {/* Search & Toggles Row */}
+                <div className="flex flex-wrap items-center gap-4">
+                    {/* Search Bar */}
+                    <div className="flex-1 min-w-[200px]">
+                        <input
+                            type="text"
+                            placeholder="Search spells..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full bg-stone-900 border border-stone-800 rounded px-3 py-1.5 text-sm text-parchment focus:outline-none focus:border-purple-500/50 transition-colors"
+                        />
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                        <span className="text-xs text-stone-500 uppercase tracking-wider font-bold">Show:</span>
+                        <button
+                            onClick={() => setShowPreparedOnly(!showPreparedOnly)}
+                            className={`px-3 py-1 text-xs rounded border transition-colors ${showPreparedOnly
+                                ? 'bg-yellow-900/20 text-yellow-500 border-yellow-900/50'
+                                : 'bg-stone-900 text-stone-400 border-stone-800 hover:border-stone-700'
+                                }`}
+                        >
+                            Prepared Only
+                        </button>
+                    </div>
                 </div>
 
-                <div className="h-4 w-px bg-stone-800" />
+                {/* Advanced Filters Row */}
+                <div className="hidden sm:flex flex-wrap items-center gap-4 text-xs">
+                    <select
+                        value={filterSchool}
+                        onChange={(e) => setFilterSchool(e.target.value)}
+                        className="bg-stone-900 border border-stone-800 rounded px-2 py-1 text-stone-400 focus:outline-none focus:border-stone-700"
+                    >
+                        <option value="all">All Schools</option>
+                        <option value="Abjuration">Abjuration</option>
+                        <option value="Conjuration">Conjuration</option>
+                        <option value="Divination">Divination</option>
+                        <option value="Enchantment">Enchantment</option>
+                        <option value="Evocation">Evocation</option>
+                        <option value="Illusion">Illusion</option>
+                        <option value="Necromancy">Necromancy</option>
+                        <option value="Transmutation">Transmutation</option>
+                    </select>
 
+                    <select
+                        value={filterDamage}
+                        onChange={(e) => setFilterDamage(e.target.value)}
+                        className="bg-stone-900 border border-stone-800 rounded px-2 py-1 text-stone-400 focus:outline-none focus:border-stone-700"
+                    >
+                        <option value="all">All Damage</option>
+                        <option value="acid">Acid</option>
+                        <option value="bludgeoning">Bludgeoning</option>
+                        <option value="cold">Cold</option>
+                        <option value="fire">Fire</option>
+                        <option value="force">Force</option>
+                        <option value="lightning">Lightning</option>
+                        <option value="necrotic">Necrotic</option>
+                        <option value="piercing">Piercing</option>
+                        <option value="poison">Poison</option>
+                        <option value="psychic">Psychic</option>
+                        <option value="radiant">Radiant</option>
+                        <option value="slashing">Slashing</option>
+                        <option value="thunder">Thunder</option>
+                    </select>
+                </div>
+
+                <div className="h-px w-full bg-stone-800/50" />
+
+                {/* Level Tabs */}
                 <div className="flex items-center gap-2 overflow-x-auto no-scrollbar mask-gradient-r">
                     <button
                         onClick={() => setFilterLevel('all')}

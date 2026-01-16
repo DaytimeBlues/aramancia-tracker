@@ -21,13 +21,19 @@ function parseInventoryInput(input: string): InventoryItem {
             .split(',')
             .map(s => s.trim())
             .filter(Boolean);
-        return { name: `Wand (${spells.join(', ')})`, spells: spells.length > 0 ? spells : undefined };
+        return {
+            name: `Wand (${spells.join(', ')})`,
+            spells: spells.length > 0 ? spells.map(s => ({ name: s, cost: 1 })) : undefined
+        };
     }
 
     const wandOfMatch = trimmed.match(/^wand of\s+(.+)$/i);
     if (wandOfMatch) {
         const spellName = wandOfMatch[1].trim();
-        return { name: trimmed, spells: spellName ? [spellName] : undefined };
+        return {
+            name: trimmed,
+            spells: spellName ? [{ name: spellName, cost: 1 }] : undefined
+        };
     }
 
     return { name: trimmed };
@@ -78,15 +84,15 @@ export function InventoryWidget({ items, onAdd, onRemove, onCastSpell }: Invento
 
                             {item.spells && item.spells.length > 0 && (
                                 <div className="mt-2 flex flex-wrap gap-2">
-                                    {item.spells.map(spellName => (
+                                    {item.spells.map((spell) => (
                                         <button
-                                            key={spellName}
-                                            onClick={() => onCastSpell?.(spellName)}
+                                            key={spell.name}
+                                            onClick={() => onCastSpell?.(spell.name)}
                                             className="text-[10px] px-2 py-1 bg-white/5 border border-white/10 rounded text-parchment-light hover:text-white hover:border-white/30 transition-colors flex items-center gap-1"
-                                            title={`Cast ${spellName}`}
+                                            title={`Cast ${spell.name} (${spell.cost} charge${spell.cost > 1 ? 's' : ''})`}
                                         >
                                             <Wand2 size={12} />
-                                            Cast {spellName}
+                                            Cast {spell.name}
                                         </button>
                                     ))}
                                 </div>

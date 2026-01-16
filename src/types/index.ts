@@ -1,5 +1,7 @@
 
 export type AbilityKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha';
+// Refreshed types
+
 
 export type AbilityScores = Record<AbilityKey, number>;
 export type AbilityMods = Record<AbilityKey, number>;
@@ -68,10 +70,9 @@ export interface Minion {
 export interface InventoryItem {
     name: string;
     /**
-     * Optional list of spells that can be cast via this item (e.g., wand/staff).
-     * These are spell *names* that should match entries in `src/data/spells.ts`.
+     * List of spells/abilities imbued in the item.
      */
-    spells?: string[];
+    spells?: { name: string; cost: number; }[];
     /**
      * Optional charges for items like wands.
      */

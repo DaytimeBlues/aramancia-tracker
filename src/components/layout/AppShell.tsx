@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Feather, Shield, Brain, User, Settings, Skull, Wand2, BookOpen, Backpack } from 'lucide-react'; // Added Backpack, Removed X
+import { Feather, Shield, Brain, User, Settings, Skull, Wand2, Backpack } from 'lucide-react'; // Added Backpack, Removed X
 import { BackgroundVideo } from './BackgroundVideo';
 import { useAppSelector } from '../../store/hooks';
 import { selectCharacter } from '../../store/slices/characterSlice';
@@ -16,7 +16,6 @@ const navItems = [
     { id: 'home', icon: Shield, label: 'Stats' },
     { id: 'spells', icon: Wand2, label: 'Spellbook' },
     { id: 'combat', icon: Skull, label: 'Combat' },
-    { id: 'grimoire', icon: BookOpen, label: 'Arcana' },
     { id: 'abilities', icon: Brain, label: 'Abilities' },
     { id: 'bio', icon: User, label: 'Bio' },
     { id: 'inventory', icon: Backpack, label: 'Inventory' },

@@ -217,7 +217,7 @@ function App() {
         </div>
       )}
 
-      {activeTab === 'grimoire' && <div className="animate-fade-in"><GrimoireView /></div>}
+
 
       {activeTab === 'abilities' && (
         <div className="animate-fade-in">
@@ -227,6 +227,9 @@ function App() {
             skills={character.skills}
             profBonus={character.profBonus}
           />
+          <div className="mt-8 pt-8 border-t border-white/10">
+            <GrimoireView />
+          </div>
         </div>
       )}
 

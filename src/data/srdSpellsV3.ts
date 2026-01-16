@@ -88,6 +88,38 @@ function requiresSave(desc: string): { required: boolean; ability?: string } {
     return { required: false };
 }
 
+// Generate usage tips based on spell properties
+function generateUsageTips(srd: SRDSpell): string {
+    const tips: string[] = [];
+    const desc = srd.description.toLowerCase();
+
+    if (srd.concentration) tips.push("Requires Concentration: Watch your positioning to avoid taking damage.");
+    if (srd.duration.includes("1 minute") || srd.duration.includes("10 minutes")) tips.push("Cast before combat if possible to save action economy.");
+
+    // AOE / Targeting tips
+    if (desc.includes("radius") || desc.includes("cone") || desc.includes("cube") || desc.includes("sphere")) {
+        tips.push("Area of Effect: Target clusters of enemies for maximum efficiency.");
+        tips.push("Watch out for friendly fire!");
+    }
+
+    // Save tips
+    const save = requiresSave(srd.description);
+    if (save.required && save.ability) {
+        tips.push(`Target enemies with low ${save.ability} specifically.`);
+        if (save.ability === 'Dexterity') tips.push("Good against large, slow Brutes.");
+        if (save.ability === 'Wisdom') tips.push("Effective against simple-minded beasts or impulsive foes.");
+        if (save.ability === 'Constitution') tips.push("Avoid using on high-vitality monsters (Giants, Constructs).");
+    }
+
+    // Damage type tips
+    if (desc.includes("fire damage")) tips.push("Great against Trolls and plants. Avoid Fiends.");
+    if (desc.includes("cold damage")) tips.push("Often slows enemies. Good against Fire Elementals.");
+    if (desc.includes("lightning damage")) tips.push("Can be effective against armored foes (situational).");
+    if (desc.includes("psychic damage")) tips.push("Bypasses most physical resistances. Good against low-INT targets.");
+
+    return tips.length > 0 ? tips.join(" ") : "Read description carefully for specific triggers.";
+}
+
 // Transform a single SRD spell to SpellV3 format
 function transformToV3(srd: SRDSpell): SpellV3 {
     const saveInfo = requiresSave(srd.description);
@@ -124,6 +156,7 @@ function transformToV3(srd: SRDSpell): SpellV3 {
         } : undefined,
         damage: parseDamage(srd.description),
         tags: [srd.school.toLowerCase()],
+        usageTips: generateUsageTips(srd),
     };
 }
 

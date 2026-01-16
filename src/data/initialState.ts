@@ -19,7 +19,7 @@ export const initialCharacterData: CharacterData = {
         str: 8,
         dex: 14,
         con: 14,
-        int: 16, // Primary stat
+        int: 18, // Primary stat (+4 Mod + 3 Prof = +7)
         wis: 12,
         cha: 10
     },
@@ -27,7 +27,7 @@ export const initialCharacterData: CharacterData = {
         str: -1,
         dex: 2,
         con: 2,
-        int: 3,
+        int: 4,
         wis: 1,
         cha: 0
     },
@@ -58,10 +58,18 @@ export const initialCharacterData: CharacterData = {
         { name: 'Arcane Focus (Crystal)' },
         { name: 'Scholar\'s Pack' },
         {
-            name: 'Wand',
+            name: 'Direstone Runic Wand',
             charges: { current: 7, max: 7 },
-            spells: ['Magic Missile', 'Web', 'Fly'],
-            description: 'A mysterious wand with 7 charges.'
+            spells: [
+                { name: 'Algiz (Fire Resist)', cost: 3 },
+                { name: 'Eihwaz (Arcane Lock)', cost: 2 },
+                { name: 'Hagalaz (Shatter)', cost: 2 },
+                { name: 'Kenaz (Burning Hands)', cost: 1 },
+                { name: 'Kenaz (Heat Metal)', cost: 2 },
+                { name: 'Raidho (Stone Shape)', cost: 4 },
+                { name: 'Raidho (Illusory Script)', cost: 1 }
+            ],
+            description: 'A rigid stone wand from the Direstone mines. Expending the last charge risks crumbling (d20 roll).'
         }
     ],
     // Wizard Spell Slots (Level 5: 4/3/2)

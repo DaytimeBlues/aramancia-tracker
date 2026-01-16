@@ -1,0 +1,19 @@
+commit 7bbded553e5c08a600c7f3d23711a7b7b04a80de
+Author: GitHub Actions <github-actions@github.com>
+Date:   Wed Jan 14 09:21:42 2026 +0000
+
+    Fix ESLint error: use type alias instead of empty interface
+
+diff --git a/src/features/minions/minionSlice.ts b/src/features/minions/minionSlice.ts
+index 6aead7a..d66f475 100644
+--- a/src/features/minions/minionSlice.ts
++++ b/src/features/minions/minionSlice.ts
+@@ -1,7 +1,7 @@
+ import { createEntityAdapter, createSlice, type EntityState, type PayloadAction } from '@reduxjs/toolkit';
+ import { MINION_AC_MAX, MINION_NAME_MAX, type Minion } from './minionSchema';
+ 
+-export interface MinionState extends EntityState<Minion> {}
++export type MinionState = EntityState<Minion>;
+ 
+ const minionAdapter = createEntityAdapter<Minion>();
+ 

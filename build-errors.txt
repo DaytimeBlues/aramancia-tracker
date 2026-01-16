@@ -1,0 +1,10 @@
+﻿
+> aramancia-v2@0.0.0 build
+> tsc -b && vite build
+
+src/App.tsx(122,51): error TS1005: '=>' expected.
+src/App.tsx(122,52): error TS1127: Invalid character.
+src/App.tsx(122,59): error TS1005: ',' expected.
+src/App.tsx(123,11): error TS1005: ':' expected.
+src/App.tsx(123,64): error TS1005: ',' expected.
+src/App.tsx(363,1): error TS1128: Declaration or statement expected.

@@ -1,28 +1,10 @@
 import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { AppDispatch, RootState } from '../index';
 import { slotExpended } from './spellbookSlice';
+import type { Minion } from '../../types';
 
-// Minion type for Animate Dead / Summon Undead creatures
-export interface Minion {
-    id: string;
-    name: string;
-    type: 'skeleton' | 'zombie' | 'undead_spirit';
-    form?: 'ghostly' | 'putrid' | 'skeletal'; // For Summon Undead
-    hp: number;
-    maxHp: number;
-    ac: number;
-    speed: number;
-    attacks: MinionAttack[];
-    conditions: string[];
-    controlExpiresRound?: number;
-}
-
-export interface MinionAttack {
-    name: string;
-    toHit: number;
-    damage: string; // e.g., "1d6+2"
-    damageType: string;
-}
+// Re-export Minion type for consumers of this slice
+export type { Minion };
 
 // Concentration state
 export interface ConcentrationState {
@@ -128,6 +110,11 @@ export const combatSlice = createSlice({
         },
 
         // === Minion Management ===
+        minionsHydrated: (state, action: PayloadAction<Minion[]>) => {
+            minionAdapter.setAll(state.minions, action.payload);
+            state.initiativeOrder = action.payload.map(minion => minion.id);
+            state.currentTurnIndex = 0;
+        },
         minionAdded: (state, action: PayloadAction<Minion>) => {
             minionAdapter.addOne(state.minions, action.payload);
             // Add to initiative order
@@ -257,6 +244,7 @@ export const {
     minionDamaged,
     minionHealed,
     allMinionsCleared,
+    minionsHydrated,
     combatStarted,
     turnAdvanced,
     combatEnded,
@@ -288,5 +276,9 @@ export const castingCompletedWithSlot = () => (dispatch: AppDispatch, getState: 
 
 // Selectors
 export const minionSelectors = minionAdapter.getSelectors();
+export const selectAllMinions = (state: RootState) => minionSelectors.selectAll(state.combat.minions);
+export const selectMinionById = (id: string) => (state: RootState) =>
+    minionSelectors.selectById(state.combat.minions, id);
+export const selectMinionCount = (state: RootState) => minionSelectors.selectTotal(state.combat.minions);
 
 export default combatSlice.reducer;

@@ -1,3 +1,4 @@
+
 export type AbilityKey = 'str' | 'dex' | 'con' | 'int' | 'wis' | 'cha';
 
 export type AbilityScores = Record<AbilityKey, number>;
@@ -39,13 +40,29 @@ export interface MinionStats {
     notes: string;
 }
 
+export interface MinionAttack {
+    name: string;
+    toHit: number;
+    damage: string; // e.g., "1d6+2"
+    damageType: string;
+}
+
+/**
+ * Minion type for Animate Dead / Summon Undead creatures
+ */
 export interface Minion {
     id: string;
-    type: 'Skeleton' | 'Zombie';
     name: string;
-    hp: { current: number; max: number };
+    type: 'skeleton' | 'zombie' | 'undead_spirit';
+    form?: 'ghostly' | 'putrid' | 'skeletal'; // For Summon Undead
+    hp: number;
+    maxHp: number;
     ac: number;
-    notes: string;
+    speed: number;
+    attacks: MinionAttack[];
+    conditions: string[];
+    controlExpiresRound?: number;
+    notes?: string;
 }
 
 export interface InventoryItem {
@@ -55,6 +72,14 @@ export interface InventoryItem {
      * These are spell *names* that should match entries in `src/data/spells.ts`.
      */
     spells?: string[];
+    /**
+     * Optional charges for items like wands.
+     */
+    charges?: {
+        current: number;
+        max: number;
+    };
+    description?: string;
 }
 
 // Re-export Schema types
@@ -106,6 +131,6 @@ export interface Session {
     date: string;
     label?: string;
     characterData: CharacterData;
-    minions: Minion[];
     lastModified: string;
+    minions: Minion[];
 }

@@ -29,22 +29,23 @@ import { RestView } from './components/views/RestView';
 import { GrimoireView } from './components/views/GrimoireView';
 import { BiographyView } from './components/views/BiographyView';
 import { StatsView } from './components/views/StatsView';
+import { InventoryView } from './components/views/InventoryView';
 import { SessionPicker } from './components/SessionPicker';
 import { spells } from './data/spells';
 import { getActiveSession } from './utils/sessionStorage';
 import { getRequiredLevelForSpell } from './utils/spellRules';
-import type { Session, Minion } from './types';
+import type { Session } from './types';
 import { useAppDispatch, useAppSelector } from './store/hooks';
 import {
   selectCharacter,
   selectToast,
-  selectMinions,
   hpChanged,
   tempHpSet,
   mageArmourToggled,
   shieldToggled,
   slotUsed,
   slotRestored,
+  slotsUpdated,
   concentrationSet,
   deathSaveChanged,
   hitDiceSpent,
@@ -55,16 +56,11 @@ import {
   itemUnattuned,
   inventoryItemAdded,
   inventoryItemRemoved,
-  minionAdded,
-  minionHpChanged,
-  minionRemoved,
-  allMinionsCleared,
   toastShown,
   toastCleared,
   hydrate,
-  allSlotsRestored,
 } from './store/slices/characterSlice';
-import { castingStarted, slotConfirmed } from './store/slices/combatSlice';
+import { castingStarted, slotConfirmed, minionsHydrated } from './store/slices/combatSlice';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -76,7 +72,7 @@ function App() {
   // --- REDUX SELECTORS ---
   const character = useAppSelector(selectCharacter);
   const toast = useAppSelector(selectToast);
-  const minions = useAppSelector(selectMinions);
+  // NOTE: minions are now managed in CombatView via combatSlice
 
   // Clear toast after 2 seconds
   useEffect(() => {
@@ -88,7 +84,8 @@ function App() {
 
   // --- SESSION HANDLING ---
   const handleSessionSelected = (session: Session) => {
-    dispatch(hydrate({ characterData: session.characterData, minions: session.minions }));
+    dispatch(hydrate({ characterData: session.characterData }));
+    dispatch(minionsHydrated(session.minions));
     setShowSessionPicker(false);
   };
 
@@ -119,30 +116,6 @@ function App() {
     dispatch(deathSaveChanged({ type, value }));
   }, [dispatch]);
 
-  const addMinion = (type: 'Skeleton' | 'Zombie') => {
-    const stats = character.defaultMinion[type];
-    const newMinion: Minion = {
-      id: crypto.randomUUID(),
-      type,
-      name: `${type} ${minions.filter(m => m.type === type).length + 1}`,
-      hp: { current: stats.hp, max: stats.hp },
-      ac: stats.ac,
-      notes: stats.notes
-    };
-    dispatch(minionAdded(newMinion));
-  };
-
-  const updateMinion = useCallback((id: string, hp: number) => {
-    dispatch(minionHpChanged({ id, hp }));
-  }, [dispatch]);
-
-  const removeMinion = useCallback((id: string) => {
-    dispatch(minionRemoved(id));
-  }, [dispatch]);
-
-  const clearMinions = useCallback(() => {
-    dispatch(allMinionsCleared());
-  }, [dispatch]);
 
   const handleCastFromInventory = useCallback((spellName: string) => {
     const spell = spells.find(s => s.name === spellName) ||
@@ -241,13 +214,7 @@ function App() {
 
       {activeTab === 'combat' && (
         <div className="animate-fade-in">
-          <CombatView
-            minions={minions}
-            onAddMinion={addMinion}
-            onUpdateMinion={updateMinion}
-            onRemoveMinion={removeMinion}
-            onClearMinions={clearMinions}
-          />
+          <CombatView />
         </div>
       )}
 
@@ -261,6 +228,12 @@ function App() {
             skills={character.skills}
             profBonus={character.profBonus}
           />
+        </div>
+      )}
+
+      {activeTab === 'inventory' && (
+        <div className="animate-fade-in">
+          <InventoryView />
         </div>
       )}
 
@@ -320,9 +293,9 @@ function App() {
           </div>
           <div className="mt-8 border-t border-gray-800 pt-8">
             <MulticlassSpellSlotsWidget
-              onSlotsCalculated={() => {
-                dispatch(allSlotsRestored());
-                dispatch(toastShown('Spell slots updated!'));
+              currentSlots={character.slots}
+              onSlotsCalculated={(newSlots) => {
+                dispatch(slotsUpdated(newSlots));
               }}
             />
           </div>

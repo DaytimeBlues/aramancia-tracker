@@ -10,6 +10,7 @@
 import { Middleware } from '@reduxjs/toolkit';
 import { updateActiveSession } from '../../utils/sessionStorage';
 import { CharacterState } from './characterSlice';
+import { selectAllMinions } from './combatSlice';
 
 // Actions that should NOT trigger persistence (ephemeral)
 const EPHEMERAL_ACTIONS = ['character/toastCleared', 'character/toastShown'];
@@ -17,20 +18,21 @@ const EPHEMERAL_ACTIONS = ['character/toastCleared', 'character/toastShown'];
 export const persistenceMiddleware: Middleware = (store) => (next) => (action) => {
     const result = next(action);
 
-    // Only persist on character actions, and skip ephemeral ones
+    // Only persist on character actions or combat minion actions, and skip ephemeral ones
     if (
         typeof action === 'object' &&
         action !== null &&
         'type' in action &&
         typeof action.type === 'string' &&
-        action.type.startsWith('character/') &&
-        !EPHEMERAL_ACTIONS.includes(action.type)
+        ((action.type.startsWith('character/') && !EPHEMERAL_ACTIONS.includes(action.type)) ||
+            (action.type.startsWith('combat/') && action.type.includes('minion')))
     ) {
         const state = store.getState();
         const character: CharacterState = state.character;
+        const minions = selectAllMinions(state);
 
-        // Extract CharacterData (without minions and toast) for session storage
-        const { minions, ...characterData } = character;
+        // Extract CharacterData (without toast) for session storage
+        const { toast, ...characterData } = character;
 
         // Save to sessionStorage (debounced internally if needed, but let's keep it simple)
         // Using requestIdleCallback for better performance on rapid updates

@@ -1,0 +1,1 @@
+src/components/features/combat/MinionCard.tsx(3,48): error TS2614: Module '"../../../store/slices/combatSlice"' has no exported member 'MinionAttack'. Did you mean to use 'import MinionAttack from "../../../store/slices/combatSlice"' instead?

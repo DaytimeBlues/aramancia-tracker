@@ -145,7 +145,7 @@ export function CombatView() {
             <MinionDrawer
                 isOpen={isDrawerOpen}
                 onClose={() => setIsDrawerOpen(false)}
-                minions={minions}
+
             />
 
             {/* Stat Block Modal */}

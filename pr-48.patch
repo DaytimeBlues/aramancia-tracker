@@ -1,0 +1,63 @@
+diff --git a/src/App.tsx b/src/App.tsx
+index 6bf0ae5..856bb09 100644
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -320,7 +320,7 @@ function App() {
+           </div>
+           <div className="mt-8 border-t border-gray-800 pt-8">
+             <MulticlassSpellSlotsWidget
+-              onSlotsCalculated={(_newSlots) => {
++              onSlotsCalculated={() => {
+                 dispatch(allSlotsRestored());
+                 dispatch(toastShown('Spell slots updated!'));
+               }}
+diff --git a/src/store/slices/persistenceMiddleware.ts b/src/store/slices/persistenceMiddleware.ts
+index 56431e1..aba303f 100644
+--- a/src/store/slices/persistenceMiddleware.ts
++++ b/src/store/slices/persistenceMiddleware.ts
+@@ -30,7 +30,7 @@ export const persistenceMiddleware: Middleware = (store) => (next) => (action) =
+         const character: CharacterState = state.character;
+ 
+         // Extract CharacterData (without minions and toast) for session storage
+-        const { minions, toast, ...characterData } = character;
++        const { minions, ...characterData } = character;
+ 
+         // Save to sessionStorage (debounced internally if needed, but let's keep it simple)
+         // Using requestIdleCallback for better performance on rapid updates
+diff --git a/src/utils/sessionStorage.ts b/src/utils/sessionStorage.ts
+index bfdb393..6a2b904 100644
+--- a/src/utils/sessionStorage.ts
++++ b/src/utils/sessionStorage.ts
+@@ -17,23 +17,24 @@ export function generateSessionId(): string {
+ /**
+  * Migrates session data from older versions to the current schema.
+  */
+-function migrateSession(session: any): Session {
++function migrateSession(session: unknown): Session {
+     // If no version or version < 2.0
+-    const version = parseFloat(session.version || '1.0');
++    const sessionObj = session as Record<string, unknown>;
++    const version = parseFloat((sessionObj.version as string) || '1.0');
+ 
+     if (version < 2.0) {
+         // Migration to 2.0: Ensure minions have speed
+-        if (Array.isArray(session.minions)) {
+-            session.minions = session.minions.map((m: any) => ({
++        if (Array.isArray(sessionObj.minions)) {
++            sessionObj.minions = sessionObj.minions.map((m: Record<string, unknown>) => ({
+                 ...m,
+-                speed: m.speed ?? 30, // Default speed if missing
+-                type: m.type ? m.type.toLowerCase() : 'skeleton' // Normalizing type to lowercase
++                speed: (m.speed as number) ?? 30, // Default speed if missing
++                type: m.type ? (m.type as string).toLowerCase() : 'skeleton' // Normalizing type to lowercase
+             }));
+         }
+-        session.version = '2.0';
++        sessionObj.version = '2.0';
+     }
+ 
+-    return session as Session;
++    return sessionObj as Session;
+ }
+ 
+ /**

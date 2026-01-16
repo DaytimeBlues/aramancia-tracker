@@ -9,15 +9,13 @@
  * to sessionStorage on every action.
  */
 import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import type { CharacterData, AbilityKey, InventoryItem, Minion } from '../../types';
+import type { CharacterData, AbilityKey, InventoryItem } from '../../types';
 import { initialCharacterData } from '../../data/initialState';
 import { getActiveSession } from '../../utils/sessionStorage';
 import { recalculateDerivedCharacterData } from '../../utils/srdRules';
 
 // --- STATE INTERFACE ---
-// Extends CharacterData with session-level data (minions)
 export interface CharacterState extends CharacterData {
-    minions: Minion[];
     // Toast message (ephemeral UI state, OK to keep here for simplicity)
     toast: string | null;
 }
@@ -29,13 +27,11 @@ function getInitialState(): CharacterState {
     if (session) {
         return {
             ...session.characterData,
-            minions: session.minions || [],
             toast: null,
         };
     }
     return {
         ...initialCharacterData,
-        minions: [],
         toast: null,
     };
 }
@@ -50,9 +46,8 @@ export const characterSlice = createSlice({
         /**
          * Hydrate state from sessionStorage (called on app mount or session switch)
          */
-        hydrate: (state, action: PayloadAction<{ characterData: CharacterData; minions: Minion[] }>) => {
+        hydrate: (state, action: PayloadAction<{ characterData: CharacterData }>) => {
             Object.assign(state, action.payload.characterData);
-            state.minions = action.payload.minions;
         },
 
         // --- HP ACTIONS ---
@@ -129,6 +124,16 @@ export const characterSlice = createSlice({
                 state.slots[level].used = 0;
             });
         },
+        slotsUpdated: (state, action: PayloadAction<Record<number, { used: number; max: number }>>) => {
+            Object.entries(action.payload).forEach(([level, slotData]) => {
+                const slotLevel = Number(level);
+                const currentUsed = state.slots[slotLevel]?.used ?? 0;
+                state.slots[slotLevel] = {
+                    used: Math.min(currentUsed, slotData.max),
+                    max: slotData.max
+                };
+            });
+        },
 
         // --- CONCENTRATION ---
         concentrationSet: (state, action: PayloadAction<string | null>) => {
@@ -202,29 +207,24 @@ export const characterSlice = createSlice({
         // --- INVENTORY ---
         inventoryItemAdded: (state, action: PayloadAction<InventoryItem>) => {
             state.inventory.push(action.payload);
+            state.toast = `Added ${action.payload.name}`;
         },
         inventoryItemRemoved: (state, action: PayloadAction<number>) => {
             state.inventory.splice(action.payload, 1);
         },
-
-        // --- MINIONS ---
-        minionAdded: (state, action: PayloadAction<Minion>) => {
-            state.minions.push(action.payload);
-            state.toast = `Raised ${action.payload.type}`;
-        },
-        minionHpChanged: (state, action: PayloadAction<{ id: string; hp: number }>) => {
-            const minion = state.minions.find(m => m.id === action.payload.id);
-            if (minion) {
-                minion.hp.current = Math.max(0, action.payload.hp);
+        inventoryItemUpdated: (state, action: PayloadAction<{ index: number; item: InventoryItem }>) => {
+            if (state.inventory[action.payload.index]) {
+                state.inventory[action.payload.index] = action.payload.item;
             }
         },
-        minionRemoved: (state, action: PayloadAction<string>) => {
-            state.minions = state.minions.filter(m => m.id !== action.payload);
-            state.toast = "Minion Destroyed";
-        },
-        allMinionsCleared: (state) => {
-            state.minions = [];
-            state.toast = "All Minions Released";
+        itemChargeConsumed: (state, action: PayloadAction<number>) => {
+            const item = state.inventory[action.payload];
+            if (item && item.charges && item.charges.current > 0) {
+                item.charges.current -= 1;
+                state.toast = `Used charge on ${item.name}`;
+            } else if (item) {
+                state.toast = `${item.name} has no charges left!`;
+            }
         },
 
         // --- TOAST ---
@@ -257,7 +257,6 @@ export const selectCharacter = (state: StateWithCharacter) => state.character;
 export const selectHp = (state: StateWithCharacter) => state.character.hp;
 export const selectSlots = (state: StateWithCharacter) => state.character.slots;
 export const selectConcentration = (state: StateWithCharacter) => state.character.concentration;
-export const selectMinions = (state: StateWithCharacter) => state.character.minions;
 export const selectToast = (state: StateWithCharacter) => state.character.toast;
 
 export const selectAbilityModifier = createSelector(
@@ -299,6 +298,7 @@ export const {
     slotUsed,
     slotRestored,
     allSlotsRestored,
+    slotsUpdated,
     concentrationSet,
     deathSaveChanged,
     hitDiceSpent,
@@ -309,10 +309,8 @@ export const {
     itemUnattuned,
     inventoryItemAdded,
     inventoryItemRemoved,
-    minionAdded,
-    minionHpChanged,
-    minionRemoved,
-    allMinionsCleared,
+    inventoryItemUpdated,
+    itemChargeConsumed,
     toastShown,
     toastCleared,
     spellPrepared,

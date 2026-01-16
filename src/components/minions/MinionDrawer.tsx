@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { X, Trash2, Skull, Biohazard, Minus, Plus, Ghost, Play } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { minionAdded, minionRemoved, minionUpdated, allMinionsCleared, concentrationSet, slotUsed } from '../../store/slices/characterSlice';
-import { selectCharacter, selectSpellAttackBonus } from '../../store/slices/characterSlice';
+import { concentrationSet, slotUsed, selectCharacter, selectSpellAttackBonus } from '../../store/slices/characterSlice';
+import { allMinionsCleared, minionAdded, minionDamaged, minionHealed, minionRemoved, selectAllMinions } from '../../store/slices/combatSlice';
 import { createAnimateDead, createSummonUndead } from '../../utils/necromancy';
 
 interface MinionDrawerProps {
@@ -12,7 +12,7 @@ interface MinionDrawerProps {
 
 export function MinionDrawer({ isOpen, onClose }: MinionDrawerProps) {
     const dispatch = useAppDispatch();
-    const minions = useAppSelector(state => state.character.minions);
+    const minions = useAppSelector(selectAllMinions);
     const character = useAppSelector(selectCharacter);
     const spellAttackMod = useAppSelector(selectSpellAttackBonus);
 
@@ -58,8 +58,12 @@ export function MinionDrawer({ isOpen, onClose }: MinionDrawerProps) {
         }
     };
 
-    const handleUpdateMinion = (id: string, hp: number) => {
-        dispatch(minionUpdated({ id, hp }));
+    const handleDamageMinion = (id: string, damage: number) => {
+        dispatch(minionDamaged({ id, damage }));
+    };
+
+    const handleHealMinion = (id: string, healing: number) => {
+        dispatch(minionHealed({ id, healing }));
     };
 
     const handleRemoveMinion = (id: string) => {
@@ -276,7 +280,7 @@ export function MinionDrawer({ isOpen, onClose }: MinionDrawerProps) {
                                     <div className="flex items-center justify-between gap-4">
                                         <div className="flex items-center gap-3 flex-1">
                                             <button
-                                                onClick={() => handleUpdateMinion(minion.id, Math.max(0, minion.hp - 1))}
+                                                onClick={() => handleDamageMinion(minion.id, 1)}
                                                 className="w-8 h-8 flex items-center justify-center bg-white/5 hover:bg-red-500/20 text-muted hover:text-red-400 rounded-lg transition-colors border border-white/10"
                                             >
                                                 <Minus size={14} />
@@ -290,7 +294,7 @@ export function MinionDrawer({ isOpen, onClose }: MinionDrawerProps) {
                                                 </div>
                                             </div>
                                             <button
-                                                onClick={() => handleUpdateMinion(minion.id, Math.min(minion.maxHp, minion.hp + 1))}
+                                                onClick={() => handleHealMinion(minion.id, 1)}
                                                 className="w-8 h-8 flex items-center justify-center bg-white/5 hover:bg-white/20 text-muted hover:text-white rounded-lg transition-colors border border-white/10"
                                             >
                                                 <Plus size={14} />

@@ -11,7 +11,7 @@ test.describe('Navigation', () => {
 
     test('should load the app and display a title', async ({ page }) => {
         // The app should load without errors
-        await expect(page).toHaveTitle(/Aramancia|Tracker/i);
+        await expect(page).toHaveTitle(/Aramancia/i);
     });
 
     test('should navigate to Spells tab', async ({ page }) => {

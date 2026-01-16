@@ -35,7 +35,7 @@ export const allies: Character[] = [
         desc: "A drunk dwarf whom Aramancia met at their lowest point. Despite his vices, he is a loyal friend."
     },
     {
-        name: "Fuyuki",
+        name: "Aramancia",
         role: "Kitsune Warlock",
         desc: "An enigmatic Warlock for which I deduced may have unwittingly made a compact with the devil - a patron to fuel his darker arts - how excellent! He has ties to a cult and a curious mask. Despite a distant attitude at first, has let slip his deep fears and insecurities at being beholden to a patron who may order the death of friends or family at a whim. A curious case for me to pry, and I believe, to genuinely help."
     },

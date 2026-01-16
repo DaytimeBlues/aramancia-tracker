@@ -299,6 +299,7 @@ function App() {
               onSlotsCalculated={(newSlots) => {
                 dispatch(slotsUpdated(newSlots));
               }}
+              }}
             />
           </div>
 

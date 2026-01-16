@@ -127,7 +127,7 @@ export const CombatOverlay: React.FC = () => {
             }]
             : undefined;
 
-    const spellV3 = {
+    const spellV3: SpellAdapter = {
         id: spell.name,
         name: spell.name,
         level: spell.lvl,

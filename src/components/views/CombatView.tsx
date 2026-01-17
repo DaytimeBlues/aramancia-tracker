@@ -7,6 +7,7 @@ import type { UndeadStatBlock } from '../../data/undeadStats';
 import { Skull, Shield, Sword, Info, X, Users, Ghost, Biohazard, Bone, ChevronDown, ChevronUp, Wand2, Hourglass, Plus } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { minionSelectors, minionAdded } from '../../store/slices/combatSlice';
+import type { Minion } from '../../types';
 
 // No props needed now!
 // No props needed now!
@@ -85,7 +86,7 @@ export function CombatView() {
                                         };
                                         // Need dispatch here, but CombatView.tsx doesn't have it explicitly yet
                                         // I'll add the dispatch call
-                                        dispatch(minionAdded(minion as any)); // Using as any to bypass strict Minion type match for now if needed, or better: match the type
+                                        dispatch(minionAdded(minion as Minion)); // Using as any to bypass strict Minion type match for now if needed, or better: match the type
                                     }}
                                     className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-accent text-bg-dark flex items-center justify-center shadow-lg hover:scale-110 active:scale-90 transition-all z-20 border-2 border-bg-dark"
                                     aria-label="Quick Add Skeleton"
@@ -121,7 +122,7 @@ export function CombatView() {
                                             ac: 8,
                                             attacks: [{ name: 'Slam', toHit: 3, damage: '1d6+1' }]
                                         };
-                                        dispatch(minionAdded(minion as any));
+                                        dispatch(minionAdded(minion as Minion));
                                     }}
                                     className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-green-600 text-bg-dark flex items-center justify-center shadow-lg hover:scale-110 active:scale-90 transition-all z-20 border-2 border-bg-dark"
                                     aria-label="Quick Add Zombie"

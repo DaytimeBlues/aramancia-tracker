@@ -311,6 +311,7 @@ export function MinionDrawer({ isOpen, onClose }: MinionDrawerProps) {
                                         <button
                                             onClick={() => handleRemoveMinion(minion.id)}
                                             className="p-2 hover:bg-red-500/10 text-muted hover:text-red-400 rounded-lg transition-colors ml-2"
+                                            aria-label="Remove Minion"
                                         >
                                             <Trash2 size={18} />
                                         </button>

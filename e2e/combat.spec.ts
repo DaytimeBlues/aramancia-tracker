@@ -28,13 +28,13 @@ test.describe('Combat Flow & Minions', () => {
         await expect(page.getByText(/Skeleton 1/i)).toBeVisible();
 
         // 2. Remove Minion
-        await page.getByRole('button', { name: /remove/i }).click();
+        await page.getByRole('button', { name: /remove minion/i }).click();
         await expect(page.getByText(/Skeleton 1/i)).not.toBeVisible();
 
         // 3. Clear All
         await page.getByLabel('Quick Add Skeleton').click();
         await page.getByRole('button', { name: /Manage Minions/i }).click();
-        await page.getByRole('button', { name: /Clear All/i }).click();
+        await page.getByRole('button', { name: /Dismiss All/i }).click();
 
         await expect(page.getByText(/No active minions/i)).toBeVisible();
     });
@@ -53,7 +53,7 @@ test.describe('Combat Flow & Minions', () => {
         await webCard.getByRole('button', { name: /cast spell/i }).click();
 
         // Handle CastModal
-        await expect(page.getByText(/Cast Web/i)).first().toBeVisible();
+        await expect(page.getByText(/Cast Web/i).first()).toBeVisible();
         // Click final Cast Spell button in the footer
         await page.locator('button').filter({ hasText: /^Cast Spell$/ }).click();
 
@@ -65,7 +65,7 @@ test.describe('Combat Flow & Minions', () => {
 
         // Verify CombatHUD shows concentration (Fitts' Law HUD)
         // Adjusting selector for the new glassmorphism HUD
-        const hud = page.locator('div.backdrop-blur-xl').filter({ hasText: /Concentrating/i });
+        const hud = page.getByTestId('combat-hud');
         await expect(hud).toBeVisible({ timeout: 10000 });
         await expect(hud.getByText(/Web/i)).toBeVisible();
 

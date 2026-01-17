@@ -8,6 +8,32 @@
 
 ---
 
+## Design Philosophy
+### Core Principles
+1. **Aesthetic-Usability Effect** (Nielsen Norman): Beautiful designs feel easier to use
+2. **Fitts's Law**: Important actions get larger touch targets, positioned at edges
+3. **Kyoto Minimalism**: Dark void + warm gold, like a moonlit temple
+
+### Visual Rules
+- All corners: 8px radius (0.5rem)
+- Card elevation: 3 levels (base, elevated, floating)
+- Touch targets: minimum 44x44px (2.75rem)
+- Animation timing: 200ms ease-out (actions), 300ms ease-in-out (transitions)
+
+### Color Hierarchy
+- Primary Action: White (#f5f5f4)
+- Secondary Action: Gold accent (#d4af37)
+- Critical State: Vermillion (#dc2626)
+- Informational: Muted white (rgba(255,255,255,0.7))
+
+### Typography Scale
+- Hero: 2rem (32px) - XP, major stats
+- Title: 1.25rem (20px) - section headers
+- Body: 1rem (16px) - content
+- Caption: 0.75rem (12px) - labels, hints
+
+---
+
 ## Session Log
 Entries are appended by agents at the end of each session.
 

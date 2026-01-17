@@ -145,7 +145,8 @@ export function createSession(sessionNumber: number, date: string, label?: strin
         label,
         characterData: { ...initialCharacterData },
         minions: [],
-        lastModified: new Date().toISOString()
+        lastModified: new Date().toISOString(),
+        version: SCHEMA_VERSION
     };
 
     const sessions = getSessions();

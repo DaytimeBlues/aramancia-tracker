@@ -134,4 +134,5 @@ export interface Session {
     characterData: CharacterData;
     lastModified: string;
     minions: Minion[];
+    version: string;
 }

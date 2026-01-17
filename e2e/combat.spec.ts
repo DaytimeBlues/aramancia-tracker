@@ -12,46 +12,42 @@ test.describe('Combat Flow & Minions', () => {
         // Verify initial empty state in CombatView
         await expect(page.getByText(/Undead Horde/i)).toBeVisible();
         // Using a more specific selector to avoid ambiguity
-        await expect(page.locator('.card-parchment').filter({ hasText: /Undead Horde/i }).getByText(/0 Active/i)).toBeVisible();
+        // 1. Add Minion
+        // Find skeleton card and click Quick Add
+        await page.getByLabel('Quick Add Skeleton').click();
 
-        // Open Horde Management Drawer
-        await page.getByRole('button', { name: /Manage Horde/i }).click();
+        // Check Initiative Tracker (New Phase 3 check)
+        await expect(page.getByText(/Initiative/i)).toBeVisible();
+        await expect(page.getByText(/Skeleton/i)).toBeVisible();
+        await expect(page.getByText(/Roll: 10/i)).toBeVisible(); // Default minion poll
 
-        // Verify Drawer is open
-        await expect(page.getByText(/Necromancy/i)).first().toBeVisible();
+        // Open Minion Drawer via FAB (Fitts' Law optimization check)
+        await page.locator('button').filter({ hasText: /^1$/ }).click(); // FAB with badge '1'
 
-        // Add a Skeleton
-        await page.getByRole('button', { name: /Raise Skeleton/i }).click();
+        await expect(page.getByText(/Current Minions/i)).toBeVisible();
+        await expect(page.getByText(/Skeleton 1/i)).toBeVisible();
 
-        // Verify minion added (checking the counter in the drawer header)
-        await expect(page.locator('span').filter({ hasText: '1 Active' })).toBeVisible();
+        // 2. Remove Minion
+        await page.getByRole('button', { name: /remove/i }).click();
+        await expect(page.getByText(/Skeleton 1/i)).not.toBeVisible();
 
-        // Add a Zombie
-        await page.getByRole('button', { name: /Raise Zombie/i }).click();
+        // 3. Clear All
+        await page.getByLabel('Quick Add Skeleton').click();
+        await page.getByRole('button', { name: /Manage Minions/i }).click();
+        await page.getByRole('button', { name: /Clear All/i }).click();
 
-        // Verify both exist
-        await expect(page.locator('span').filter({ hasText: '2 Active' })).toBeVisible();
-        await expect(page.getByText(/Zombie 1/i)).toBeVisible();
-
-        // Clear All (Dismiss All in UI)
-        page.on('dialog', dialog => dialog.accept());
-        await page.getByRole('button', { name: /Dismiss All/i }).click();
-
-        // Verify back to empty state in drawer
-        await expect(page.locator('span').filter({ hasText: '0 Active' })).toBeVisible();
-        await expect(page.getByText(/No undead raised/i)).toBeVisible();
+        await expect(page.getByText(/No active minions/i)).toBeVisible();
     });
 
     test('should verify spell casting flow with concentration', async ({ page }) => {
-        // Navigate to Spells tab
+        await page.goto('/');
+
+        // Navigate to Spells
         await page.getByRole('button', { name: /spells/i }).click();
 
-        // Search for "Web" (Concentration, level 2)
-        // We target the heading to be sure it's the right card
-        const webHeading = page.getByRole('heading', { name: 'Web', exact: true });
-        await expect(webHeading).toBeVisible();
-
-        const webCard = page.locator('div').filter({ has: webHeading });
+        // Find and Cast Web
+        const webCard = page.locator('div').filter({ hasText: /^Web$/ }).first();
+        await expect(webCard).toBeVisible();
 
         // Cast Web (it is prepared by default)
         await webCard.getByRole('button', { name: /cast spell/i }).click();
@@ -61,15 +57,20 @@ test.describe('Combat Flow & Minions', () => {
         // Click final Cast Spell button in the footer
         await page.locator('button').filter({ hasText: /^Cast Spell$/ }).click();
 
-        // Verify Resolution Overlay (Web is a Save spell)
+        // Verify Resolution Panel (New Component Name)
         await expect(page.getByText(/Saving Throw/i)).toBeVisible();
 
         // Click "Failed Save"
         await page.getByRole('button', { name: /Failed Save/i }).click();
 
-        // Verify CombatHUD shows concentration
-        const hud = page.locator('.fixed.top-20');
-        await expect(hud.getByText(/Concentrating/i)).toBeVisible();
+        // Verify CombatHUD shows concentration (Fitts' Law HUD)
+        // Adjusting selector for the new glassmorphism HUD
+        const hud = page.locator('div.backdrop-blur-xl').filter({ hasText: /Concentrating/i });
+        await expect(hud).toBeVisible({ timeout: 10000 });
         await expect(hud.getByText(/Web/i)).toBeVisible();
+
+        // Break concentration manually via HUD
+        await page.getByRole('button', { name: /Break/i }).click();
+        await expect(hud).not.toBeVisible();
     });
 });

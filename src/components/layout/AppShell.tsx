@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Feather, Shield, Brain, User, Settings, Skull, Wand2, Backpack } from 'lucide-react'; // Added Backpack, Removed X
+import { Feather, Shield, Brain, User, Settings, Skull, Wand2, Backpack } from 'lucide-react';
 import { BackgroundVideo } from './BackgroundVideo';
 import { useAppSelector } from '../../store/hooks';
 import { selectCharacter } from '../../store/slices/characterSlice';
@@ -25,51 +25,46 @@ const navItems = [
 
 export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
     const [imgError, setImgError] = useState(false);
-    // const location = useLocation(); // Unused
     const activeMinions = useAppSelector(selectAllMinions);
     const character = useAppSelector(selectCharacter);
     const [isMinionDrawerOpen, setIsMinionDrawerOpen] = useState(false);
     const [isWandDrawerOpen, setIsWandDrawerOpen] = useState(false);
+
+    // Helper to determine class display
+    const characterClass = 'Warlock'; // Default for now as per tracker focus
+
     return (
         <>
             {/* Background Image - OUTSIDE main container */}
             <BackgroundVideo />
 
             <div className="min-h-screen w-full relative z-10 bg-transparent text-text overflow-x-hidden">
-                {/* Gradient Overlays - above background */}
+                {/* Gradient Overlays */}
                 <div className="fixed inset-0 z-5 pointer-events-none">
                     <div className="absolute inset-0 bg-gradient-to-b from-white/3 via-transparent to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 h-60 bg-gradient-to-t from-bg-dark via-bg-dark/80 to-transparent" />
-                    <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-bg-dark/60 to-transparent" />
+                    <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-bg-dark via-bg-dark/80 to-transparent" />
                 </div>
 
                 {/* Header */}
                 <header className="fixed top-0 left-0 right-0 z-40">
-                    {/* Top Runic Border */}
                     <div className="h-1 w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
-                    <div className="bg-card/95 backdrop-blur-xl border-b border-white/10 relative">
-                        {/* Corner Decorations */}
-                        <div className="absolute top-2 left-2 w-4 h-4 border-l-2 border-t-2 border-white/30" />
-                        <div className="absolute top-2 right-2 w-4 h-4 border-r-2 border-t-2 border-white/30" />
-
-                        <div className="max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+                    <div className="bg-bg-dark/80 backdrop-blur-xl border-b border-white/10 relative shadow-lg">
+                        <div className="max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
                             {/* Left: Icon and Title */}
-                            <div className="flex items-center gap-4">
-                                {/* Glowing Quill Icon */}
+                            <div className="flex items-center gap-3">
                                 <div className="relative">
-                                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-white/15 to-white/5 border-2 border-white/30 flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.15)]">
-                                        <Feather size={18} className="text-white" />
+                                    <div className="w-9 h-9 rounded-full bg-gradient-to-br from-white/10 to-transparent border border-white/20 flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                                        <Feather size={16} className="text-parchment" />
                                     </div>
-                                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-white animate-pulse shadow-[0_0_10px_rgba(255,255,255,0.5)]" />
+                                    <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-accent animate-pulse shadow-[0_0_8px_rgba(212,177,58,0.5)]" />
                                 </div>
 
-                                {/* Title */}
                                 <div>
-                                    <h1 className="font-display text-xl text-parchment-light tracking-[0.2em] drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">
+                                    <h1 className="font-display text-lg text-parchment-light tracking-[0.15em] drop-shadow-md leading-none">
                                         Aramancia
                                     </h1>
-                                    <p className="text-[10px] text-white/50 font-sans uppercase tracking-[0.3em]">
+                                    <p className="text-[9px] text-muted/60 font-sans uppercase tracking-[0.25em]">
                                         Tracker
                                     </p>
                                 </div>
@@ -77,103 +72,104 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
 
                             {/* Right: Character Info */}
                             <div className="flex items-center gap-3">
-                                <div className="text-right">
-                                    <p className="text-xs text-parchment font-display">Level 5</p>
-                                    <p className="text-[10px] text-muted">Necromancer</p>
+                                <div className="text-right hidden sm:block">
+                                    <p className="text-xs text-parchment font-display">Level {character.level}</p>
+                                    <p className="text-[10px] text-muted">{characterClass}</p>
                                 </div>
-                                {/* Character Portrait */}
-                                <div className="w-10 h-10 rounded-full border-2 border-white/30 overflow-hidden bg-card-elevated shadow-[0_0_15px_rgba(0,0,0,0.5)] flex items-center justify-center">
+                                <div className="w-9 h-9 rounded-full border border-white/20 overflow-hidden bg-black/40 shadow-inner flex items-center justify-center">
                                     {imgError ? (
-                                        <User size={20} className="text-white/50" />
+                                        <User size={18} className="text-white/30" />
                                     ) : (
                                         <img
                                             src="/assets/aramancia-portrait.jpg"
                                             alt="Aramancia"
-                                            className="w-full h-full object-cover"
+                                            className="w-full h-full object-cover opacity-90"
                                             onError={() => setImgError(true)}
                                         />
                                     )}
                                 </div>
                             </div>
                         </div>
-
-                        {/* Bottom Ornate Border */}
-                        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                     </div>
                 </header>
 
                 {/* Main Content */}
-                <main className="pt-24 px-4 pb-40 max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto relative z-10">
+                <main className="pt-20 px-4 pb-32 max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto relative z-10 animate-fade-in">
                     {children}
                 </main>
 
-                {/* Bottom Navigation - Scrollable */}
-                <nav className="fixed bottom-0 left-0 right-0 z-50">
-                    {/* Top Glow Line */}
-                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+                {/* Bottom Navigation - Premium Glassmorphism */}
+                <nav className="fixed bottom-0 left-0 right-0 z-50 pb-safe">
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-                    <div className="bg-card/98 backdrop-blur-xl border-t border-white/10 relative">
-                        {/* Corner Decorations */}
-                        <div className="absolute bottom-2 left-2 w-4 h-4 border-l-2 border-b-2 border-white/20" />
-                        <div className="absolute bottom-2 right-2 w-4 h-4 border-r-2 border-b-2 border-white/20" />
-
+                    <div className="bg-bg-dark/90 backdrop-blur-2xl border-t border-white/10 relative">
                         <div className="max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
-                            {/* Evenly distributed nav items */}
-                            <div className="flex items-center justify-evenly py-2 px-1">
-                                {navItems.map(({ id, icon: Icon, label }) => (
-                                    <button
-                                        key={id}
-                                        onClick={() => onTabChange(id)}
-                                        className={`flex flex-col items-center gap-1 px-2 py-1.5 rounded-lg transition-all duration-300 group ${activeTab === id
-                                            ? 'text-white'
-                                            : 'text-muted hover:text-parchment'
-                                            }`}
-                                    >
-                                        <div className={`relative p-1.5 rounded-lg transition-all duration-300 ${activeTab === id
-                                            ? 'bg-white/10 shadow-[0_0_15px_rgba(255,255,255,0.25)] border border-white/20'
-                                            : 'group-hover:bg-white/5'
-                                            }`}>
-                                            <Icon size={16} />
-                                            {activeTab === id && (
-                                                <div className="absolute inset-0 rounded-lg bg-white/5 animate-pulse" />
+                            <div className="flex items-center justify-between px-2 py-2">
+                                {navItems.map(({ id, icon: Icon, label }) => {
+                                    const isActive = activeTab === id;
+                                    return (
+                                        <button
+                                            key={id}
+                                            onClick={() => onTabChange(id)}
+                                            className="relative group flex-1 flex flex-col items-center justify-center pt-2 pb-1 mx-0.5 rounded-xl transition-all duration-300 tap-feedback min-h-[56px]"
+                                        >
+                                            <div className={`
+                                                relative p-2 rounded-xl transition-all duration-300 mb-0.5
+                                                ${isActive ? 'bg-white/10 shadow-[0_0_12px_rgba(255,255,255,0.15)] -translate-y-1' : 'group-hover:bg-white/5'}
+                                            `}>
+                                                <Icon
+                                                    size={20}
+                                                    className={`transition-colors duration-300 ${isActive ? 'text-white' : 'text-muted group-hover:text-parchment'}`}
+                                                />
+                                                {isActive && (
+                                                    <div className="absolute inset-0 rounded-xl bg-white/5 animate-pulse" />
+                                                )}
+                                            </div>
+                                            <span className={`
+                                                text-[9px] font-sans font-medium uppercase tracking-wider transition-all duration-300
+                                                ${isActive ? 'text-white translate-y-0 opacity-100' : 'text-muted/60 opacity-0 h-0 overflow-hidden group-hover:opacity-100 group-hover:h-auto translate-y-2 group-hover:translate-y-0'}
+                                            `}>
+                                                {label}
+                                            </span>
+
+                                            {/* Active Indicator Dot */}
+                                            {isActive && (
+                                                <div className="absolute bottom-1 w-1 h-1 rounded-full bg-accent shadow-[0_0_5px_rgba(212,177,58,0.8)]" />
                                             )}
-                                        </div>
-                                        <span className={`text-[8px] font-sans uppercase tracking-wide transition-colors duration-300 ${activeTab === id ? 'text-white' : 'group-hover:text-parchment'
-                                            }`}>
-                                            {label}
-                                        </span>
-                                    </button>
-                                ))}
+                                        </button>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
                 </nav>
 
-                {/* Minion Drawer - Triggered via FAB or state */}
-                {/* We need a way to open this. For now, let's add a FAB in the bottom right corner if there are minions or necromancy is relevant */}
-                <div className="fixed bottom-24 right-4 flex flex-col gap-3 z-40">
-                    {/* Wand Trigger */}
-                    {character.inventory.some(i => i.name.toLowerCase().includes('wand')) && (
-                        <button
-                            onClick={() => setIsWandDrawerOpen(true)}
-                            className="bg-card-elevated hover:bg-card-elevated/80 text-purple-300 border border-purple-500/30 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all animate-in zoom-in slide-in-from-bottom-4 active:scale-95"
-                        >
-                            <Wand2 size={24} />
-                        </button>
-                    )}
-
-                    {/* Minion Drawer Trigger */}
-                    <button
-                        onClick={() => setIsMinionDrawerOpen(true)}
-                        className="bg-card-elevated hover:bg-card-elevated/80 text-parchment border border-white/20 w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all animate-in zoom-in slide-in-from-bottom-4 active:scale-95"
-                    >
-                        <Skull size={24} />
-                        {activeMinions.length > 0 && (
-                            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border border-card shadow-sm font-bold">
-                                {activeMinions.length}
-                            </span>
+                {/* FABs Container */}
+                <div className="fixed bottom-24 right-4 flex flex-col gap-4 z-40 pointer-events-none">
+                    <div className="pointer-events-auto flex flex-col gap-3 items-end">
+                        {/* Wand Trigger */}
+                        {character.inventory.some(i => i.name.toLowerCase().includes('wand')) && (
+                            <button
+                                onClick={() => setIsWandDrawerOpen(true)}
+                                className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-purple-300 border-purple-500/30 hover:bg-purple-900/40 hover:scale-105 active:scale-95 transition-all shadow-lg tap-feedback backdrop-blur-md"
+                            >
+                                <Wand2 size={24} />
+                            </button>
                         )}
-                    </button>
+
+                        {/* Minion Drawer Trigger - Only show if active minions exist */}
+                        {activeMinions.length > 0 && (
+                            <button
+                                onClick={() => setIsMinionDrawerOpen(true)}
+                                className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-parchment border-white/20 hover:bg-white/10 hover:scale-105 active:scale-95 transition-all shadow-lg tap-feedback backdrop-blur-md relative"
+                            >
+                                <Skull size={24} />
+                                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border border-bg-dark font-bold animate-number-pop">
+                                    {activeMinions.length}
+                                </span>
+                            </button>
+                        )}
+                    </div>
                 </div>
 
                 <MinionDrawer
@@ -186,16 +182,12 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                     onClose={() => setIsWandDrawerOpen(false)}
                 />
 
-            </div >
+            </div>
 
-            {/* Hide scrollbar but keep functionality */}
+            {/* Global Styles */}
             <style>{`
-                .scrollbar-hide::-webkit-scrollbar {
-                    display: none;
-                }
-                .scrollbar-hide {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
+                .pb-safe {
+                    padding-bottom: env(safe-area-inset-bottom, 20px);
                 }
             `}</style>
         </>

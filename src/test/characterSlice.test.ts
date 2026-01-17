@@ -9,7 +9,6 @@ import type { CharacterState } from '../store/slices/characterSlice';
 
 const createState = (overrides: Partial<CharacterState> = {}): CharacterState => ({
     ...structuredClone(initialCharacterData),
-    minions: [],
     toast: null,
     ...overrides,
 });

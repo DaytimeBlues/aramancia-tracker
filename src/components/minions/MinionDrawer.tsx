@@ -6,11 +6,9 @@ import {
     minionDamaged,
     minionHealed,
     minionRemoved,
-    selectAllMinions,
-    type Minion
+    selectAllMinions
 } from '../../store/slices/combatSlice';
 import { concentrationSet, slotUsed, selectCharacter, selectSpellAttackBonus } from '../../store/slices/characterSlice';
-import { undeadStats } from '../../data/undeadStats';
 import { useState } from 'react';
 import { createAnimateDead, createSummonUndead } from '../../utils/necromancy';
 

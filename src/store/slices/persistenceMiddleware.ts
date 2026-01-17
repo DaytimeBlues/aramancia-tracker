@@ -34,7 +34,7 @@ export const persistenceMiddleware: Middleware = (store) => (next) => (action) =
         // Extract CharacterData (without minions and toast) for session storage
         // We alias 'minions' to '_minions' to avoid collision with the 'minions' variable declared above
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { minions: _minions, toast: _toast, ...characterData } = character;
+        const { toast: _toast, ...characterData } = character;
 
         // Save to sessionStorage (debounced internally if needed, but let's keep it simple)
         // Using requestIdleCallback for better performance on rapid updates

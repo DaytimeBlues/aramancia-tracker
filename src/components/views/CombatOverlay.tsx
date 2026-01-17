@@ -80,11 +80,18 @@ type SpellAdapter = Partial<SpellV3> & {
     id: string;
     name: string;
     level: number;
-    requiresAttackRoll?: boolean;
-    requiresSavingThrow?: boolean;
+    requiresAttackRoll: boolean;
+    requiresSavingThrow: boolean;
+    ritual: boolean;
+    castingTime: SpellV3['castingTime'];
+    range: SpellV3['range'];
+    components: SpellV3['components'];
+    duration: SpellV3['duration'];
+    description: string;
     desc?: string;
     decisionTree?: { level: number; summary: string }[];
     higherLevelDescription?: string;
+    school: SpellV3['school'];
 };
 
 export const CombatOverlay: React.FC = () => {

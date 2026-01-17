@@ -1,8 +1,8 @@
 # Aramancia Tracker - Implementation Plan
 
-## Current Phase: 1 - State Unification
-**Status**: Pending Start
-**Branch**: `feature/state-unification` (Upcoming)
+## Current Phase: 2 - E2E Test Foundation
+**Status**: In Progress
+**Branch**: `master` (Current)
 
 ### Objectives
 - Migrate all Minion state from `characterSlice` to `combatSlice`.
@@ -10,11 +10,12 @@
 - Ensure no state duplication persists.
 
 ### Tasks
-- [ ] Audit all imports of Minion actions from `characterSlice`.
-- [ ] Update `MinionDrawer` component to dispatch `combatSlice` actions.
-- [ ] Add Minion selectors to `combatSlice.ts`.
-- [ ] Remove Minion actions/state from `characterSlice.ts` to enforce Single Source of Truth.
-- [ ] Verify Minion migration with manual testing / E2E (Simulated).
+- [x] Audit all imports of Minion actions from `characterSlice`.
+- [x] Update `MinionDrawer` component to dispatch `combatSlice` actions.
+- [x] Add Minion selectors to `combatSlice.ts`.
+- [x] Remove Minion actions/state from `characterSlice.ts` to enforce Single Source of Truth.
+- [x] Verify Minion migration with manual testing / E2E (Simulated).
+- [x] Delete obsolete `features/minions/minionSlice.ts`.
 
 ---
 

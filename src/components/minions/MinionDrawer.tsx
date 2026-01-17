@@ -1,13 +1,17 @@
-import { X, Trash2, Skull, Biohazard, Minus, Plus } from 'lucide-react';
-import { useAppDispatch } from '../../store/hooks';
-import { minionAdded, minionRemoved, minionUpdated, allMinionsCleared } from '../../store/slices/combatSlice';
-import type { Minion } from '../../store/slices/combatSlice';
-import { undeadStats } from '../../data/undeadStats';
-import { useState } from 'react';
 import { X, Trash2, Skull, Biohazard, Minus, Plus, Ghost, Play } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+    allMinionsCleared,
+    minionAdded,
+    minionDamaged,
+    minionHealed,
+    minionRemoved,
+    selectAllMinions,
+    type Minion
+} from '../../store/slices/combatSlice';
 import { concentrationSet, slotUsed, selectCharacter, selectSpellAttackBonus } from '../../store/slices/characterSlice';
-import { allMinionsCleared, minionAdded, minionDamaged, minionHealed, minionRemoved, selectAllMinions } from '../../store/slices/combatSlice';
+import { undeadStats } from '../../data/undeadStats';
+import { useState } from 'react';
 import { createAnimateDead, createSummonUndead } from '../../utils/necromancy';
 
 interface MinionDrawerProps {

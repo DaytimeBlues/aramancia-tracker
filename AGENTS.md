@@ -18,6 +18,7 @@ Entries are appended by agents at the end of each session.
 - **Conductor Initialization**: Set up directory structure (`.conductor/`, `docs/`) and core artifacts.
 - **Merge Completion**: Consolidated all outstanding PRs into `master` before starting this protocol work.
 - **Conflict Resolution**: Fixed `src/components/views/CombatOverlay.tsx` (restored usageTips, fixed badges), `App.tsx`, and `persistenceMiddleware.ts`.
+- **Documentation**: Created `conductor_setup_guide.md` to standardize protocol across workspaces.
 
 #### Key Decisions Made
 - **Stale Branch Policy**: Decided to IGNORE ~18 stale branches (>4 days old) to avoid regression.

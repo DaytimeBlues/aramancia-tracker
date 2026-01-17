@@ -31,3 +31,7 @@
 - Multi-character party management (Single player focus).
 - Server-side synchronization / Backend.
 - Native mobile app (Capacitor is separate/future).
+
+## 6. Version Control
+- **Branching**: ALWAYS use `master` as the primary branch. Do not use `main`.
+- **Commit Messages**: Semantic Conventional Commits (e.g., `feat(ui): add glow`).

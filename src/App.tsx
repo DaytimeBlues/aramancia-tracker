@@ -7,6 +7,7 @@
  */
 import { useState, useEffect, useCallback } from 'react';
 import { AppShell } from './components/layout/AppShell';
+import { Toast as GlobalToast } from './components/ui/Toast';
 
 import { HealthWidget } from './components/widgets/HealthWidget';
 import { ArmorClassWidget } from './components/widgets/ArmorClassWidget';
@@ -72,6 +73,7 @@ function App() {
   // --- REDUX SELECTORS ---
   const character = useAppSelector(selectCharacter);
   const toast = useAppSelector(selectToast);
+  const activeConcentration = useAppSelector(state => state.combat.activeConcentration);
   // NOTE: minions are now managed in CombatView via combatSlice
 
   // Clear toast after 2 seconds
@@ -311,7 +313,7 @@ function App() {
       {/* Combat Overlay System */}
       <CombatOverlay />
 
-      {activeTab !== 'home' && activeTab !== 'settings' && (
+      {activeTab !== 'home' && activeTab !== 'settings' && (character.concentration || activeConcentration) && (
         <CombatHUD
           baseAC={character.baseAC}
           dexMod={character.abilityMods.dex}
@@ -324,9 +326,10 @@ function App() {
       {/* Toast */}
       {
         toast && (
-          <div className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-white/95 text-black px-6 py-3 rounded-lg shadow-xl shadow-white/20 z-[100] animate-slide-up font-display text-sm uppercase tracking-widest border border-white/50">
-            {toast}
-          </div>
+          <GlobalToast
+            message={toast}
+            onClose={() => dispatch(toastCleared())}
+          />
         )
       }
 

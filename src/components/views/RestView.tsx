@@ -17,9 +17,9 @@ export function RestView({ hitDice, conMod, currentHP, maxHP, onSpendHitDie, onL
 
     if (showShortRest) {
         return (
-            <div className="pb-20 animate-fade-in relative z-20">
-                {/* Header */}
-                <div className="flex items-center justify-between mb-6 sticky top-0 bg-bg-dark/80 backdrop-blur-md p-2 -mx-2 rounded-xl border border-white/5 z-30">
+            <div className="pb-24 animate-fade-in relative z-20">
+                {/* Header - Glassmorphism Sticky */}
+                <div className="flex items-center justify-between mb-8 sticky top-0 bg-bg/60 backdrop-blur-xl p-3 -mx-2 rounded-2xl border border-white/10 shadow-2xl z-40">
                     <div className="flex items-center gap-3">
                         <div className="p-2 bg-gradient-to-br from-amber-500/20 to-transparent rounded-lg border border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
                             <Sun size={20} className="text-amber-200" />
@@ -37,8 +37,9 @@ export function RestView({ hitDice, conMod, currentHP, maxHP, onSpendHitDie, onL
                     </button>
                 </div>
 
-                {/* HP Status */}
-                <div className="card-parchment p-4 mb-6 shadow-xl relative overflow-hidden group">
+                {/* HP Status - Glass Card */}
+                <div className="glass-card p-5 mb-8 shadow-2xl relative overflow-hidden group elevation-2 rounded-2xl">
+                    <div className="absolute inset-0 bg-gradient-to-br from-red-950/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                     <div className="absolute inset-0 bg-red-900/5 opacity-0 group-hover:opacity-100 transition-opacity" />
 
                     <div className="flex items-center justify-between mb-3 relative z-10">
@@ -86,41 +87,43 @@ export function RestView({ hitDice, conMod, currentHP, maxHP, onSpendHitDie, onL
     }
 
     return (
-        <div className="pb-20 flex flex-col items-center justify-center h-full min-h-[70vh] animate-fade-in">
-            <div className="text-center mb-12 relative">
-                <div className="relative inline-block mb-6">
-                    <div className="absolute inset-0 bg-accent/20 blur-3xl rounded-full" />
-                    <Tent size={64} className="text-parchment relative z-10 drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)]" />
-                    <Sparkles size={24} className="text-white absolute -top-2 -right-2 animate-pulse drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" />
+        <div className="pb-24 flex flex-col items-center justify-center min-h-[75vh] animate-fade-in">
+            <div className="text-center mb-16 relative">
+                <div className="relative inline-block mb-8">
+                    <div className="absolute inset-[-20px] bg-accent/20 blur-[40px] rounded-full animate-pulse-glow" />
+                    <div className="relative z-10 p-6 glass-card rounded-full border-accent/20 shadow-2xl">
+                        <Tent size={72} className="text-accent drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]" />
+                    </div>
+                    <Sparkles size={28} className="text-white absolute -top-1 -right-1 animate-pulse drop-shadow-[0_0_12px_rgba(255,255,255,1)]" />
                 </div>
-                <h2 className="font-display text-4xl text-parchment-light tracking-wide mb-3 drop-shadow-lg">Rest & Recovery</h2>
-                <div className="h-px w-24 bg-gradient-to-r from-transparent via-white/20 to-transparent mx-auto mb-3" />
-                <p className="text-sm text-muted max-w-xs mx-auto leading-relaxed">
-                    The weary traveler finds strength in repose. Choose your respite wisely.
+                <h2 className="font-display text-5xl text-parchment-light tracking-widest mb-4 drop-shadow-2xl">Rest & Recovery</h2>
+                <div className="h-0.5 w-32 bg-gradient-to-r from-transparent via-accent/30 to-transparent mx-auto mb-4" />
+                <p className="text-base text-muted max-w-sm mx-auto leading-relaxed italic">
+                    "The weary traveler finds strength in repose. Choose your respite wisely."
                 </p>
             </div>
 
-            <div className="w-full space-y-5 max-w-sm">
+            <div className="w-full space-y-6 max-w-sm px-4">
                 {/* Short Rest */}
                 <button
                     onClick={() => setShowShortRest(true)}
-                    className="w-full card-parchment p-0 text-left group transition-all duration-300 hover:shadow-[0_0_25px_rgba(212,177,58,0.15)] hover:-translate-y-1 border-white/10 hover:border-accent/30 tap-feedback"
+                    className="w-full glass-card p-0 text-left group transition-all duration-500 hover:shadow-[0_0_40px_rgba(212,175,55,0.2)] hover:-translate-y-2 border-white/10 hover:border-accent/50 tap-feedback elevation-2 rounded-3xl overflow-hidden"
                 >
-                    <div className="p-5 flex items-center gap-5 relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-amber-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="p-6 flex items-center gap-6 relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-amber-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                        <div className="p-3.5 bg-black/40 rounded-2xl border border-white/10 group-hover:border-amber-500/30 group-hover:bg-amber-900/20 transition-all shadow-inner">
-                            <Sun size={28} className="text-parchment group-hover:text-amber-200 transition-colors" />
+                        <div className="p-4 bg-gradient-to-br from-amber-900/40 to-amber-950/60 rounded-2xl border border-amber-500/30 group-hover:border-amber-400/50 group-hover:scale-110 transition-all shadow-2xl">
+                            <Sun size={32} className="text-amber-200 group-hover:text-amber-50 animate-pulse-glow" />
                         </div>
                         <div className="flex-1 relative z-10">
-                            <h3 className="font-display text-xl text-parchment-light group-hover:text-amber-100 transition-colors tracking-wide mb-1">
+                            <h3 className="font-display text-2xl text-parchment-light group-hover:text-white transition-colors tracking-widest mb-1.5 uppercase">
                                 Short Rest
                             </h3>
-                            <div className="flex items-center gap-2 text-xs text-muted group-hover:text-amber-200/60 transition-colors">
-                                <span className="font-bold">{hitDice.current}/{hitDice.max}</span> Hit Dice Available
+                            <div className="flex items-center gap-2 text-xs text-amber-200/60 font-medium tracking-wide">
+                                <span className="text-amber-300 font-bold">{hitDice.current}/{hitDice.max}</span> Dice Available
                             </div>
                         </div>
-                        <ChevronRight size={20} className="text-muted/50 group-hover:text-amber-200 group-hover:translate-x-1 transition-all" />
+                        <ChevronRight size={24} className="text-muted/30 group-hover:text-amber-300 group-hover:translate-x-2 transition-all" />
                     </div>
                 </button>
 
@@ -131,23 +134,23 @@ export function RestView({ hitDice, conMod, currentHP, maxHP, onSpendHitDie, onL
                             onLongRest();
                         }
                     }}
-                    className="w-full card-parchment p-0 text-left group transition-all duration-300 hover:shadow-[0_0_25px_rgba(147,51,234,0.15)] hover:-translate-y-1 border-white/10 hover:border-purple-500/30 tap-feedback"
+                    className="w-full glass-card p-0 text-left group transition-all duration-500 hover:shadow-[0_0_40px_rgba(168,85,247,0.2)] hover:-translate-y-2 border-white/10 hover:border-purple-500/50 tap-feedback elevation-2 rounded-3xl overflow-hidden"
                 >
-                    <div className="p-5 flex items-center gap-5 relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="p-6 flex items-center gap-6 relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                        <div className="p-3.5 bg-black/40 rounded-2xl border border-white/10 group-hover:border-purple-500/30 group-hover:bg-purple-900/20 transition-all shadow-inner">
-                            <Moon size={28} className="text-parchment group-hover:text-purple-200 transition-colors" />
+                        <div className="p-4 bg-gradient-to-br from-purple-900/40 to-purple-950/60 rounded-2xl border border-purple-500/30 group-hover:border-purple-400/50 group-hover:scale-110 transition-all shadow-2xl">
+                            <Moon size={32} className="text-purple-200 group-hover:text-purple-50" />
                         </div>
                         <div className="flex-1 relative z-10">
-                            <h3 className="font-display text-xl text-parchment-light group-hover:text-purple-100 transition-colors tracking-wide mb-1">
+                            <h3 className="font-display text-2xl text-parchment-light group-hover:text-white transition-colors tracking-widest mb-1.5 uppercase">
                                 Long Rest
                             </h3>
-                            <div className="flex items-center gap-2 text-xs text-muted group-hover:text-purple-200/60 transition-colors">
-                                Restore HP & Spell Slots
+                            <div className="flex items-center gap-2 text-xs text-purple-200/60 font-medium tracking-wide">
+                                Full Restoration
                             </div>
                         </div>
-                        <ChevronRight size={20} className="text-muted/50 group-hover:text-purple-200 group-hover:translate-x-1 transition-all" />
+                        <ChevronRight size={24} className="text-muted/30 group-hover:text-purple-300 group-hover:translate-x-2 transition-all" />
                     </div>
                 </button>
             </div>

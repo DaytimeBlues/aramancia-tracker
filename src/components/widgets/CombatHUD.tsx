@@ -1,5 +1,7 @@
-import { useAppSelector } from '../../store/hooks';
-import { selectSpellAttackBonus, selectSpellSaveDC } from '../../store/slices/characterSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { selectSpellAttackBonus, selectSpellSaveDC, concentrationSet } from '../../store/slices/characterSlice';
+import { concentrationBroken } from '../../store/slices/combatSlice';
+import { XCircle } from 'lucide-react';
 
 interface CombatHUDProps {
     baseAC: number;
@@ -16,6 +18,7 @@ export function CombatHUD({
     hasShield,
     concentrationSpell,
 }: CombatHUDProps) {
+    const dispatch = useAppDispatch();
     const spellSaveDC = useAppSelector(selectSpellSaveDC);
     const spellAttackBonus = useAppSelector(selectSpellAttackBonus);
     const activeConcentration = useAppSelector(state => state.combat.activeConcentration);
@@ -57,9 +60,23 @@ export function CombatHUD({
                     <span className="font-display text-parchment-light">{currentAC}</span>
                 </div>
                 {concentrationName && (
-                    <div className="flex items-center gap-2 text-xs text-parchment-light">
-                        <span>🔮</span>
-                        <span className="truncate">{concentrationName}</span>
+                    <div className="flex items-center justify-between gap-2 border-t border-white/5 pt-2 mt-2 group/conc">
+                        <div className="flex items-center gap-2 text-xs text-parchment-light overflow-hidden">
+                            <span>🔮</span>
+                            <span className="truncate">{concentrationName}</span>
+                        </div>
+                        <button
+                            onClick={() => {
+                                console.log(`[CombatHUD] Breaking concentration on: ${concentrationName}`);
+                                dispatch(concentrationSet(null));
+                                dispatch(concentrationBroken());
+                            }}
+                            className="text-red-400/60 hover:text-red-400 transition-colors p-1 rounded-md hover:bg-red-400/10"
+                            title="Break Concentration"
+                        >
+                            <XCircle size={14} />
+                            <span className="sr-only">Break</span>
+                        </button>
                     </div>
                 )}
             </div>

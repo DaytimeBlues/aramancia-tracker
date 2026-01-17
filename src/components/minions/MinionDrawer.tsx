@@ -78,9 +78,7 @@ export function MinionDrawer({ isOpen, onClose }: MinionDrawerProps) {
     };
 
     const handleClearMinions = () => {
-        if (confirm("Dismiss all undead servants?")) {
-            dispatch(allMinionsCleared());
-        }
+        dispatch(allMinionsCleared());
     };
 
     return (

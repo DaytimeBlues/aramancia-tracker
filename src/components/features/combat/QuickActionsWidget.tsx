@@ -6,6 +6,7 @@ import {
     concentrationBroken
 } from '../../../store/slices/combatSlice';
 import { slotsRestored } from '../../../store/slices/spellbookSlice';
+import { Button } from '../../ui/Button';
 import { Brain, Moon, Sun, AlertTriangle, Check, X, ChevronRight } from 'lucide-react';
 import { concentrationSet } from '../../../store/slices/characterSlice';
 import { spells as allSpells } from '../../../data/spells';
@@ -106,12 +107,14 @@ export const QuickActionsWidget: React.FC = () => {
                                 Concentrating on <strong>{activeConcentration.spellName}</strong>
                             </span>
                         </div>
-                        <button
+                        <Button
+                            variant="ghost"
+                            size="sm"
                             onClick={handleDropConcentration}
-                            className="text-xs text-stone-500 hover:text-red-400 transition-colors"
+                            className="text-stone-500 hover:text-red-400"
                         >
                             Drop
-                        </button>
+                        </Button>
                     </div>
                 </div>
             )}
@@ -135,20 +138,22 @@ export const QuickActionsWidget: React.FC = () => {
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
-                        <button
+                        <Button
+                            variant="fantasy"
                             onClick={handleConcentrationPassed}
-                            className="flex items-center justify-center gap-2 px-4 py-2 bg-green-900/30 hover:bg-green-900/50 border border-green-800 rounded text-green-400 font-bold"
+                            className="bg-green-900/30 hover:bg-green-900/50 border-green-800 text-green-400"
+                            icon={<Check className="w-4 h-4" />}
                         >
-                            <Check className="w-4 h-4" />
                             Passed
-                        </button>
-                        <button
+                        </Button>
+                        <Button
+                            variant="fantasy"
                             onClick={handleConcentrationFailed}
-                            className="flex items-center justify-center gap-2 px-4 py-2 bg-red-900/30 hover:bg-red-900/50 border border-red-800 rounded text-red-400 font-bold"
+                            className="bg-red-900/30 hover:bg-red-900/50 border-red-800 text-red-400"
+                            icon={<X className="w-4 h-4" />}
                         >
-                            <X className="w-4 h-4" />
                             Failed
-                        </button>
+                        </Button>
                     </div>
                 </div>
             )}
@@ -168,57 +173,66 @@ export const QuickActionsWidget: React.FC = () => {
                                     className="flex-1 px-3 py-2 bg-stone-900 border border-stone-700 rounded text-white placeholder:text-stone-600"
                                     autoFocus
                                 />
-                                <button
+                                <Button
+                                    variant="fantasy"
                                     onClick={handleTriggerConcentrationCheck}
-                                    className="px-4 py-2 bg-orange-900/30 hover:bg-orange-900/50 border border-orange-800 rounded text-orange-400 font-bold"
+                                    className="bg-orange-900/30 hover:bg-orange-900/50 border-orange-800 text-orange-400"
                                 >
                                     Check
-                                </button>
-                                <button
+                                </Button>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
                                     onClick={() => setShowDamageInput(false)}
-                                    className="px-3 py-2 text-stone-500 hover:text-stone-300"
+                                    className="text-stone-500 hover:text-stone-300"
                                 >
                                     <X className="w-4 h-4" />
-                                </button>
+                                </Button>
                             </div>
                         ) : (
-                            <button
+                            <Button
+                                variant="fantasy"
                                 onClick={() => setShowDamageInput(true)}
-                                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-stone-800 hover:bg-stone-700 border border-stone-700 rounded text-stone-300"
+                                className="w-full bg-stone-800 hover:bg-stone-700 border-stone-700 text-stone-300"
+                                icon={<AlertTriangle className="w-4 h-4 text-orange-400" />}
                             >
-                                <AlertTriangle className="w-4 h-4 text-orange-400" />
                                 Took Damage (Concentration Check)
-                            </button>
+                            </Button>
                         )}
                     </div>
                 )}
 
                 {/* Set Concentration Button */}
                 {!activeConcentration && (
-                    <button
+                    <Button
+                        variant="primary"
                         onClick={() => setShowConcentrationPicker(true)}
-                        className="col-span-2 flex items-center justify-center gap-2 px-4 py-3 bg-purple-900/20 hover:bg-purple-900/30 border border-purple-500/30 rounded text-purple-300 font-display transition-colors"
+                        className="col-span-2 bg-purple-900/20 hover:bg-purple-900/30 border-purple-500/30 text-purple-300"
+                        icon={<Brain className="w-4 h-4" />}
                     >
-                        <Brain className="w-4 h-4" />
                         Set Concentration
-                    </button>
+                    </Button>
                 )}
 
                 {/* Rest Buttons */}
-                <button
+                <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleShortRest}
-                    className="flex items-center justify-center gap-2 px-3 py-2 bg-stone-800 hover:bg-stone-700 border border-stone-700 rounded text-stone-400 text-sm"
+                    className="bg-stone-800 hover:bg-stone-700 border-stone-700 text-stone-400"
+                    icon={<Moon className="w-4 h-4" />}
                 >
-                    <Moon className="w-4 h-4" />
                     Short Rest
-                </button>
-                <button
+                </Button>
+                <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={handleLongRest}
-                    className="flex items-center justify-center gap-2 px-3 py-2 bg-yellow-900/20 hover:bg-yellow-900/30 border border-yellow-900/30 rounded text-yellow-500 text-sm"
+                    className="bg-yellow-900/20 hover:bg-yellow-900/30 border-yellow-900/30 text-yellow-500"
+                    icon={<Sun className="w-4 h-4" />}
                 >
-                    <Sun className="w-4 h-4" />
                     Long Rest
-                </button>
+                </Button>
             </div>
 
             {/* Concentration Picker Modal */}

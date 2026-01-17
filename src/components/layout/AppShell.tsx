@@ -6,6 +6,7 @@ import { selectCharacter } from '../../store/slices/characterSlice';
 import { selectAllMinions } from '../../store/slices/combatSlice';
 import { MinionDrawer } from '../minions/MinionDrawer';
 import { WandDrawer } from '../widgets/WandDrawer';
+import { MinionBubble } from '../widgets/MinionBubble';
 
 interface AppShellProps {
     children: React.ReactNode;
@@ -111,6 +112,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                                         <button
                                             key={id}
                                             onClick={() => onTabChange(id)}
+                                            aria-label={label}
                                             className="relative group flex-1 flex flex-col items-center justify-center pt-2 pb-1 mx-0.5 rounded-xl transition-all duration-300 tap-feedback min-h-[56px]"
                                         >
                                             <div className={`
@@ -157,18 +159,11 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                             </button>
                         )}
 
-                        {/* Minion Drawer Trigger - Only show if active minions exist */}
-                        {activeMinions.length > 0 && (
-                            <button
-                                onClick={() => setIsMinionDrawerOpen(true)}
-                                className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-parchment border-white/20 hover:bg-white/10 hover:scale-105 active:scale-95 transition-all shadow-lg tap-feedback backdrop-blur-md relative"
-                            >
-                                <Skull size={24} />
-                                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full border border-bg-dark font-bold animate-number-pop">
-                                    {activeMinions.length}
-                                </span>
-                            </button>
-                        )}
+                        {/* Minion Bubble - Premium Summary & Trigger */}
+                        <MinionBubble
+                            minions={activeMinions}
+                            onClick={() => setIsMinionDrawerOpen(true)}
+                        />
                     </div>
                 </div>
 

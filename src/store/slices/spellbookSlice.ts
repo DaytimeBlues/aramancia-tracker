@@ -14,8 +14,18 @@ export interface SpellbookState {
 }
 
 const initialState = spellbookAdapter.getInitialState({
-    preparedSpellIds: [] as string[],
-    availableSlots: { 1: 4, 2: 3, 3: 2, 4: 1 } as Record<number, number>, // Added Type Assertion
+    preparedSpellIds: [
+        'mage-armor',
+        'shield',
+        'magic-missile',
+        'misty-step',
+        'counterspell',
+        'fireball',
+        'animate-dead',
+        'web',
+        'fly'
+    ] as string[],
+    availableSlots: { 1: 4, 2: 3, 3: 2, 4: 1 } as Record<number, number>,
     maxSlots: { 1: 4, 2: 3, 3: 2, 4: 1 } as Record<number, number>
 });
 

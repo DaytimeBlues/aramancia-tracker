@@ -30,11 +30,13 @@ export function CombatView() {
 
     return (
         <div className="pb-24 relative min-h-screen">
-            {/* Combat Stats Strip - Floating Glass */}
-            <div className="mb-6 sticky top-0 z-30">
-                <div className="absolute inset-0 bg-bg/80 backdrop-blur-md border-b border-white/5 shadow-2xl"></div>
-                <div className="relative pt-2 pb-2 px-2">
-                    <MathStrip />
+            {/* Combat Stats Strip - Premium Floating Glass */}
+            <div className="sticky top-0 z-40 transition-all duration-300">
+                <div className="absolute inset-0 bg-bg/60 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"></div>
+                <div className="relative pt-3 pb-3 px-4 flex items-center justify-between">
+                    <div className="flex-1 max-w-2xl mx-auto">
+                        <MathStrip />
+                    </div>
                 </div>
             </div>
 
@@ -42,16 +44,22 @@ export function CombatView() {
                 {/* Initiative Tracker (P0) */}
                 <InitiativeTracker />
 
-                {/* Undead Manager Card */}
-                <div className="card-parchment p-0 overflow-visible">
-                    <div className="p-4 border-b border-white/5 flex justify-between items-center bg-black/20 rounded-t-lg">
-                        <div className="flex items-center gap-2">
-                            <div className="p-1.5 bg-green-900/20 rounded border border-green-500/20">
-                                <Users size={16} className="text-green-400" />
+                {/* Undead Manager Card - Kyoto Ornate Style */}
+                <div className="glass-card p-0 overflow-visible elevation-2 rounded-2xl animate-slide-up stagger-2">
+                    <div className="p-5 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-green-950/40 to-transparent">
+                        <div className="flex items-center gap-3">
+                            <div className="p-2 bg-green-900/30 rounded-lg border border-green-500/30 shadow-[0_0_10px_rgba(34,197,94,0.1)]">
+                                <Users size={18} className="text-green-400" />
                             </div>
-                            <h3 className="font-display text-sm text-parchment tracking-wider uppercase">Undead Horde</h3>
+                            <div>
+                                <h3 className="font-display text-base text-parchment tracking-widest uppercase">Undead Horde</h3>
+                                <div className="text-[10px] text-muted/60 uppercase tracking-tighter">Necromantic Servants</div>
+                            </div>
                         </div>
-                        <span className="text-xs text-green-400 font-display bg-green-900/20 px-2 py-0.5 rounded border border-green-500/20">{minions.length} Active</span>
+                        <div className="flex items-center gap-2 bg-green-900/30 px-3 py-1 rounded-full border border-green-500/30 shadow-inner">
+                            <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                            <span className="text-xs text-green-300 font-bold uppercase tracking-wider">{minions.length} Active</span>
+                        </div>
                     </div>
 
                     <div className="p-4">
@@ -211,25 +219,33 @@ export function CombatView() {
                 </div>
             </div>
 
-            {/* Floating Action Buttons (Fitts's Law) */}
-            <div className="fixed bottom-24 right-4 flex flex-col gap-3 z-40">
-                {/* End Turn FAB */}
-                <button
-                    className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-red-300 border-red-500/30 hover:bg-red-900/40 hover:scale-105 active:scale-95 transition-all shadow-lg tap-feedback"
-                    title="End Turn"
-                    onClick={() => { /* TODO: Hook up to turn logic */ }}
-                >
-                    <Hourglass size={20} />
-                </button>
+            {/* Fixed Navigation/Action Zone - Fitts's Law Optimized */}
+            <div className="fixed bottom-0 left-0 right-0 p-4 pointer-events-none z-50">
+                <div className="max-w-2xl mx-auto flex items-end justify-between pointer-events-auto">
+                    {/* Character/Nav Context can go here if needed, but we focus on primary combat actions */}
 
-                {/* Cast Spell FAB */}
-                <button
-                    className="w-14 h-14 rounded-full bg-gradient-to-br from-accent to-accent-dark flex items-center justify-center text-bg-dark hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(212,177,58,0.4)] tap-feedback animate-float"
-                    title="Quick Cast"
-                    onClick={() => { /* TODO: Hook up to spell drawer */ }}
-                >
-                    <Wand2 size={24} />
-                </button>
+                    <div className="flex flex-col gap-4 items-end mb-4">
+                        {/* End Turn FAB - Edge Positioning */}
+                        <button
+                            className="w-14 h-14 rounded-2xl glass-card flex items-center justify-center text-red-400 border-red-500/40 hover:bg-red-950/40 hover:scale-105 active:scale-95 transition-all shadow-xl tap-feedback elevation-3"
+                            title="End Turn"
+                            onClick={() => { /* TODO: Hook up to turn logic */ }}
+                        >
+                            <Hourglass size={24} className="animate-spin-slow-once" />
+                        </button>
+
+                        {/* Cast Spell FAB - Primary Action at Edge */}
+                        <button
+                            className="w-18 h-18 rounded-3xl bg-gradient-to-br from-accent-glow via-accent to-accent-dark flex items-center justify-center text-bg-dark hover:scale-110 active:scale-95 transition-all shadow-[0_0_30px_rgba(212,175,55,0.4)] tap-feedback elevation-3 group"
+                            title="Quick Cast"
+                            onClick={() => { /* TODO: Hook up to spell drawer */ }}
+                        >
+                            <Wand2 size={32} className="group-hover:rotate-12 transition-transform duration-500" />
+                            {/* Visual flare */}
+                            <div className="absolute inset-0 rounded-3xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <MinionDrawer

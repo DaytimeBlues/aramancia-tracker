@@ -40,20 +40,10 @@ export function SpellSlotsWidget({ slots, onChange, spellSaveDC = 14 }: SpellSlo
                                 </div>
                             </div>
 
-                            {/* Orb Container */}
-                            <div className="p-3 bg-black/20 rounded-xl border border-white/5 flex flex-wrap gap-3 items-center justify-center relative backdrop-blur-sm">
+                            {/* Orb Container - Fitts's Law: spacing for easy tapping */}
+                            <div className="p-4 bg-black/40 rounded-2xl border border-white/5 flex flex-wrap gap-5 items-center justify-center relative backdrop-blur-md shadow-inner">
                                 {Array.from({ length: max }).map((_, i) => {
                                     const isAvailable = i >= used;
-                                    // Reverse index for clicking behavior (click rightmost available to use it)
-                                    // Actually, let's keep simple index logic: click specific orb toggles state up to that point?
-                                    // Standard: click 1st orb -> 1 used. Click 3rd orb -> 3 used.
-                                    // Proposed: Click an AVAILABLE orb to consume it (turn it off). Click an USED orb to restore it?
-                                    // Current logic: `const newUsed = i < used ? i : i + 1;` 
-                                    // If i < used (clicking a used slot), it restores up to i (making i the first used index? No, `newUsed = i` means slots 0..i-1 are used? No. `used` is count of used slots.
-                                    // If used=2 (slots 0,1 are used/empty), slots 2,3,4 are avail.
-                                    // Click slot 0 (used): i=0 < used=2. newUsed=0. USED becomes 0. RESTORED ALL?
-                                    // Click slot 1 (used): i=1 < used=2. newUsed=1. USED becomes 1. One slot used.
-                                    // Click slot 2 (avail): i=2 >= used=2. newUsed=3. USED becomes 3. Slot 2 is now used.
 
                                     return (
                                         <button
@@ -63,30 +53,34 @@ export function SpellSlotsWidget({ slots, onChange, spellSaveDC = 14 }: SpellSlo
                                                 onChange(level, newUsed);
                                             }}
                                             className={`
-                                                relative w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 transform
+                                                relative w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 transform tap-feedback
                                                 ${isAvailable
-                                                    ? 'scale-100 shadow-[0_0_15px_rgba(212,177,58,0.4)] hover:shadow-[0_0_20px_rgba(212,177,58,0.6)] hover:scale-110 cursor-pointer'
-                                                    : 'scale-90 opacity-40 hover:opacity-100 hover:scale-100 cursor-alias'
+                                                    ? 'scale-100 shadow-[0_0_20px_rgba(212,177,58,0.3)] hover:shadow-[0_0_25px_rgba(212,177,58,0.5)] hover:scale-110 cursor-pointer'
+                                                    : 'scale-90 opacity-20 hover:opacity-100 hover:scale-100 cursor-alias'
                                                 }
-                                                active:scale-95 tap-feedback
                                             `}
                                             title={isAvailable ? 'Cast Spell' : 'Restore Slot'}
                                         >
                                             {/* Inner Orb Gradient */}
                                             <div className={`
-                                                absolute inset-0 rounded-full transition-all duration-500
+                                                absolute inset-0 rounded-full transition-all duration-700
                                                 ${isAvailable
-                                                    ? 'bg-gradient-to-br from-accent-glow via-accent to-accent-dark opacity-100'
-                                                    : 'bg-stone-800 border border-white/10 opacity-50'
+                                                    ? 'bg-gradient-to-br from-[#e5c158] via-[#d4af37] to-[#b38f2a] opacity-100'
+                                                    : 'bg-stone-950 border border-white/10 opacity-50'
                                                 }
                                             `}></div>
 
-                                            {/* Shine Effect */}
-                                            {isAvailable && <div className="absolute top-1 left-1 w-2 h-2 bg-white/40 blur-[1px] rounded-full"></div>}
-
-                                            {/* Particle/Glow when active */}
+                                            {/* Ornate Frame for active orbs */}
                                             {isAvailable && (
-                                                <div className="absolute inset-0 rounded-full animate-pulse-glow opacity-50"></div>
+                                                <div className="absolute inset-[-2px] border border-accent/20 rounded-full animate-spin-slow pointer-events-none"></div>
+                                            )}
+
+                                            {/* Shine Effect */}
+                                            {isAvailable && <div className="absolute top-1.5 left-1.5 w-2.5 h-2.5 bg-white/50 blur-[1px] rounded-full"></div>}
+
+                                            {/* Core Glow when active */}
+                                            {isAvailable && (
+                                                <div className="absolute inset-0 rounded-full animate-pulse-glow opacity-40"></div>
                                             )}
                                         </button>
                                     );

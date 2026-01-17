@@ -10,9 +10,9 @@ interface CharacterViewProps {
 }
 
 export function CharacterView({ data }: CharacterViewProps) {
-    if (!data) return null;
-
     const [collapsedSkills, setCollapsedSkills] = useState<Record<string, boolean>>({});
+
+    if (!data) return null;
 
     const toggleSkillCategory = (ability: string) => {
         setCollapsedSkills(prev => ({

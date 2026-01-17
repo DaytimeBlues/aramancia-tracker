@@ -70,8 +70,8 @@ describe('combatSlice reducers', () => {
 
         store.dispatch(castingStarted({ spellId: 'magic-missile' }));
         store.dispatch(slotConfirmed({ slotLevel: 2, resolutionMode: 'automatic' }));
-        // @ts-ignore - Thunk dispatch typing in unit tests can be tricky 
-        store.dispatch(castingCompletedWithSlot() as any);
+        // @ts-expect-error - Thunk dispatch typing in unit tests can be tricky 
+        store.dispatch(castingCompletedWithSlot() as unknown);
 
         expect(store.getState().spellbook.availableSlots[2]).toBe(2);
     });

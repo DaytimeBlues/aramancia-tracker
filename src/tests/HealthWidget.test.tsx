@@ -60,7 +60,7 @@ describe('HealthWidget', () => {
     );
 
     const statCircle = container.querySelector('.stat-circle');
-    expect(statCircle).toHaveClass('border-red-500');
+    expect(statCircle).toHaveClass('border-red-600');
   });
 
   it('shows low HP state at 25% or below', () => {

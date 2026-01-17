@@ -52,6 +52,7 @@ export const initialCharacterData: CharacterData = {
         survival: { name: 'Survival', attr: 'wis', prof: false }
     },
     concentration: null,
+    conditions: [],
     attunement: [],
     inventory: [
         { name: 'Spellbook' },

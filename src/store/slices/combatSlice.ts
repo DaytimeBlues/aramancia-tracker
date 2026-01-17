@@ -184,6 +184,24 @@ export const combatSlice = createSlice({
             }
         },
 
+        minionConditionToggled: (state, action: PayloadAction<{ id: string; condition: string }>) => {
+            const minion = state.minions.entities[action.payload.id];
+            if (minion) {
+                const { condition } = action.payload;
+                const currentConditions = minion.conditions || [];
+                const hasCondition = currentConditions.includes(condition);
+
+                const newConditions = hasCondition
+                    ? currentConditions.filter(c => c !== condition)
+                    : [...currentConditions, condition];
+
+                minionAdapter.updateOne(state.minions, {
+                    id: action.payload.id,
+                    changes: { conditions: newConditions },
+                });
+            }
+        },
+
         allMinionsCleared: (state) => {
             minionAdapter.removeAll(state.minions);
             // Keep only player initiative if present
@@ -282,6 +300,7 @@ export const {
     minionUpdated,
     minionDamaged,
     minionHealed,
+    minionConditionToggled,
     allMinionsCleared,
     minionsHydrated,
     combatStarted,

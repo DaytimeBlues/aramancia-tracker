@@ -139,6 +139,16 @@ export const characterSlice = createSlice({
         concentrationSet: (state, action: PayloadAction<string | null>) => {
             state.concentration = action.payload;
         },
+        conditionToggled: (state, action: PayloadAction<string>) => {
+            const condition = action.payload;
+            if (state.conditions.includes(condition)) {
+                state.conditions = state.conditions.filter(c => c !== condition);
+                state.toast = `Condition removed: ${condition}`;
+            } else {
+                state.conditions.push(condition);
+                state.toast = `Condition active: ${condition}`;
+            }
+        },
 
         // --- DEATH SAVES ---
         deathSaveChanged: (state, action: PayloadAction<{ type: 'successes' | 'failures'; value: number }>) => {
@@ -316,6 +326,7 @@ export const {
     toastCleared,
     spellPrepared,
     spellUnprepared,
+    conditionToggled,
 } = characterSlice.actions;
 
 export default characterSlice.reducer;

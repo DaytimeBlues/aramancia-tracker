@@ -121,6 +121,7 @@ export interface CharacterData {
         [key: string]: MinionStats;
     };
     concentration: string | null; // Currently concentrating on this spell
+    conditions: string[]; // Active conditions (e.g. 'Poisoned', 'Prone')
     attunement: string[]; // Max 3 attuned magic items
     inventory: InventoryItem[]; // General inventory items (supports spellcasting items)
     preparedSpells: string[]; // Spell names from SRD that are currently prepared

@@ -22,7 +22,6 @@ import { InitiativeWidget } from './components/widgets/InitiativeWidget';
 import { ProficiencyWidget } from './components/widgets/ProficiencyWidget';
 import { SavingThrowsWidget } from './components/widgets/SavingThrowsWidget';
 import { CharacterEditor } from './components/widgets/CharacterEditor';
-import { CombatHUD } from './components/widgets/CombatHUD';
 import SpellsView from './components/views/SpellsView';
 import { CombatView } from './components/views/CombatView';
 import { CombatOverlay } from './components/views/CombatOverlay';
@@ -312,16 +311,6 @@ function App() {
 
       {/* Combat Overlay System */}
       <CombatOverlay />
-
-      {activeTab !== 'home' && activeTab !== 'settings' && (character.concentration || activeConcentration) && (
-        <CombatHUD
-          baseAC={character.baseAC}
-          dexMod={character.abilityMods.dex}
-          mageArmour={character.mageArmour}
-          hasShield={character.shield}
-          concentrationSpell={character.concentration}
-        />
-      )}
 
       {/* Toast */}
       {

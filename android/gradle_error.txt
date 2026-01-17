@@ -1,0 +1,57 @@
+﻿./gradlew : 
+At line:1 char:65
++ ... ogram 
+Files\Android\Android 
+Studio\jbr'; 
+./gradlew clean 2>&1 
+| Out-F ...
++                     
+                      
+   
+~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo    
+          : NotSpeci  
+  fied: (:String) [   
+ ], RemoteExceptio    
+n
+    + FullyQualifiedE 
+   rrorId : NativeCo  
+  mmandError
+ 
+FAILURE: Build failed 
+with an exception.
+
+* Where:
+Build file 'C:\Users\J
+ihye\aramancia-tracker
+\aramancia-tracker\and
+roid\build.gradle' 
+line: 14
+
+* What went wrong:
+A problem occurred 
+evaluating root 
+project 'android'.
+> Could not get 
+unknown property 
+'kotlinVersion' for 
+object of type org.gra
+dle.api.internal.artif
+acts.dsl.dependencies.
+DefaultDependencyHandl
+er.
+
+* Try:
+> Run with 
+--stacktrace option 
+to get the stack 
+trace.
+> Run with --info or 
+--debug option to get 
+more log output.
+> Run with --scan to 
+get full insights.
+> Get more help at htt
+ps://help.gradle.org.
+
+BUILD FAILED in 545ms

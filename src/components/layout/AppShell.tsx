@@ -7,6 +7,7 @@ import { selectAllMinions } from '../../store/slices/combatSlice';
 import { MinionDrawer } from '../minions/MinionDrawer';
 import { WandDrawer } from '../widgets/WandDrawer';
 import { MinionBubble } from '../widgets/MinionBubble';
+import { CombatBubble } from '../widgets/CombatBubble';
 
 interface AppShellProps {
     children: React.ReactNode;
@@ -149,6 +150,9 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                 {/* FABs Container */}
                 <div className="fixed bottom-24 right-4 flex flex-col gap-4 z-40 pointer-events-none">
                     <div className="pointer-events-auto flex flex-col gap-3 items-end">
+                        {/* Combat Bubble - Always visible */}
+                        <CombatBubble onClick={() => onTabChange('combat')} />
+
                         {/* Wand Trigger */}
                         {character.inventory.some(i => i.name.toLowerCase().includes('wand')) && (
                             <button

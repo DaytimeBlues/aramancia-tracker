@@ -71,6 +71,22 @@ export const initialCharacterData: CharacterData = {
                 { name: 'Raidho (Illusory Script)', cost: 1 }
             ],
             description: 'A rigid stone wand from the Direstone mines. Expending the last charge risks crumbling (d20 roll).'
+        },
+        // Component-based spell materials
+        {
+            name: 'Feather (Fly)',
+            spells: [{ name: 'Fly', cost: 0 }],
+            description: 'A wing feather from any bird. Material component for Fly.'
+        },
+        {
+            name: 'Ashes (Fireball)',
+            spells: [{ name: 'Fireball', cost: 0 }],
+            description: 'A tiny ball of bat guano and sulfur. Material component for Fireball.'
+        },
+        {
+            name: 'Crystal Orb (Clairvoyance)',
+            spells: [{ name: 'Clairvoyance', cost: 0 }],
+            description: 'A focus worth at least 100 gp. Material component for Clairvoyance.'
         }
     ],
     // Wizard Spell Slots (Level 5: 4/3/2)

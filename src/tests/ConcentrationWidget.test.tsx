@@ -14,7 +14,7 @@ describe('ConcentrationWidget', () => {
     );
 
     expect(screen.getByText('Concentration')).toBeInTheDocument();
-    expect(screen.getByText('Not concentrating on any spell')).toBeInTheDocument();
+    expect(screen.getByText('Select a spell to track concentration')).toBeInTheDocument();
   });
 
   it('displays active concentration spell', () => {
@@ -41,7 +41,7 @@ describe('ConcentrationWidget', () => {
       />
     );
 
-    const endButton = screen.getByText('End');
+    const endButton = screen.getByLabelText('End Concentration');
     await user.click(endButton);
 
     expect(handleClear).toHaveBeenCalled();

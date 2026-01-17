@@ -53,6 +53,27 @@ Entries are appended by agents at the end of each session.
 #### Open Questions for Next Session
 - None immediately. Roadmap defined in `.conductor/plan.md`.
 
+### 2026-01-16 (Codex)
+**Branch**: `master`
+
+#### Summary
+- **Android QA Artifacts**: Added an Android CI workflow, Kotlin-based Espresso launch test, and a test plan document.
+- **Gradle Updates**: Enabled Kotlin plugin support and exposed a WebView ID to allow UI click assertions.
+
+### 2026-01-16 (Codex)
+**Branch**: `work`
+
+#### Summary
+- **Lint Fixes**: Resolved hook ordering, removed unused eslint directive, and aligned combat slice test typing with store reducers.
+
+### 2026-01-16 (Codex)
+**Branch**: `work`
+
+#### Summary
+- **Test Alignment**: Updated unit tests to match current UI copy and styles, ensured combat test seeds player initiative, and excluded Playwright specs from Vitest.
+- **Test Scope**: Restricted Vitest to project tests and excluded node_modules to prevent third-party suites from running.
+- **Preflight**: Skip Playwright E2E when browsers are missing to avoid false failures in clean environments.
+
 ---
 
 ## Knowledge Base (Learned Patterns)

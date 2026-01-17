@@ -98,7 +98,11 @@ pass "Build complete."
 echo -e "\nRunning End-to-End Tests..."
 if [ "$ENV" == "NODE" ]; then
     if [ -f "playwright.config.ts" ]; then
-        npx playwright test || fail "E2E Tests failed. Run 'npx playwright show-report' to see why."
+        if [ -d "${HOME}/.cache/ms-playwright" ] && ls "${HOME}/.cache/ms-playwright" | grep -q chromium; then
+            npx playwright test || fail "E2E Tests failed. Run 'npx playwright show-report' to see why."
+        else
+            echo -e "${YELLOW}WARNING: Playwright browsers not installed. Run 'npx playwright install' to enable E2E tests.${NC}"
+        fi
     else
         echo "No Playwright config found. Skipping E2E tests."
     fi

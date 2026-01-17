@@ -9,6 +9,7 @@ import combatReducer, {
     slotConfirmed,
     castingCompletedWithSlot,
 } from '../store/slices/combatSlice';
+import characterReducer from '../store/slices/characterSlice';
 import spellbookReducer from '../store/slices/spellbookSlice';
 
 describe('combatSlice reducers', () => {
@@ -52,6 +53,7 @@ describe('combatSlice reducers', () => {
 
         const seeded = {
             ...combatReducer(undefined, minionAdded(minion)),
+            initiatives: { player: 12 },
             initiativeOrder: ['player', 'm1'],
         };
 
@@ -64,14 +66,14 @@ describe('combatSlice reducers', () => {
         const store = configureStore({
             reducer: {
                 combat: combatReducer,
+                character: characterReducer,
                 spellbook: spellbookReducer,
             },
         });
 
         store.dispatch(castingStarted({ spellId: 'magic-missile' }));
         store.dispatch(slotConfirmed({ slotLevel: 2, resolutionMode: 'automatic' }));
-        // @ts-ignore - Thunk dispatch typing in unit tests can be tricky 
-        store.dispatch(castingCompletedWithSlot() as any);
+        store.dispatch(castingCompletedWithSlot());
 
         expect(store.getState().spellbook.availableSlots[2]).toBe(2);
     });

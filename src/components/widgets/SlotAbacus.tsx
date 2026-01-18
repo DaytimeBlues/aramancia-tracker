@@ -98,23 +98,27 @@ export const SlotAbacus: React.FC = () => {
                                             key={i}
                                             onClick={() => handleSlotClick(slotLevel, isAvailable)}
                                             className={`
-                                                w-7 h-7 rounded-full transition-all duration-300
-                                                tap-feedback relative group
-                                                ${isAvailable
-                                                    ? 'bg-gradient-to-br from-indigo-400 via-indigo-500 to-indigo-700 shadow-[0_0_10px_rgba(99,102,241,0.4)] hover:scale-110'
-                                                    : 'bg-stone-800 border-2 border-stone-700 opacity-50 hover:opacity-80 hover:scale-105'
-                                                }
+                                                relative w-8 h-8 transition-all duration-500
+                                                tap-feedback group
+                                                ${isAvailable ? 'hover:scale-110' : 'hover:scale-105 opacity-60 hover:opacity-100'}
                                             `}
                                             title={isAvailable ? 'Use slot' : 'Restore slot'}
                                         >
-                                            {/* Shine */}
-                                            {isAvailable && (
-                                                <div className="absolute top-1 left-1 w-2 h-2 bg-white/40 rounded-full blur-[1px]" />
-                                            )}
+                                            <img
+                                                src={isAvailable ? "/assets/orb-active.png" : "/assets/orb-empty.png"}
+                                                alt={isAvailable ? "Active Slot" : "Empty Slot"}
+                                                className={`
+                                                    w-full h-full object-contain transition-all duration-700
+                                                    ${isAvailable
+                                                        ? 'drop-shadow-[0_0_8px_rgba(129,140,248,0.5)] group-hover:drop-shadow-[0_0_12px_rgba(129,140,248,0.8)]'
+                                                        : 'grayscale-[0.5] contrast-[0.8]'
+                                                    }
+                                                `}
+                                            />
 
-                                            {/* Hollow center for used */}
-                                            {!isAvailable && (
-                                                <div className="absolute inset-2 rounded-full bg-stone-900" />
+                                            {/* Selection Flare */}
+                                            {isAvailable && (
+                                                <div className="absolute inset-0 rounded-full bg-indigo-400/10 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
                                             )}
                                         </button>
                                     );

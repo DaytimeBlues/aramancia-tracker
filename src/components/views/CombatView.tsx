@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { MinionDrawer } from '../minions/MinionDrawer';
 import { MathStrip } from '../features/combat/MathStrip';
-import { InitiativeTracker } from '../features/combat/InitiativeTracker';
 import { undeadStats } from '../../data/undeadStats';
 import type { UndeadStatBlock } from '../../data/undeadStats';
 import { Skull, Shield, Sword, Info, X, Users, Ghost, Biohazard, Bone, ChevronDown, ChevronUp, Wand2, Hourglass, Plus } from 'lucide-react';
@@ -9,8 +8,6 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { minionSelectors, minionAdded } from '../../store/slices/combatSlice';
 import type { Minion } from '../../types';
 
-// No props needed now!
-// No props needed now!
 export function CombatView() {
     const dispatch = useAppDispatch();
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -40,9 +37,7 @@ export function CombatView() {
                 </div>
             </div>
 
-            <div className="px-4 space-y-6">
-                {/* Initiative Tracker (P0) */}
-                <InitiativeTracker />
+            <div className="px-4 space-y-6 pt-4">
 
                 {/* Undead Manager Card - Kyoto Ornate Style */}
                 <div className="glass-card p-0 overflow-visible elevation-2 rounded-2xl animate-slide-up stagger-2">

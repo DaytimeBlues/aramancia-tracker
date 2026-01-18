@@ -728,15 +728,33 @@ h6 {
     font-size: 1rem;
   }
 
-  /* Even wider container */
-  .max-w-md {
-    max-width: 36rem !important;
+  /* Full width container for desktop */
+  .max-w-md, .max-w-lg, .max-w-xl, .max-w-2xl {
+    max-width: 80rem !important;
   }
 
   /* Larger touch targets */
   nav button {
     padding: 0.75rem 1rem;
   }
+}
+
+/* Responsive Grid Overrides */
+@media (min-width: 1280px) {
+  .xl\:grid-cols-3 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (min-width: 1600px) {
+  .xl\:grid-cols-3 {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  }
+}
+
+/* Navigation Polish */
+.text-stone-500 {
+  color: #78716c; /* Slightly brighter for visibility */
 }
 
 /* Touch-friendly hover states (disable on touch devices) */

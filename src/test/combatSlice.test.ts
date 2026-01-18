@@ -18,7 +18,7 @@ describe('combatSlice reducers', () => {
         expect(state.concentrationCheckDC).toBe(11);
     });
 
-    it('tracks initiative entries when minions are added and removed', () => {
+    it('tracks minion entities when added and removed', () => {
         const minion = {
             id: 'm1',
             name: 'Skeleton 1',
@@ -32,13 +32,13 @@ describe('combatSlice reducers', () => {
         };
 
         const withMinion = combatReducer(undefined, minionAdded(minion));
-        expect(withMinion.initiativeOrder).toContain('m1');
+        expect(withMinion.minions.ids).toContain('m1');
 
         const withoutMinion = combatReducer(withMinion, minionRemoved('m1'));
-        expect(withoutMinion.initiativeOrder).not.toContain('m1');
+        expect(withoutMinion.minions.ids).not.toContain('m1');
     });
 
-    it('clears all minions but keeps player initiative if present', () => {
+    it('clears all minions', () => {
         const minion = {
             id: 'm1',
             name: 'Skeleton 1',
@@ -51,14 +51,8 @@ describe('combatSlice reducers', () => {
             conditions: [],
         };
 
-        const seeded = {
-            ...combatReducer(undefined, minionAdded(minion)),
-            initiatives: { player: 12 },
-            initiativeOrder: ['player', 'm1'],
-        };
-
+        const seeded = combatReducer(undefined, minionAdded(minion));
         const cleared = combatReducer(seeded, allMinionsCleared());
-        expect(cleared.initiativeOrder).toEqual(['player']);
         expect(cleared.minions.ids).toHaveLength(0);
     });
 

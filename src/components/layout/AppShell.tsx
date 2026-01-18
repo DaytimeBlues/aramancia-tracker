@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Feather, Shield, Brain, User, Settings, Skull, Wand2, Backpack, Zap } from 'lucide-react';
+import { Feather, Shield, Brain, User, Settings, Skull, Wand2, Backpack } from 'lucide-react';
 import { BackgroundVideo } from './BackgroundVideo';
 import { useAppSelector } from '../../store/hooks';
 import { selectCharacter } from '../../store/slices/characterSlice';
@@ -13,7 +13,6 @@ import { PanicButtons } from '../widgets/PanicButtons';
 import { ConcentrationToggle } from '../widgets/ConcentrationToggle';
 import { FamiliarBubble } from '../widgets/FamiliarBubble';
 import { FamiliarDrawer } from '../widgets/FamiliarDrawer';
-import { SummonManager } from '../widgets/SummonManager';
 
 
 interface AppShellProps {
@@ -39,7 +38,6 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
     const [isMinionDrawerOpen, setIsMinionDrawerOpen] = useState(false);
     const [isWandDrawerOpen, setIsWandDrawerOpen] = useState(false);
     const [isFamiliarDrawerOpen, setIsFamiliarDrawerOpen] = useState(false);
-    const [isSummonManagerOpen, setIsSummonManagerOpen] = useState(false);
 
     // Helper to determine class display
     const characterClass = 'Warlock'; // Default for now as per tracker focus
@@ -61,7 +59,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                     <div className="h-1 w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 
                     <div className="bg-bg-dark/80 backdrop-blur-xl border-b border-white/10 relative shadow-lg">
-                        <div className="max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
                             {/* Left: Icon and Title */}
                             <div className="flex items-center gap-3">
                                 <div className="relative">
@@ -108,7 +106,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                 </header>
 
                 {/* Main Content */}
-                <main className="pt-20 px-4 pb-32 max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto relative z-10 animate-fade-in">
+                <main className="pt-20 px-4 sm:px-6 lg:px-8 pb-32 max-w-7xl mx-auto relative z-10 animate-fade-in">
                     {children}
                 </main>
 
@@ -116,8 +114,8 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                 <nav className="fixed bottom-0 left-0 right-0 z-50 pb-safe">
                     <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent" />
 
-                    <div className="bg-bg-dark/90 backdrop-blur-2xl border-t border-white/10 relative">
-                        <div className="max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto">
+                    <div className="bg-bg-dark/95 backdrop-blur-2xl border-t border-white/10 relative">
+                        <div className="max-w-4xl mx-auto">
                             <div className="flex items-center justify-between px-2 py-2">
                                 {navItems.map(({ id, icon: Icon, label }) => {
                                     const isActive = activeTab === id;
@@ -134,7 +132,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                                             `}>
                                                 <Icon
                                                     size={20}
-                                                    className={`transition-colors duration-300 ${isActive ? 'text-white' : 'text-muted group-hover:text-parchment'}`}
+                                                    className={`transition-colors duration-300 ${isActive ? 'text-white' : 'text-stone-500 group-hover:text-parchment'}`}
                                                 />
                                                 {isActive && (
                                                     <div className="absolute inset-0 rounded-xl bg-white/5 animate-pulse" />
@@ -184,22 +182,10 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                             onClick={() => setIsFamiliarDrawerOpen(true)}
                         />
 
-                        {/* Minion Bubble - Premium Summary & Trigger */}
                         <MinionBubble
                             minions={activeMinions}
                             onClick={() => setIsMinionDrawerOpen(true)}
                         />
-
-                        {/* Summon Manager Trigger (Combat Mode only) */}
-                        {activeTab === 'combat' && (
-                            <button
-                                onClick={() => setIsSummonManagerOpen(true)}
-                                className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-yellow-300 border-yellow-500/30 hover:bg-yellow-900/40 hover:scale-105 active:scale-95 transition-all shadow-lg tap-feedback backdrop-blur-md"
-                                title="Summon Creatures"
-                            >
-                                <Zap size={24} />
-                            </button>
-                        )}
                     </div>
                 </div>
 
@@ -219,11 +205,6 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                 <FamiliarDrawer
                     isOpen={isFamiliarDrawerOpen}
                     onClose={() => setIsFamiliarDrawerOpen(false)}
-                />
-
-                <SummonManager
-                    isOpen={isSummonManagerOpen}
-                    onClose={() => setIsSummonManagerOpen(false)}
                 />
 
             </div>

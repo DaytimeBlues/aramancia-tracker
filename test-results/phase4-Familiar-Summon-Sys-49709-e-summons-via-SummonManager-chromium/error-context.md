@@ -1,0 +1,288 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - img "Background" [ref=e4]
+  - generic [ref=e9]:
+    - banner [ref=e10]:
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - img [ref=e17]
+          - generic [ref=e21]:
+            - heading "Aramancia" [level=1] [ref=e22]
+            - paragraph [ref=e23]: Tracker
+        - generic [ref=e24]:
+          - button "Preparation Mode" [ref=e25]:
+            - img [ref=e26]
+            - generic [ref=e28]: Study
+          - button "Execution Mode" [pressed] [ref=e29]:
+            - img [ref=e30]
+            - generic [ref=e39]: Combat
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - paragraph [ref=e42]: Level 5
+            - paragraph [ref=e43]: Warlock
+          - img [ref=e45]
+    - main [ref=e48]:
+      - generic [ref=e50]:
+        - generic [ref=e56]:
+          - button "+7 Spell Atk" [ref=e58] [cursor=pointer]:
+            - img [ref=e60]
+            - generic [ref=e62]: "+7"
+            - generic [ref=e63]: Spell Atk
+          - button "+14 Save DC" [ref=e66] [cursor=pointer]:
+            - img [ref=e68]
+            - generic [ref=e70]: "+14"
+            - generic [ref=e71]: Save DC
+          - button "+3 Prof" [ref=e74]:
+            - img [ref=e76]
+            - generic [ref=e79]: "+3"
+            - generic [ref=e80]: Prof
+          - button "+4 INT" [ref=e83]:
+            - img [ref=e85]
+            - generic [ref=e93]: "+4"
+            - generic [ref=e94]: INT
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - generic [ref=e97]:
+              - generic [ref=e98]:
+                - img [ref=e99]
+                - heading "Initiative" [level=3] [ref=e101]
+              - generic [ref=e102]:
+                - generic [ref=e103]: Round 1
+                - button "Reset Initiative" [ref=e104]:
+                  - img [ref=e105]
+            - generic [ref=e109]:
+              - paragraph [ref=e110]: No initiative set
+              - button "Roll for Aramancia" [ref=e111]
+          - generic [ref=e112]:
+            - generic [ref=e113]:
+              - generic [ref=e114]:
+                - img [ref=e116]
+                - generic [ref=e121]:
+                  - heading "Undead Horde" [level=3] [ref=e122]
+                  - generic [ref=e123]: Necromantic Servants
+              - generic [ref=e126]: 0 Active
+            - generic [ref=e127]:
+              - generic [ref=e128]:
+                - generic [ref=e129]:
+                  - button "0 Skeletons" [ref=e130] [cursor=pointer]:
+                    - img [ref=e132]
+                    - img [ref=e135]
+                    - generic [ref=e140]: "0"
+                    - generic [ref=e141]: Skeletons
+                  - button "Quick Add Skeleton" [ref=e142]:
+                    - img [ref=e143]
+                - generic [ref=e144]:
+                  - button "0 Zombies" [ref=e145] [cursor=pointer]:
+                    - img [ref=e147]
+                    - img [ref=e150]
+                    - generic [ref=e160]: "0"
+                    - generic [ref=e161]: Zombies
+                  - button "Quick Add Zombie" [ref=e162]:
+                    - img [ref=e163]
+              - button "Manage Minions" [ref=e164]:
+                - img [ref=e165]
+                - text: Manage Minions
+          - button "Summon Undead Stat Blocks • Level 3+" [ref=e171]:
+            - generic [ref=e172]:
+              - img [ref=e174]
+              - generic [ref=e176]:
+                - heading "Summon Undead" [level=3] [ref=e177]
+                - generic [ref=e178]: Stat Blocks • Level 3+
+            - img [ref=e179]
+        - generic [ref=e182]:
+          - button "End Turn" [ref=e183]:
+            - img [ref=e184]
+          - button "Quick Cast" [ref=e187]:
+            - img [ref=e188]
+        - generic [ref=e192]:
+          - generic [ref=e195]:
+            - generic [ref=e196]:
+              - img [ref=e197]
+              - heading "Necromancy" [level=2] [ref=e202]
+              - generic [ref=e203]: 0 Active
+            - button [ref=e205]:
+              - img [ref=e206]
+          - generic [ref=e209]:
+            - generic [ref=e210]:
+              - button "Animate Dead" [ref=e211]
+              - button "Summon Undead" [ref=e212]
+            - generic [ref=e213]:
+              - generic [ref=e214]:
+                - button "Raise Skeleton AC 13 • HP 13" [ref=e215]:
+                  - img [ref=e216]
+                  - generic [ref=e221]: Raise Skeleton
+                  - generic [ref=e222]: AC 13 • HP 13
+                - button "Raise Zombie AC 8 • HP 22" [ref=e223]:
+                  - img [ref=e224]
+                  - generic [ref=e234]: Raise Zombie
+                  - generic [ref=e235]: AC 8 • HP 22
+              - generic [ref=e236]: Requires Level 6 for Undead Thralls
+            - generic [ref=e237]:
+              - heading "Active Servants" [level=3] [ref=e238]
+              - generic [ref=e239]: No undead raised
+    - navigation [ref=e240]:
+      - generic [ref=e244]:
+        - button "Stats" [ref=e245]:
+          - img [ref=e247]
+          - generic: Stats
+        - button "Spellbook" [ref=e249]:
+          - img [ref=e251]
+          - generic: Spellbook
+        - button "Combat" [ref=e254]:
+          - img [ref=e256]
+          - generic [ref=e262]: Combat
+        - button "Abilities" [ref=e264]:
+          - img [ref=e266]
+          - generic: Abilities
+        - button "Bio" [ref=e274]:
+          - img [ref=e276]
+          - generic: Bio
+        - button "Inventory" [ref=e279]:
+          - img [ref=e281]
+          - generic: Inventory
+        - button "Settings" [ref=e285]:
+          - img [ref=e287]
+          - generic: Settings
+    - generic [ref=e290]:
+      - generic [ref=e291]:
+        - img [ref=e292]
+        - generic [ref=e295]: Not Concentrating
+      - button "12 14 +7" [ref=e296]:
+        - img [ref=e297]
+        - generic [ref=e306]:
+          - generic "Armor Class" [ref=e307]:
+            - img [ref=e308]
+            - generic [ref=e310]: "12"
+          - generic "Spell Save DC" [ref=e311]:
+            - img [ref=e312]
+            - generic [ref=e316]: "14"
+          - generic "Spell Attack Bonus" [ref=e317]:
+            - img [ref=e318]
+            - generic [ref=e321]: "+7"
+      - button [ref=e322]:
+        - img [ref=e323]
+      - button "Find Familiar" [ref=e326]:
+        - img [ref=e327]
+      - button "Summon Creatures" [active] [ref=e330]:
+        - img [ref=e331]
+    - button "Toggle Panic Buttons" [ref=e335]:
+      - img [ref=e336]
+    - generic [ref=e338]:
+      - generic [ref=e341]:
+        - generic [ref=e342]:
+          - img [ref=e343]
+          - heading "Necromancy" [level=2] [ref=e348]
+          - generic [ref=e349]: 0 Active
+        - button [ref=e351]:
+          - img [ref=e352]
+      - generic [ref=e355]:
+        - generic [ref=e356]:
+          - button "Animate Dead" [ref=e357]
+          - button "Summon Undead" [ref=e358]
+        - generic [ref=e359]:
+          - generic [ref=e360]:
+            - button "Raise Skeleton AC 13 • HP 13" [ref=e361]:
+              - img [ref=e362]
+              - generic [ref=e367]: Raise Skeleton
+              - generic [ref=e368]: AC 13 • HP 13
+            - button "Raise Zombie AC 8 • HP 22" [ref=e369]:
+              - img [ref=e370]
+              - generic [ref=e380]: Raise Zombie
+              - generic [ref=e381]: AC 8 • HP 22
+          - generic [ref=e382]: Requires Level 6 for Undead Thralls
+        - generic [ref=e383]:
+          - heading "Active Servants" [level=3] [ref=e384]
+          - generic [ref=e385]: No undead raised
+    - generic [ref=e386]:
+      - generic [ref=e389]:
+        - generic [ref=e390]:
+          - img [ref=e391]
+          - generic [ref=e394]:
+            - heading "Direstone Runic Wand" [level=2] [ref=e395]
+            - paragraph [ref=e396]: A rigid stone wand from the Direstone mines. Expending the last charge risks crumbling (d20 roll).
+        - button [ref=e397]:
+          - img [ref=e398]
+      - generic [ref=e401]:
+        - generic [ref=e403]:
+          - generic [ref=e404]:
+            - text: "7"
+            - generic [ref=e405]: / 7
+          - generic [ref=e406]: Charges Remaining
+        - generic [ref=e407]:
+          - heading "Imbued Runes" [level=3] [ref=e408]
+          - button "Algiz (Fire Resist) 3 Charges" [ref=e409]:
+            - generic [ref=e410]:
+              - img [ref=e412]
+              - generic [ref=e414]:
+                - generic [ref=e415]: Algiz (Fire Resist)
+                - generic [ref=e417]: 3 Charges
+            - img [ref=e418]
+          - button "Eihwaz (Arcane Lock) 2 Charges" [ref=e420]:
+            - generic [ref=e421]:
+              - img [ref=e423]
+              - generic [ref=e425]:
+                - generic [ref=e426]: Eihwaz (Arcane Lock)
+                - generic [ref=e428]: 2 Charges
+            - img [ref=e429]
+          - button "Hagalaz (Shatter) 2 Charges" [ref=e431]:
+            - generic [ref=e432]:
+              - img [ref=e434]
+              - generic [ref=e436]:
+                - generic [ref=e437]: Hagalaz (Shatter)
+                - generic [ref=e439]: 2 Charges
+            - img [ref=e440]
+          - button "Kenaz (Burning Hands) 1 Charge" [ref=e442]:
+            - generic [ref=e443]:
+              - img [ref=e445]
+              - generic [ref=e447]:
+                - generic [ref=e448]: Kenaz (Burning Hands)
+                - generic [ref=e450]: 1 Charge
+            - img [ref=e451]
+          - button "Kenaz (Heat Metal) 2 Charges" [ref=e453]:
+            - generic [ref=e454]:
+              - img [ref=e456]
+              - generic [ref=e458]:
+                - generic [ref=e459]: Kenaz (Heat Metal)
+                - generic [ref=e461]: 2 Charges
+            - img [ref=e462]
+          - button "Raidho (Stone Shape) 4 Charges" [ref=e464]:
+            - generic [ref=e465]:
+              - img [ref=e467]
+              - generic [ref=e469]:
+                - generic [ref=e470]: Raidho (Stone Shape)
+                - generic [ref=e472]: 4 Charges
+            - img [ref=e473]
+          - button "Raidho (Illusory Script) 1 Charge" [ref=e475]:
+            - generic [ref=e476]:
+              - img [ref=e478]
+              - generic [ref=e480]:
+                - generic [ref=e481]: Raidho (Illusory Script)
+                - generic [ref=e483]: 1 Charge
+            - img [ref=e484]
+    - generic [ref=e487]:
+      - generic [ref=e488]:
+        - heading "Summon Creatures" [level=2] [ref=e489]:
+          - img [ref=e490]
+          - text: Summon Creatures
+        - button [ref=e493]:
+          - img [ref=e494]
+      - generic [ref=e497]:
+        - button "Wolf CR 1/4 Level 3+ HP 11 AC 13" [ref=e498]:
+          - generic [ref=e499]: Wolf
+          - generic [ref=e500]:
+            - generic [ref=e501]: CR 1/4
+            - generic [ref=e502]: Level 3+
+          - generic [ref=e503]:
+            - generic [ref=e504]: HP 11
+            - generic [ref=e505]: AC 13
+        - button "Giant Wolf Spider CR 1/4 Level 3+ HP 11 AC 13" [ref=e506]:
+          - generic [ref=e507]: Giant Wolf Spider
+          - generic [ref=e508]:
+            - generic [ref=e509]: CR 1/4
+            - generic [ref=e510]: Level 3+
+          - generic [ref=e511]:
+            - generic [ref=e512]: HP 11
+            - generic [ref=e513]: AC 13
+```

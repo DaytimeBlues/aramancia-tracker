@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Feather, Shield, Brain, User, Settings, Skull, Wand2, Backpack } from 'lucide-react';
+import { Feather, Shield, Brain, User, Settings, Skull, Wand2, Backpack, Zap } from 'lucide-react';
 import { BackgroundVideo } from './BackgroundVideo';
 import { useAppSelector } from '../../store/hooks';
 import { selectCharacter } from '../../store/slices/characterSlice';
@@ -14,7 +14,7 @@ import { ConcentrationToggle } from '../widgets/ConcentrationToggle';
 import { FamiliarBubble } from '../widgets/FamiliarBubble';
 import { FamiliarDrawer } from '../widgets/FamiliarDrawer';
 import { SummonManager } from '../widgets/SummonManager';
-import { Sparkles } from 'lucide-react';
+
 
 interface AppShellProps {
     children: React.ReactNode;
@@ -197,7 +197,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                                 className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-yellow-300 border-yellow-500/30 hover:bg-yellow-900/40 hover:scale-105 active:scale-95 transition-all shadow-lg tap-feedback backdrop-blur-md"
                                 title="Summon Creatures"
                             >
-                                <Sparkles size={24} />
+                                <Zap size={24} />
                             </button>
                         )}
                     </div>

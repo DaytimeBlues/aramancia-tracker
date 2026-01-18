@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Minus, Plus, Shield, Skull, Sparkles, X, Zap } from 'lucide-react';
+import { Minus, Plus, Zap, X } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectSlots, slotUsed, toastShown } from '../../store/slices/characterSlice';
 import { minionAdded, selectAllMinions } from '../../store/slices/combatSlice';
@@ -69,7 +69,7 @@ export function SummonManager({ isOpen, onClose }: SummonManagerProps) {
             <div className="w-full max-w-lg glass-card p-6 rounded-2xl animate-in zoom-in-95 duration-200">
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                        <Sparkles className="text-yellow-400" />
+                        <Zap className="text-yellow-400" />
                         Summon Creatures
                     </h2>
                     <button onClick={onClose} className="text-slate-400 hover:text-white transition-colors">
@@ -87,8 +87,8 @@ export function SummonManager({ isOpen, onClose }: SummonManagerProps) {
                                 setCount(1);
                             }}
                             className={`p-3 rounded-xl border text-left transition-all ${selectedPrototype?.name === p.name
-                                    ? 'bg-yellow-500/20 border-yellow-500 shadow-yellow-500/20 shadow-lg'
-                                    : 'bg-slate-900/40 border-slate-800 hover:border-slate-700'
+                                ? 'bg-yellow-500/20 border-yellow-500 shadow-yellow-500/20 shadow-lg'
+                                : 'bg-slate-900/40 border-slate-800 hover:border-slate-700'
                                 }`}
                         >
                             <div className="font-bold text-white">{p.name}</div>
@@ -142,10 +142,10 @@ export function SummonManager({ isOpen, onClose }: SummonManagerProps) {
                                         disabled={!isAvailable || isTooLow}
                                         onClick={() => setSelectedSlot(level)}
                                         className={`flex-1 py-2 rounded-lg text-sm font-bold transition-all ${selectedSlot === level
-                                                ? 'bg-yellow-500 text-black'
-                                                : isAvailable && !isTooLow
-                                                    ? 'bg-yellow-900/20 text-yellow-400 border border-yellow-700/50 hover:bg-yellow-900/40'
-                                                    : 'bg-slate-900/50 text-slate-600 border border-slate-800 cursor-not-allowed'
+                                            ? 'bg-yellow-500 text-black'
+                                            : isAvailable && !isTooLow
+                                                ? 'bg-yellow-900/20 text-yellow-400 border border-yellow-700/50 hover:bg-yellow-900/40'
+                                                : 'bg-slate-900/50 text-slate-600 border border-slate-800 cursor-not-allowed'
                                             }`}
                                     >
                                         L{level}

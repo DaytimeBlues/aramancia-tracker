@@ -1,0 +1,322 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - img "Background" [ref=e4]
+  - generic [ref=e9]:
+    - banner [ref=e10]:
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - img [ref=e17]
+          - generic [ref=e21]:
+            - heading "Aramancia" [level=1] [ref=e22]
+            - paragraph [ref=e23]: Tracker
+        - generic [ref=e24]:
+          - button "Preparation Mode" [pressed] [ref=e25]:
+            - img [ref=e26]
+            - generic [ref=e28]: Study
+          - button "Execution Mode" [ref=e29]:
+            - img [ref=e30]
+            - generic [ref=e39]: Combat
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - paragraph [ref=e42]: Level 5
+            - paragraph [ref=e43]: Warlock
+          - img [ref=e45]
+    - main [ref=e48]:
+      - generic [ref=e49]:
+        - generic [ref=e51]:
+          - generic [ref=e52]:
+            - img [ref=e53]
+            - heading "Hit Points" [level=3] [ref=e58]
+          - generic [ref=e59]:
+            - button "32 /32 Edit" [ref=e60]:
+              - generic [ref=e61]:
+                - text: "32"
+                - generic [ref=e62]: /32
+              - generic [ref=e64]: Edit
+            - generic [ref=e69]:
+              - button [ref=e70]:
+                - img [ref=e71]
+              - button [ref=e72]:
+                - img [ref=e73]
+          - generic [ref=e75]:
+            - img [ref=e76]
+            - generic [ref=e78]: Temp HP
+            - spinbutton [ref=e79]
+            - button "Add" [ref=e80]
+        - generic [ref=e82]:
+          - generic [ref=e86]:
+            - img [ref=e88]
+            - heading "Defense" [level=3] [ref=e90]
+          - generic [ref=e91]:
+            - generic [ref=e92]:
+              - generic:
+                - generic: "12"
+                - generic: AC
+            - generic [ref=e93]:
+              - button "Mage Armor base 13 + dex" [ref=e94]:
+                - generic [ref=e95]:
+                  - generic [ref=e96]: Mage Armor
+                  - generic [ref=e97]: base 13 + dex
+              - button "Shield Spell +5 bonus" [ref=e99]:
+                - generic [ref=e100]:
+                  - generic [ref=e101]: Shield Spell
+                  - generic [ref=e102]: +5 bonus
+          - generic [ref=e105]: "Base Armor Class: 12"
+        - generic [ref=e107]:
+          - generic [ref=e108]:
+            - generic [ref=e109]:
+              - img [ref=e111]
+              - heading "Spell Slots" [level=3] [ref=e114]
+            - button "Recover" [disabled] [ref=e115]:
+              - img [ref=e116]
+              - generic [ref=e119]: Recover
+          - generic [ref=e120]:
+            - generic [ref=e121]:
+              - generic [ref=e122]: L1
+              - generic [ref=e123]:
+                - button "Use slot" [ref=e124]
+                - button "Use slot" [ref=e126]
+                - button "Use slot" [ref=e128]
+                - button "Use slot" [ref=e130]
+              - generic [ref=e132]: 4/4
+            - generic [ref=e133]:
+              - generic [ref=e134]: L2
+              - generic [ref=e135]:
+                - button "Use slot" [ref=e136]
+                - button "Use slot" [ref=e138]
+                - button "Use slot" [ref=e140]
+              - generic [ref=e142]: 3/3
+            - generic [ref=e143]:
+              - generic [ref=e144]: L3
+              - generic [ref=e145]:
+                - button "Use slot" [ref=e146]
+                - button "Use slot" [ref=e148]
+              - generic [ref=e150]: 2/2
+        - generic [ref=e152]:
+          - generic [ref=e154]:
+            - img [ref=e156]
+            - heading "Concentration" [level=3] [ref=e164]
+          - generic [ref=e166]:
+            - paragraph [ref=e167]: Select a spell to track concentration
+            - generic [ref=e168]:
+              - button "Sleep (2024)" [ref=e169]
+              - button "Detect Magic" [ref=e170]
+              - button "Faerie Fire" [ref=e171]
+              - button "Darkness" [ref=e172]
+              - button "Hold Person" [ref=e173]
+              - button "Blur" [ref=e174]
+        - generic [ref=e176]:
+          - generic [ref=e177]:
+            - img [ref=e178]
+            - heading "Death Saves" [level=3] [ref=e183]
+          - generic [ref=e184]:
+            - generic [ref=e185]:
+              - generic [ref=e186]:
+                - img [ref=e187]
+                - generic [ref=e189]: Success
+              - generic [ref=e190]:
+                - button [ref=e191]
+                - button [ref=e192]
+                - button [ref=e193]
+            - generic [ref=e195]:
+              - generic [ref=e196]:
+                - img [ref=e197]
+                - generic [ref=e202]: Failure
+              - generic [ref=e203]:
+                - button [ref=e204]
+                - button [ref=e205]
+                - button [ref=e206]
+      - generic [ref=e208]:
+        - img [ref=e210]
+        - generic [ref=e213]: Hedwig has died!
+        - button [ref=e214]:
+          - img [ref=e215]
+      - generic [ref=e219]:
+        - generic [ref=e221]:
+          - img [ref=e222]
+          - heading "Sessions" [level=2] [ref=e224]
+        - generic [ref=e226]:
+          - heading "New Session" [level=3] [ref=e227]
+          - generic [ref=e228]:
+            - generic [ref=e229]: "Session #"
+            - spinbutton [ref=e230]: "1"
+          - generic [ref=e231]:
+            - generic [ref=e232]: Date
+            - textbox [ref=e233]: 2026-01-18
+          - generic [ref=e234]:
+            - generic [ref=e235]: Label (optional)
+            - textbox "e.g. 'Battle at Ravenloft'" [ref=e236]
+          - button "Start Session" [ref=e238]:
+            - img [ref=e239]
+            - text: Start Session
+    - navigation [ref=e240]:
+      - generic [ref=e244]:
+        - button "Stats" [ref=e245]:
+          - img [ref=e247]
+          - generic [ref=e250]: Stats
+        - button "Spellbook" [ref=e252]:
+          - img [ref=e254]
+          - generic: Spellbook
+        - button "Combat" [ref=e257]:
+          - img [ref=e259]
+          - generic: Combat
+        - button "Abilities" [ref=e264]:
+          - img [ref=e266]
+          - generic: Abilities
+        - button "Bio" [ref=e274]:
+          - img [ref=e276]
+          - generic: Bio
+        - button "Inventory" [ref=e279]:
+          - img [ref=e281]
+          - generic: Inventory
+        - button "Settings" [ref=e285]:
+          - img [ref=e287]
+          - generic: Settings
+    - generic [ref=e290]:
+      - generic [ref=e291]:
+        - img [ref=e292]
+        - generic [ref=e295]: Not Concentrating
+      - button "12 14 +7" [ref=e296]:
+        - img [ref=e297]
+        - generic [ref=e306]:
+          - generic "Armor Class" [ref=e307]:
+            - img [ref=e308]
+            - generic [ref=e310]: "12"
+          - generic "Spell Save DC" [ref=e311]:
+            - img [ref=e312]
+            - generic [ref=e316]: "14"
+          - generic "Spell Attack Bonus" [ref=e317]:
+            - img [ref=e318]
+            - generic [ref=e321]: "+7"
+      - button [ref=e322]:
+        - img [ref=e323]
+      - button "Hedwig (owl)" [ref=e326]:
+        - img [ref=e327]
+    - generic [ref=e332]:
+      - generic [ref=e335]:
+        - generic [ref=e336]:
+          - img [ref=e337]
+          - heading "Necromancy" [level=2] [ref=e342]
+          - generic [ref=e343]: 0 Active
+        - button [ref=e345]:
+          - img [ref=e346]
+      - generic [ref=e349]:
+        - generic [ref=e350]:
+          - button "Animate Dead" [ref=e351]
+          - button "Summon Undead" [ref=e352]
+        - generic [ref=e353]:
+          - generic [ref=e354]:
+            - button "Raise Skeleton AC 13 • HP 13" [ref=e355]:
+              - img [ref=e356]
+              - generic [ref=e361]: Raise Skeleton
+              - generic [ref=e362]: AC 13 • HP 13
+            - button "Raise Zombie AC 8 • HP 22" [ref=e363]:
+              - img [ref=e364]
+              - generic [ref=e374]: Raise Zombie
+              - generic [ref=e375]: AC 8 • HP 22
+          - generic [ref=e376]: Requires Level 6 for Undead Thralls
+        - generic [ref=e377]:
+          - heading "Active Servants" [level=3] [ref=e378]
+          - generic [ref=e379]: No undead raised
+    - generic [ref=e380]:
+      - generic [ref=e383]:
+        - generic [ref=e384]:
+          - img [ref=e385]
+          - generic [ref=e388]:
+            - heading "Direstone Runic Wand" [level=2] [ref=e389]
+            - paragraph [ref=e390]: A rigid stone wand from the Direstone mines. Expending the last charge risks crumbling (d20 roll).
+        - button [ref=e391]:
+          - img [ref=e392]
+      - generic [ref=e395]:
+        - generic [ref=e397]:
+          - generic [ref=e398]:
+            - text: "7"
+            - generic [ref=e399]: / 7
+          - generic [ref=e400]: Charges Remaining
+        - generic [ref=e401]:
+          - heading "Imbued Runes" [level=3] [ref=e402]
+          - button "Algiz (Fire Resist) 3 Charges" [ref=e403]:
+            - generic [ref=e404]:
+              - img [ref=e406]
+              - generic [ref=e408]:
+                - generic [ref=e409]: Algiz (Fire Resist)
+                - generic [ref=e411]: 3 Charges
+            - img [ref=e412]
+          - button "Eihwaz (Arcane Lock) 2 Charges" [ref=e414]:
+            - generic [ref=e415]:
+              - img [ref=e417]
+              - generic [ref=e419]:
+                - generic [ref=e420]: Eihwaz (Arcane Lock)
+                - generic [ref=e422]: 2 Charges
+            - img [ref=e423]
+          - button "Hagalaz (Shatter) 2 Charges" [ref=e425]:
+            - generic [ref=e426]:
+              - img [ref=e428]
+              - generic [ref=e430]:
+                - generic [ref=e431]: Hagalaz (Shatter)
+                - generic [ref=e433]: 2 Charges
+            - img [ref=e434]
+          - button "Kenaz (Burning Hands) 1 Charge" [ref=e436]:
+            - generic [ref=e437]:
+              - img [ref=e439]
+              - generic [ref=e441]:
+                - generic [ref=e442]: Kenaz (Burning Hands)
+                - generic [ref=e444]: 1 Charge
+            - img [ref=e445]
+          - button "Kenaz (Heat Metal) 2 Charges" [ref=e447]:
+            - generic [ref=e448]:
+              - img [ref=e450]
+              - generic [ref=e452]:
+                - generic [ref=e453]: Kenaz (Heat Metal)
+                - generic [ref=e455]: 2 Charges
+            - img [ref=e456]
+          - button "Raidho (Stone Shape) 4 Charges" [ref=e458]:
+            - generic [ref=e459]:
+              - img [ref=e461]
+              - generic [ref=e463]:
+                - generic [ref=e464]: Raidho (Stone Shape)
+                - generic [ref=e466]: 4 Charges
+            - img [ref=e467]
+          - button "Raidho (Illusory Script) 1 Charge" [ref=e469]:
+            - generic [ref=e470]:
+              - img [ref=e472]
+              - generic [ref=e474]:
+                - generic [ref=e475]: Raidho (Illusory Script)
+                - generic [ref=e477]: 1 Charge
+            - img [ref=e478]
+    - generic [ref=e481]:
+      - generic [ref=e482]:
+        - heading "Hedwig" [level=2] [ref=e483]:
+          - img [ref=e484]
+          - text: Hedwig
+        - button [ref=e487]:
+          - img [ref=e488]
+      - generic [ref=e491]:
+        - generic [ref=e492]:
+          - img [ref=e494]
+          - generic [ref=e498]:
+            - generic [ref=e499]: Hedwig
+            - generic [ref=e500]: owl
+            - generic [ref=e501]:
+              - generic [ref=e502]:
+                - img [ref=e503]
+                - text: 0/1
+              - generic [ref=e505]:
+                - img [ref=e506]
+                - text: AC 11
+        - generic [ref=e508]:
+          - button "Damage" [active] [ref=e509]:
+            - img [ref=e510]
+            - text: Damage
+          - button "Heal" [ref=e515]:
+            - img [ref=e516]
+            - text: Heal
+          - button "Dismiss" [disabled] [ref=e518]:
+            - img [ref=e519]
+            - text: Dismiss
+          - button "Recall" [disabled] [ref=e524]:
+            - img [ref=e525]
+            - text: Recall
+```

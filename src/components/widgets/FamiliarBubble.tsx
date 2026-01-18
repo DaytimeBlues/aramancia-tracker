@@ -1,6 +1,6 @@
 import type { ComponentType } from 'react';
 import type { Familiar } from '../../types';
-import { Bird, Cat, Bug, Feather, EyeOff, Fish, Rat, Skull, X } from 'lucide-react';
+import { Bird, Cat, Bug, Feather, EyeOff, Fish, Rat, Skull, Dog } from 'lucide-react';
 
 interface FamiliarBubbleProps {
     familiar: Familiar | null;
@@ -38,7 +38,7 @@ export function FamiliarBubble({ familiar, onClick }: FamiliarBubbleProps) {
         );
     }
 
-    const Icon = familiar.isActive ? (FORM_ICONS[familiar.form] || PawPrint) : Skull;
+    const Icon = familiar.isActive ? (FORM_ICONS[familiar.form] || Dog) : Skull;
     const hpPercentage = (familiar.hp / familiar.maxHp) * 100;
 
     return (

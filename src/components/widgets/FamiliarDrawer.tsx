@@ -1,13 +1,12 @@
 import type { ComponentType } from 'react';
-import { useMemo, useState } from 'react';
-import { Bird, Bug, Cat, Eye, EyeOff, Feather, Fish, Heart, PawPrint, Shield, Skull, Sparkles, X } from 'lucide-react';
+import { useState } from 'react';
+import { Bird, Bug, Cat, Eye, EyeOff, Feather, Fish, Heart, Dog, Shield, Skull, Zap, X } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
     familiarDamaged,
     familiarDismissed,
     familiarHealed,
     familiarRecalled,
-    familiarRenamed,
     familiarSummoned,
     selectFamiliar,
     toastShown
@@ -44,8 +43,6 @@ export function FamiliarDrawer({ isOpen, onClose }: FamiliarDrawerProps) {
     const [selectedForm, setSelectedForm] = useState<Familiar['form']>('owl');
     const [name, setName] = useState('');
 
-    const stats = useMemo(() => (familiar ? familiar : FAMILIAR_STATS[selectedForm]), [familiar, selectedForm]);
-
     if (!isOpen) return null;
 
     const handleSummon = () => {
@@ -78,7 +75,7 @@ export function FamiliarDrawer({ isOpen, onClose }: FamiliarDrawerProps) {
                     <div className="space-y-6">
                         <div className="grid grid-cols-5 gap-2">
                             {FAMILIAR_FORMS.map(form => {
-                                const Icon = FORM_ICONS[form] || PawPrint;
+                                const Icon = FORM_ICONS[form] || Dog;
                                 return (
                                     <button
                                         key={form}
@@ -103,7 +100,7 @@ export function FamiliarDrawer({ isOpen, onClose }: FamiliarDrawerProps) {
                             onClick={handleSummon}
                             className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg shadow-lg flex items-center justify-center gap-2"
                         >
-                            <Sparkles size={20} />
+                            <Zap size={20} />
                             Summon Familiar
                         </button>
                     </div>
@@ -113,7 +110,7 @@ export function FamiliarDrawer({ isOpen, onClose }: FamiliarDrawerProps) {
                         <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-900/40 border border-slate-800">
                             <div className="w-16 h-16 rounded-full glass-card flex items-center justify-center text-blue-300">
                                 {(() => {
-                                    const Icon = FORM_ICONS[familiar.form] || PawPrint;
+                                    const Icon = FORM_ICONS[familiar.form] || Dog;
                                     return <Icon size={32} />;
                                 })()}
                             </div>

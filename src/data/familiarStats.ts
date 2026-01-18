@@ -1,9 +1,4 @@
-import type { Familiar } from './types';
-
-export interface CharacterState {
-    // ... typical character fields
-    familiar: Familiar | null;
-}
+import type { Familiar } from '../types';
 
 export const FAMILIAR_FORMS: Familiar['form'][] = [
     'owl',

@@ -13,6 +13,7 @@ export function CombatView() {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [selectedStatBlock, setSelectedStatBlock] = useState<UndeadStatBlock | null>(null);
     const [showSummons, setShowSummons] = useState(false);
+    const [showCastDrawer, setShowCastDrawer] = useState(false);
 
     // Select minions from Redux
     const minions = useAppSelector(state => minionSelectors.selectAll(state.combat.minions));
@@ -215,31 +216,27 @@ export function CombatView() {
             </div>
 
             {/* Fixed Navigation/Action Zone - Fitts's Law Optimized */}
-            <div className="fixed bottom-0 left-0 right-0 p-4 pointer-events-none z-50">
-                <div className="max-w-2xl mx-auto flex items-end justify-between pointer-events-auto">
-                    {/* Character/Nav Context can go here if needed, but we focus on primary combat actions */}
+            <div className="fixed bottom-20 right-4 z-50 pointer-events-none">
+                <div className="pointer-events-auto flex flex-col gap-3 items-end">
+                    {/* End Turn FAB - Edge Positioning */}
+                    <button
+                        className="w-14 h-14 rounded-2xl glass-card flex items-center justify-center text-red-400 border-red-500/40 hover:bg-red-950/40 hover:scale-105 active:scale-95 transition-all shadow-xl tap-feedback elevation-3"
+                        title="End Turn"
+                        onClick={() => { /* TODO: Hook up to turn logic */ }}
+                    >
+                        <Hourglass size={24} className="animate-spin-slow-once" />
+                    </button>
 
-                    <div className="flex flex-col gap-4 items-end mb-4">
-                        {/* End Turn FAB - Edge Positioning */}
-                        <button
-                            className="w-14 h-14 rounded-2xl glass-card flex items-center justify-center text-red-400 border-red-500/40 hover:bg-red-950/40 hover:scale-105 active:scale-95 transition-all shadow-xl tap-feedback elevation-3"
-                            title="End Turn"
-                            onClick={() => { /* TODO: Hook up to turn logic */ }}
-                        >
-                            <Hourglass size={24} className="animate-spin-slow-once" />
-                        </button>
-
-                        {/* Cast Spell FAB - Primary Action at Edge */}
-                        <button
-                            className="w-18 h-18 rounded-3xl bg-gradient-to-br from-accent-glow via-accent to-accent-dark flex items-center justify-center text-bg-dark hover:scale-110 active:scale-95 transition-all shadow-[0_0_30px_rgba(212,175,55,0.4)] tap-feedback elevation-3 group"
-                            title="Quick Cast"
-                            onClick={() => { /* TODO: Hook up to spell drawer */ }}
-                        >
-                            <Wand2 size={32} className="group-hover:rotate-12 transition-transform duration-500" />
-                            {/* Visual flare */}
-                            <div className="absolute inset-0 rounded-3xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </button>
-                    </div>
+                    {/* Cast Spell FAB - Primary Action at Edge */}
+                    <button
+                        className="w-18 h-18 rounded-3xl bg-gradient-to-br from-accent-glow via-accent to-accent-dark flex items-center justify-center text-bg-dark hover:scale-110 active:scale-95 transition-all shadow-[0_0_30px_rgba(212,175,55,0.4)] tap-feedback elevation-3 group"
+                        title="Quick Cast"
+                        onClick={() => setShowCastDrawer(true)}
+                    >
+                        <Wand2 size={32} className="group-hover:rotate-12 transition-transform duration-500" />
+                        {/* Visual flare */}
+                        <div className="absolute inset-0 rounded-3xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
                 </div>
             </div>
 
@@ -247,6 +244,34 @@ export function CombatView() {
                 isOpen={isDrawerOpen}
                 onClose={() => setIsDrawerOpen(false)}
             />
+
+            {/* Quick Cast Drawer */}
+            {showCastDrawer && (
+                <div
+                    className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
+                    onClick={() => setShowCastDrawer(false)}
+                >
+                    <div
+                        className="fixed bottom-0 left-0 right-0 bg-card-elevated border-t border-white/10 rounded-t-2xl max-h-[70vh] overflow-hidden animate-in slide-in-from-bottom duration-300"
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <div className="p-4 border-b border-white/10 flex justify-between items-center">
+                            <h3 className="font-display text-lg text-parchment">Quick Cast</h3>
+                            <button
+                                onClick={() => setShowCastDrawer(false)}
+                                className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                            >
+                                <X size={20} className="text-muted" />
+                            </button>
+                        </div>
+                        <div className="p-4 text-center text-muted text-sm">
+                            <Wand2 size={32} className="mx-auto mb-2 text-accent opacity-50" />
+                            <p>Spell casting drawer coming soon!</p>
+                            <p className="text-xs mt-1">Go to the Spells tab to cast spells</p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Stat Block Modal */}
             {selectedStatBlock && (

@@ -16,6 +16,8 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { selectSlots, slotUsed, slotRestored } from '../../store/slices/characterSlice';
 import { Sparkles, RotateCcw } from 'lucide-react';
 import { ArcaneRecoveryModal } from './ArcaneRecoveryModal';
+import orbActive from '/assets/orb-active.png';
+import orbEmpty from '/assets/orb-empty.png';
 
 export const SlotAbacus: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -104,9 +106,9 @@ export const SlotAbacus: React.FC = () => {
                                             `}
                                             title={isAvailable ? 'Use slot' : 'Restore slot'}
                                         >
-                                            <img
-                                                src={isAvailable ? "/assets/orb-active.png" : "/assets/orb-empty.png"}
-                                                alt={isAvailable ? "Active Slot" : "Empty Slot"}
+                                             <img
+                                                 src={isAvailable ? orbActive : orbEmpty}
+                                                 alt={isAvailable ? "Active Slot" : "Empty Slot"}
                                                 className={`
                                                     w-full h-full object-contain transition-all duration-700
                                                     ${isAvailable

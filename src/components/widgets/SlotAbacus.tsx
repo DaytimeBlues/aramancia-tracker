@@ -19,7 +19,11 @@ import { ArcaneRecoveryModal } from './ArcaneRecoveryModal';
 import orbActive from '/assets/orb-active.png';
 import orbEmpty from '/assets/orb-empty.png';
 
-export const SlotAbacus: React.FC = () => {
+interface SlotAbacusProps {
+    compact?: boolean;
+}
+
+export const SlotAbacus: React.FC<SlotAbacusProps> = ({ compact = false }) => {
     const dispatch = useAppDispatch();
     const slots = useAppSelector(selectSlots);
     const level = useAppSelector(state => state.character.level);
@@ -42,6 +46,43 @@ export const SlotAbacus: React.FC = () => {
     // Check if any slots are used (for recovery eligibility)
     const hasUsedSlots = Object.values(slots).some(s => s.used > 0);
     const canUseRecovery = !arcaneRecoveryUsed && hasUsedSlots;
+
+    if (compact) {
+        return (
+            <div className="flex flex-wrap gap-x-3 gap-y-1 justify-center mt-2 animate-fade-in border-t border-white/5 pt-2">
+                {activeSlotLevels.map(([levelStr, { used, max }]) => {
+                    const slotLevel = Number(levelStr);
+                    const available = max - used;
+                    return (
+                        <div key={slotLevel} className="flex items-center gap-1.5">
+                            <span className="text-[9px] text-stone-500 font-display font-bold w-3 text-center">
+                                {slotLevel === 0 ? 'C' : slotLevel}
+                            </span>
+                            <div className="flex gap-0.5">
+                                {Array.from({ length: max }).map((_, i) => {
+                                    const isAvailable = i < available;
+                                    return (
+                                        <button
+                                            key={i}
+                                            onClick={() => handleSlotClick(slotLevel, isAvailable)}
+                                            className={`
+                                                relative w-2.5 h-2.5 rounded-full transition-all duration-300
+                                                ${isAvailable
+                                                    ? 'bg-indigo-400 shadow-[0_0_4px_rgba(129,140,248,0.6)] hover:bg-indigo-300'
+                                                    : 'bg-black/40 border border-white/10 hover:border-white/30'
+                                                }
+                                            `}
+                                            title={`Level ${slotLevel} Slot (${isAvailable ? 'Available' : 'Used'})`}
+                                        />
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
 
     return (
         <div className="card-parchment p-5 mb-4 relative">
@@ -106,9 +147,9 @@ export const SlotAbacus: React.FC = () => {
                                             `}
                                             title={isAvailable ? 'Use slot' : 'Restore slot'}
                                         >
-                                             <img
-                                                 src={isAvailable ? orbActive : orbEmpty}
-                                                 alt={isAvailable ? "Active Slot" : "Empty Slot"}
+                                            <img
+                                                src={isAvailable ? orbActive : orbEmpty}
+                                                alt={isAvailable ? "Active Slot" : "Empty Slot"}
                                                 className={`
                                                     w-full h-full object-contain transition-all duration-700
                                                     ${isAvailable

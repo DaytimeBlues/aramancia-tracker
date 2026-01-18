@@ -38,14 +38,19 @@ export const CastModal: React.FC<CastModalProps> = ({ spell, availableSlots, onC
     }
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cast-modal-title"
+        >
             <div className="bg-stone-900 border border-stone-700 rounded-lg shadow-2xl w-full max-w-md animate-in fade-in zoom-in duration-200">
 
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-stone-800">
                     <div className="flex items-center gap-2">
                         <Zap className="w-5 h-5 text-yellow-500" />
-                        <h2 className="text-xl font-cinzel text-stone-100">Cast {spell.name}</h2>
+                        <h2 id="cast-modal-title" className="text-xl font-cinzel text-stone-100">Cast {spell.name}</h2>
                     </div>
                     <button onClick={onCancel} className="text-stone-500 hover:text-stone-300">
                         <X className="w-5 h-5" />

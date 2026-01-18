@@ -1,9 +1,10 @@
 import { test, expect } from '@playwright/test';
+import { bypassSessionPicker } from './utils/session';
 
 test.describe('Spellbook Filtering & Search', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
-        await page.getByRole('button', { name: /spells/i }).click();
+        await bypassSessionPicker(page);
+        await page.getByRole('button', { name: /spells|spellbook/i }).click();
     });
 
     test('should search for spells by name', async ({ page }) => {

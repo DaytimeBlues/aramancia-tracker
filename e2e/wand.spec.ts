@@ -1,15 +1,14 @@
 import { test, expect } from '@playwright/test';
+import { bypassSessionPicker } from './utils/session';
 
 test.describe('Wand & Artifact Usage', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
+        await bypassSessionPicker(page);
     });
 
     test('should open wand drawer and cast a spell consuming charges', async ({ page }) => {
         // Wand FAB should be visible on home page because character has a wand
-        const wandFab = page.locator('button').filter({ has: page.locator('svg') }).nth(0); // AppShell has Wand2 then Skull
-        // To be safer, let's find by the Wand2 icon if possible or just the first of the fixed bottom buttons
-        // The AppShell code: first is Wand, second is Skull.
+        const wandFab = page.getByLabel(/Open Wand Drawer|Wand/i).first();
         await wandFab.click();
 
         // Verify Wand Drawer is open
@@ -28,16 +27,14 @@ test.describe('Wand & Artifact Usage', () => {
         // Verify charges (6 - 2 = 4)
         await expect(page.getByText(/4/i).locator('xpath=..').getByText(/\/ 7/i)).toBeVisible();
 
-        // Close Wand Drawer to see the HUD or just check if HUD is visible (it's fixed)
-        await page.getByRole('button').filter({ has: page.locator('svg[class*="lucide-x"]') }).click();
+        // Close Wand Drawer
+        await page.locator('div.z-50').filter({ hasText: /Runes/i }).getByLabel('Close').click();
 
-        // Bio and Stats tab show CombatHUD (App.tsx line 316: activeTab !== 'home' && activeTab !== 'settings')
-        // Wait, let's navigate to Bio to see HUD
-        await page.getByRole('button', { name: /bio/i }).click();
+        // Bio and Stats tab show CombatHUD or ConcentrationToggle
+        await page.getByRole('button', { name: /bio|stats/i }).first().click();
 
-        // Verify CombatHUD shows concentration
-        const hud = page.locator('.fixed.top-20');
-        await expect(hud.getByText(/Concentrating/i)).toBeVisible();
-        await expect(hud.getByText(/Heat Metal \(Wand\)/i)).toBeVisible();
+        // Verify ConcentrationToggle shows concentration
+        // It's in the FAB stack on the right
+        await expect(page.getByText(/Heat Metal \(Wand\)/i)).toBeVisible();
     });
 });

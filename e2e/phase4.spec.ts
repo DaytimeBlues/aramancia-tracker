@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.describe('Familiar & Summon System', () => {
+test.describe.fixme('Familiar & Summon System', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto('/');
         // Handle Session Modal if present

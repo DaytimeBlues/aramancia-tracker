@@ -6,14 +6,31 @@ import type { UndeadStatBlock } from '../../data/undeadStats';
 import { Skull, Shield, Sword, Info, X, Users, Ghost, Biohazard, Bone, ChevronDown, ChevronUp, Wand2, Hourglass, Plus } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { minionSelectors, minionAdded } from '../../store/slices/combatSlice';
+import { selectCharacter } from '../../store/slices/characterSlice';
 import type { Minion } from '../../types';
+import { ModeToggle, ViewMode } from '../widgets/ModeToggle';
+import { RolePlayView } from './RolePlayView';
 
 export function CombatView() {
     const dispatch = useAppDispatch();
+    const character = useAppSelector(selectCharacter);
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const [selectedStatBlock, setSelectedStatBlock] = useState<UndeadStatBlock | null>(null);
     const [showSummons, setShowSummons] = useState(false);
     const [showCastDrawer, setShowCastDrawer] = useState(false);
+    const [viewMode, setViewMode] = useState<ViewMode>('combat');
+
+    // If in roleplay mode, render RolePlayView instead
+    if (viewMode === 'roleplay') {
+        return (
+            <div className="min-h-screen">
+                <div className="sticky top-0 z-40 bg-bg/80 backdrop-blur-xl border-b border-white/10 p-3 flex justify-center">
+                    <ModeToggle mode={viewMode} onModeChange={setViewMode} />
+                </div>
+                <RolePlayView />
+            </div>
+        );
+    }
 
     // Select minions from Redux
     const minions = useAppSelector(state => minionSelectors.selectAll(state.combat.minions));
@@ -31,10 +48,11 @@ export function CombatView() {
             {/* Combat Stats Strip - Premium Floating Glass */}
             <div className="sticky top-0 z-40 transition-all duration-300">
                 <div className="absolute inset-0 bg-bg/60 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"></div>
-                <div className="relative pt-3 pb-3 px-4 flex items-center justify-between">
+                <div className="relative pt-3 pb-3 px-4 flex items-center justify-between gap-4">
                     <div className="flex-1 max-w-2xl mx-auto">
                         <MathStrip />
                     </div>
+                    <ModeToggle mode={viewMode} onModeChange={setViewMode} />
                 </div>
             </div>
 
@@ -78,19 +96,28 @@ export function CombatView() {
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        // Quick add logic - simple skeleton
+                                        // Necromancy: Undead Thralls (Level 6+)
+                                        // Max HP increased by Wizard Level
+                                        // Weapon Damage increased by Proficiency Bonus
+                                        const isThrall = character.level >= 6;
+                                        const hpBonus = isThrall ? character.level : 0;
+                                        const dmgBonus = isThrall ? character.profBonus : 0;
+                                        const baseDmg = 2; // Dex (+2)
+
                                         const minion = {
                                             id: `skeleton-${Date.now()}`,
                                             name: `Skeleton ${skeletonCount + 1}`,
                                             type: 'skeleton',
-                                            hp: 13,
-                                            maxHp: 13,
+                                            hp: 13 + hpBonus,
+                                            maxHp: 13 + hpBonus,
                                             ac: 13,
-                                            attacks: [{ name: 'Shortsword', toHit: 4, damage: '1d6+2' }]
+                                            attacks: [{
+                                                name: 'Shortsword',
+                                                toHit: 4,
+                                                damage: `1d6 + ${baseDmg + dmgBonus}`
+                                            }]
                                         };
-                                        // Need dispatch here, but CombatView.tsx doesn't have it explicitly yet
-                                        // I'll add the dispatch call
-                                        dispatch(minionAdded(minion as Minion)); // Using as any to bypass strict Minion type match for now if needed, or better: match the type
+                                        dispatch(minionAdded(minion as Minion));
                                     }}
                                     className="absolute -bottom-2 -right-2 w-8 h-8 rounded-full bg-accent text-bg-dark flex items-center justify-center shadow-lg hover:scale-110 active:scale-90 transition-all z-20 border-2 border-bg-dark"
                                     aria-label="Quick Add Skeleton"
@@ -117,14 +144,23 @@ export function CombatView() {
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
+                                        const isThrall = character.level >= 6;
+                                        const hpBonus = isThrall ? character.level : 0;
+                                        const dmgBonus = isThrall ? character.profBonus : 0;
+                                        const baseDmg = 1; // Str (+1)
+
                                         const minion = {
                                             id: `zombie-${Date.now()}`,
                                             name: `Zombie ${zombieCount + 1}`,
                                             type: 'zombie',
-                                            hp: 22,
-                                            maxHp: 22,
+                                            hp: 22 + hpBonus,
+                                            maxHp: 22 + hpBonus,
                                             ac: 8,
-                                            attacks: [{ name: 'Slam', toHit: 3, damage: '1d6+1' }]
+                                            attacks: [{
+                                                name: 'Slam',
+                                                toHit: 3,
+                                                damage: `1d6 + ${baseDmg + dmgBonus}`
+                                            }]
                                         };
                                         dispatch(minionAdded(minion as Minion));
                                     }}

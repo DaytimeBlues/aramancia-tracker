@@ -14,6 +14,7 @@ import { initialCharacterData } from '../../data/initialState';
 import { getActiveSession } from '../../utils/sessionStorage';
 import { recalculateDerivedCharacterData } from '../../utils/srdRules';
 
+
 // --- STATE INTERFACE ---
 export interface CharacterState extends CharacterData {
     // Toast message (ephemeral UI state, OK to keep here for simplicity)
@@ -134,6 +135,7 @@ export const characterSlice = createSlice({
                 };
             });
         },
+
 
         // --- CONCENTRATION ---
         concentrationSet: (state, action: PayloadAction<string | null>) => {
@@ -384,6 +386,7 @@ export const selectSpellAttackBonus = createSelector(
     [selectCharacter],
     (character) => character.profBonus + character.abilityMods.int
 );
+
 
 // --- EXPORT ACTIONS ---
 export const {

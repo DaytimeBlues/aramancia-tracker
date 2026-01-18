@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { bypassSessionPicker } from './utils/session';
 
 /**
  * E2E Test: Navigation between tabs.
@@ -6,7 +7,7 @@ import { test, expect } from '@playwright/test';
  */
 test.describe('Navigation', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/');
+        await bypassSessionPicker(page);
     });
 
     test('should load the app and display a title', async ({ page }) => {

@@ -780,6 +780,27 @@ export const spells: Spell[] = [
         pronunciation: "eh-vah-NES-koh"
     },
     {
+        name: "Heat Metal",
+        lvl: 2,
+        school: "TRANS",
+        castTime: "1 Action",
+        range: "60 ft",
+        duration: "1 min (Conc.)",
+        components: "V, S, M",
+        effect: "Heat a metal object, dealing fire damage to anyone touching it.",
+        rolls: "CON save vs DC (for dropping object)",
+        damage: "2d8",
+        damageType: "Fire",
+        concentration: true,
+        decisionTree: [
+            { level: 3, summary: "2d8 fire damage; bonus action to repeat." },
+            { level: 5, summary: "Upcast to increase damage per slot level." }
+        ],
+        desc: "Choose a manufactured metal object within range. Any creature in physical contact with the object takes 2d8 fire damage. Until the spell ends, you can use a bonus action on each of your subsequent turns to cause this damage again.",
+        incantation: "Fervor Metalli",
+        pronunciation: "FER-vor meh-TAL-lee"
+    },
+    {
         name: "Levitate",
         lvl: 2,
         school: "TRANS",

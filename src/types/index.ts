@@ -124,6 +124,7 @@ export interface HitDice {
     size: number;     // Die size (6 for d6, 8 for d8, etc.)
 }
 
+
 export interface CharacterData {
     hp: { current: number; max: number; temp: number };
     hitDice: HitDice;

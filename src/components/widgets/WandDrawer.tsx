@@ -75,6 +75,7 @@ export function WandDrawer({ isOpen, onClose }: WandDrawerProps) {
                         </div>
                         <button
                             onClick={onClose}
+                            aria-label="Close"
                             className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10"
                         >
                             <X size={20} className="text-white/60" />

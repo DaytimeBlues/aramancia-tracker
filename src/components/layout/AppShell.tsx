@@ -8,7 +8,6 @@ import { MinionDrawer } from '../minions/MinionDrawer';
 import { WandDrawer } from '../widgets/WandDrawer';
 import { MinionBubble } from '../widgets/MinionBubble';
 import { CombatBubble } from '../widgets/CombatBubble';
-import { ModeToggle } from '../widgets/ModeToggle';
 import { PanicButtons } from '../widgets/PanicButtons';
 import { ConcentrationToggle } from '../widgets/ConcentrationToggle';
 import { FamiliarBubble } from '../widgets/FamiliarBubble';
@@ -40,7 +39,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
     const [isFamiliarDrawerOpen, setIsFamiliarDrawerOpen] = useState(false);
 
     // Helper to determine class display
-    const characterClass = 'Warlock'; // Default for now as per tracker focus
+    const characterClass = 'Wizard'; // Wizard/Necromancer as per tracker focus
 
     return (
         <>
@@ -79,8 +78,6 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                                 </div>
                             </div>
 
-                            {/* Center: Mode Toggle */}
-                            <ModeToggle />
 
                             {/* Right: Character Info */}
                             <div className="flex items-center gap-3">
@@ -170,6 +167,8 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                         {character.inventory.some(i => i.name.toLowerCase().includes('wand')) && (
                             <button
                                 onClick={() => setIsWandDrawerOpen(true)}
+                                aria-label="Open Wand Drawer"
+                                title="Open Wand Drawer"
                                 className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-purple-300 border-purple-500/30 hover:bg-purple-900/40 hover:scale-105 active:scale-95 transition-all shadow-lg tap-feedback backdrop-blur-md"
                             >
                                 <Wand2 size={24} />

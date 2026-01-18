@@ -1,55 +1,44 @@
+import { Sword, Scroll } from 'lucide-react';
+
+export type ViewMode = 'combat' | 'roleplay';
+
+interface ModeToggleProps {
+    mode: ViewMode;
+    onModeChange: (mode: ViewMode) => void;
+}
+
 /**
- * ModeToggle.tsx
- *
- * WHY: Provides a visual toggle for switching between "Preparation" (Study)
- * and "Execution" (Combat) modes. Follows Fitts's Law by being placed in
- * an easy-to-reach location.
- *
- * Design: Kyoto-style minimalist toggle with clear visual feedback.
+ * ModeToggle - Context switcher between Combat and Role-Play dashboards.
+ * 
+ * WHY: Krug's "Don't Make Me Think" principle applied via clear iconography
+ * and prominent placement. The toggle provides instant context switching
+ * without requiring users to navigate menus or remember where things are.
  */
-import React from 'react';
-import { useWizardMode } from '../../context/WizardModeContext';
-import { BookOpen, Swords } from 'lucide-react';
-
-export const ModeToggle: React.FC = () => {
-    const { toggleMode, isPreparationMode, isExecutionMode } = useWizardMode();
-
+export function ModeToggle({ mode, onModeChange }: ModeToggleProps) {
     return (
-        <div className="flex items-center gap-2 p-1 rounded-full bg-stone-900/80 backdrop-blur-sm border border-stone-800">
+        <div className="flex bg-card-elevated/50 p-1 rounded-full border border-white/10 shadow-inner backdrop-blur-md">
             <button
-                onClick={toggleMode}
-                aria-pressed={isPreparationMode}
-                aria-label="Preparation Mode"
-                className={`
-                    flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
-                    transition-all duration-300 ease-out
-                    ${isPreparationMode
-                        ? 'bg-amber-900/40 text-amber-400 border border-amber-700/50 shadow-inner'
-                        : 'text-stone-500 hover:text-stone-300'
-                    }
-                `}
+                onClick={() => onModeChange('combat')}
+                className={`flex items-center gap-2 px-4 py-1.5 rounded-full transition-all duration-300 ${mode === 'combat'
+                    ? 'bg-accent text-bg-dark shadow-lg shadow-accent/20'
+                    : 'text-muted hover:text-parchment'
+                    }`}
+                aria-label="Combat Mode"
             >
-                <BookOpen size={14} />
-                <span className="hidden sm:inline">Study</span>
+                <Sword size={14} className={mode === 'combat' ? 'animate-pulse' : ''} />
+                <span className="text-[10px] uppercase font-bold tracking-widest">Combat</span>
             </button>
             <button
-                onClick={toggleMode}
-                aria-pressed={isExecutionMode}
-                aria-label="Execution Mode"
-                className={`
-                    flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium
-                    transition-all duration-300 ease-out
-                    ${isExecutionMode
-                        ? 'bg-red-900/40 text-red-400 border border-red-700/50 shadow-inner'
-                        : 'text-stone-500 hover:text-stone-300'
-                    }
-                `}
+                onClick={() => onModeChange('roleplay')}
+                className={`flex items-center gap-2 px-4 py-1.5 rounded-full transition-all duration-300 ${mode === 'roleplay'
+                    ? 'bg-parchment text-bg-dark shadow-lg shadow-parchment/20'
+                    : 'text-muted hover:text-parchment'
+                    }`}
+                aria-label="Roleplay Mode"
             >
-                <Swords size={14} />
-                <span className="hidden sm:inline">Combat</span>
+                <Scroll size={14} />
+                <span className="text-[10px] uppercase font-bold tracking-widest">Roleplay</span>
             </button>
         </div>
     );
-};
-
-export default ModeToggle;
+}

@@ -57,7 +57,7 @@ Error generating stack: `+n.message+`
                 .pb-safe {
                     padding-bottom: env(safe-area-inset-bottom, 20px);
                 }
-            `})]})}const Zx=({message:o,onClose:l,duration:u=3e3})=>{const[c,h]=F.useState(!1);return F.useEffect(()=>{if(o){h(!0);const f=setTimeout(()=>{h(!1),setTimeout(l,300)},u);return()=>clearTimeout(f)}else h(!1)},[o,u,l]),!o&&!c?null:i.jsx("div",{className:`
+            `})]})}const Zx=({message:o,onClose:l,duration:u=3e3})=>{const[c,h]=F.useState(!1),f=F.useRef(null);return F.useEffect(()=>{if(o!==f.current)if(f.current=o,o){h(!0);const y=setTimeout(()=>{h(!1),setTimeout(l,300)},u);return()=>clearTimeout(y)}else h(!1)},[o,u,l]),!o&&!c?null:i.jsx("div",{className:`
                 fixed bottom-24 left-1/2 -translate-x-1/2 
                 z-[100] max-w-sm w-full px-4
                 transition-all duration-300 ease-out transform

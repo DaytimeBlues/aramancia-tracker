@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { X, Sparkles } from 'lucide-react';
 
 interface ToastProps {
@@ -9,7 +9,7 @@ interface ToastProps {
 
 /**
  * Global Toast Component
- * 
+ *
  * DESIGN:
  * - "Material 3" Snackbar placement (bottom center).
  * - "Fuyuki" Glassmorphism aesthetics (backdrop-blur, parchment text).
@@ -17,18 +17,21 @@ interface ToastProps {
  */
 export const Toast: React.FC<ToastProps> = ({ message, onClose, duration = 3000 }) => {
     const [visible, setVisible] = useState(false);
+    const prevMessageRef = useRef<string | null>(null);
 
     useEffect(() => {
-        if (message) {
-            setVisible(true);
-            const timer = setTimeout(() => {
+        if (message !== prevMessageRef.current) {
+            prevMessageRef.current = message;
+            if (message) {
+                setVisible(true);
+                const timer = setTimeout(() => {
+                    setVisible(false);
+                    setTimeout(onClose, 300);
+                }, duration);
+                return () => clearTimeout(timer);
+            } else {
                 setVisible(false);
-                // Allow animation to finish before calling onClose
-                setTimeout(onClose, 300);
-            }, duration);
-            return () => clearTimeout(timer);
-        } else {
-            setVisible(false);
+            }
         }
     }, [message, duration, onClose]);
 

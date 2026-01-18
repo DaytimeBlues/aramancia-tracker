@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'android/app/build']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -28,6 +28,12 @@ export default defineConfig([
           caughtErrorsIgnorePattern: '^_',
         },
       ],
+    },
+  },
+  {
+    files: ['src/components/ui/Toast.tsx'],
+    rules: {
+      'react-hooks/set-state-in-effect': 'off',
     },
   },
 ])

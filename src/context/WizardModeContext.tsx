@@ -61,6 +61,7 @@ export const WizardModeProvider: React.FC<WizardModeProviderProps> = ({
  * Hook to access the Wizard Mode context.
  * Throws an error if used outside of a WizardModeProvider.
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useWizardMode(): WizardModeContextValue {
     const context = useContext(WizardModeContext);
     if (context === undefined) {

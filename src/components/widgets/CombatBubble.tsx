@@ -1,5 +1,6 @@
 import { useAppSelector } from '../../store/hooks';
 import { Swords, Shield, Sparkles, Target } from 'lucide-react';
+import type { ConcentrationState } from '../../store/slices/combatSlice';
 
 interface CombatBubbleProps {
     onClick: () => void;
@@ -19,8 +20,7 @@ export function CombatBubble({ onClick }: CombatBubbleProps) {
     });
 
     const concentration = useAppSelector(state => state.character.concentration);
-    // Explicit cast to bypass inexplicable build error where activeConcentration is missing from inferred type
-    const activeConcentration = useAppSelector(state => (state.combat as any).activeConcentration);
+    const activeConcentration = useAppSelector<ConcentrationState | null>(state => state.combat.activeConcentration);
 
     const isConcentrating = !!(concentration || activeConcentration);
     const attackBonusLabel = spellAttackBonus >= 0 ? `+${spellAttackBonus}` : `${spellAttackBonus}`;

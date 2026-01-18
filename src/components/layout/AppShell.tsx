@@ -8,6 +8,13 @@ import { MinionDrawer } from '../minions/MinionDrawer';
 import { WandDrawer } from '../widgets/WandDrawer';
 import { MinionBubble } from '../widgets/MinionBubble';
 import { CombatBubble } from '../widgets/CombatBubble';
+import { ModeToggle } from '../widgets/ModeToggle';
+import { PanicButtons } from '../widgets/PanicButtons';
+import { ConcentrationToggle } from '../widgets/ConcentrationToggle';
+import { FamiliarBubble } from '../widgets/FamiliarBubble';
+import { FamiliarDrawer } from '../widgets/FamiliarDrawer';
+import { SummonManager } from '../widgets/SummonManager';
+import { Sparkles } from 'lucide-react';
 
 interface AppShellProps {
     children: React.ReactNode;
@@ -31,6 +38,8 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
     const character = useAppSelector(selectCharacter);
     const [isMinionDrawerOpen, setIsMinionDrawerOpen] = useState(false);
     const [isWandDrawerOpen, setIsWandDrawerOpen] = useState(false);
+    const [isFamiliarDrawerOpen, setIsFamiliarDrawerOpen] = useState(false);
+    const [isSummonManagerOpen, setIsSummonManagerOpen] = useState(false);
 
     // Helper to determine class display
     const characterClass = 'Warlock'; // Default for now as per tracker focus
@@ -71,6 +80,9 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                                     </p>
                                 </div>
                             </div>
+
+                            {/* Center: Mode Toggle */}
+                            <ModeToggle />
 
                             {/* Right: Character Info */}
                             <div className="flex items-center gap-3">
@@ -150,6 +162,9 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                 {/* FABs Container */}
                 <div className="fixed bottom-24 right-4 flex flex-col gap-4 z-40 pointer-events-none">
                     <div className="pointer-events-auto flex flex-col gap-3 items-end">
+                        {/* Concentration Toggle - Prominent for Wizards */}
+                        <ConcentrationToggle />
+
                         {/* Combat Bubble - Always visible */}
                         <CombatBubble onClick={() => onTabChange('combat')} />
 
@@ -163,13 +178,33 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                             </button>
                         )}
 
+                        {/* Familiar Bubble */}
+                        <FamiliarBubble
+                            familiar={character.familiar}
+                            onClick={() => setIsFamiliarDrawerOpen(true)}
+                        />
+
                         {/* Minion Bubble - Premium Summary & Trigger */}
                         <MinionBubble
                             minions={activeMinions}
                             onClick={() => setIsMinionDrawerOpen(true)}
                         />
+
+                        {/* Summon Manager Trigger (Combat Mode only) */}
+                        {activeTab === 'combat' && (
+                            <button
+                                onClick={() => setIsSummonManagerOpen(true)}
+                                className="w-12 h-12 rounded-full glass-card flex items-center justify-center text-yellow-300 border-yellow-500/30 hover:bg-yellow-900/40 hover:scale-105 active:scale-95 transition-all shadow-lg tap-feedback backdrop-blur-md"
+                                title="Summon Creatures"
+                            >
+                                <Sparkles size={24} />
+                            </button>
+                        )}
                     </div>
                 </div>
+
+                {/* Panic Buttons - Bottom Left (Fitts's Law) */}
+                <PanicButtons />
 
                 <MinionDrawer
                     isOpen={isMinionDrawerOpen}
@@ -179,6 +214,16 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                 <WandDrawer
                     isOpen={isWandDrawerOpen}
                     onClose={() => setIsWandDrawerOpen(false)}
+                />
+
+                <FamiliarDrawer
+                    isOpen={isFamiliarDrawerOpen}
+                    onClose={() => setIsFamiliarDrawerOpen(false)}
+                />
+
+                <SummonManager
+                    isOpen={isSummonManagerOpen}
+                    onClose={() => setIsSummonManagerOpen(false)}
                 />
 
             </div>

@@ -1,5 +1,4 @@
 import { useAppSelector } from '../../store/hooks';
-import { selectCharacter, selectSpellAttackBonus, selectSpellSaveDC, selectCurrentAC } from '../../store/slices/characterSlice';
 import { Swords, Shield, Sparkles, Target } from 'lucide-react';
 
 interface CombatBubbleProps {
@@ -7,11 +6,21 @@ interface CombatBubbleProps {
 }
 
 export function CombatBubble({ onClick }: CombatBubbleProps) {
-    const spellSaveDC = useAppSelector(selectSpellSaveDC);
-    const spellAttackBonus = useAppSelector(selectSpellAttackBonus);
-    const currentAC = useAppSelector(selectCurrentAC);
+    const spellSaveDC = useAppSelector(state => state.character.dc);
+
+    // Inline selector logic to avoid import issues
+    const spellAttackBonus = useAppSelector(state => state.character.profBonus + state.character.abilityMods.int);
+
+    const currentAC = useAppSelector(state => {
+        const char = state.character;
+        let ac = char.mageArmour ? 13 + char.abilityMods.dex : char.baseAC;
+        if (char.shield) ac += 5;
+        return ac;
+    });
+
     const concentration = useAppSelector(state => state.character.concentration);
-    const activeConcentration = useAppSelector(state => state.combat.activeConcentration);
+    // Explicit cast to bypass inexplicable build error where activeConcentration is missing from inferred type
+    const activeConcentration = useAppSelector(state => (state.combat as any).activeConcentration);
 
     const isConcentrating = !!(concentration || activeConcentration);
     const attackBonusLabel = spellAttackBonus >= 0 ? `+${spellAttackBonus}` : `${spellAttackBonus}`;

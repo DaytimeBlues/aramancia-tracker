@@ -11,7 +11,8 @@ import { Toast as GlobalToast } from './components/ui/Toast';
 
 import { HealthWidget } from './components/widgets/HealthWidget';
 import { ArmorClassWidget } from './components/widgets/ArmorClassWidget';
-import { SpellSlotsWidget } from './components/widgets/SpellSlotsWidget';
+// import { SpellSlotsWidget } from './components/widgets/SpellSlotsWidget'; // Replaced by SlotAbacus
+import { SlotAbacus } from './components/widgets/SlotAbacus';
 import { DeathSavesWidget } from './components/widgets/DeathSavesWidget';
 import { ConcentrationWidget } from './components/widgets/ConcentrationWidget';
 import { AttunementWidget } from './components/widgets/AttunementWidget';
@@ -43,8 +44,7 @@ import {
   tempHpSet,
   mageArmourToggled,
   shieldToggled,
-  slotUsed,
-  slotRestored,
+  // slotUsed, slotRestored - now used directly in SlotAbacus
   slotsUpdated,
   concentrationSet,
   deathSaveChanged,
@@ -72,7 +72,6 @@ function App() {
   // --- REDUX SELECTORS ---
   const character = useAppSelector(selectCharacter);
   const toast = useAppSelector(selectToast);
-  const activeConcentration = useAppSelector(state => state.combat.activeConcentration);
   // NOTE: minions are now managed in CombatView via combatSlice
 
   // Clear toast after 2 seconds
@@ -104,14 +103,7 @@ function App() {
     else dispatch(shieldToggled());
   }, [dispatch]);
 
-  const updateSpellSlot = useCallback((level: number, used: number) => {
-    const currentUsed = character.slots[level]?.used ?? 0;
-    if (used > currentUsed) {
-      dispatch(slotUsed({ level }));
-    } else if (used < currentUsed) {
-      dispatch(slotRestored({ level }));
-    }
-  }, [dispatch, character.slots]);
+  // updateSpellSlot moved to SlotAbacus component (uses Redux directly)
 
   const updateDeathSaves = useCallback((type: 'successes' | 'failures', value: number) => {
     dispatch(deathSaveChanged({ type, value }));
@@ -178,11 +170,8 @@ function App() {
           </div>
 
           <div className="animate-slide-up stagger-3">
-            <SpellSlotsWidget
-              slots={character.slots}
-              onChange={updateSpellSlot}
-              spellSaveDC={character.dc}
-            />
+            {/* SlotAbacus: Kyoto-style bead visuals with Arcane Recovery */}
+            <SlotAbacus />
           </div>
 
           <div className="animate-slide-up stagger-4">

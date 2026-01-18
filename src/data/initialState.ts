@@ -115,5 +115,7 @@ export const initialCharacterData: CharacterData = {
             ac: 8,
             notes: 'Undead Fortitude.'
         }
-    }
+    },
+    arcaneRecoveryUsed: false,
+    familiar: null,
 };

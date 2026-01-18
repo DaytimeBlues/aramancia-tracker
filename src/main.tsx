@@ -8,11 +8,15 @@ import { store } from './store'
 
 import { ErrorBoundary } from './components/ErrorBoundary';
 
+import { WizardModeProvider } from './context/WizardModeContext';
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ErrorBoundary>
       <Provider store={store}>
-        <App />
+        <WizardModeProvider>
+          <App />
+        </WizardModeProvider>
       </Provider>
     </ErrorBoundary>
   </StrictMode>,

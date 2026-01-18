@@ -185,8 +185,50 @@ export const characterSlice = createSlice({
             state.shield = false;
             state.concentration = null;
             state.deathSaves = { successes: 0, failures: 0 };
+            state.arcaneRecoveryUsed = false; // Reset Arcane Recovery
 
             state.toast = "Long Rest Completed";
+        },
+
+        // --- ARCANE RECOVERY (WIZARD) ---
+        /**
+         * Arcane Recovery: Restore spell slots after short rest.
+         * SRD 5.1 Rules:
+         * - Sum of slot levels <= ceil(wizardLevel / 2)
+         * - No slot can be 6th level or higher
+         */
+        arcaneRecoveryActivated: (state, action: PayloadAction<{ slotsToRecover: { level: number; count: number }[] }>) => {
+            if (state.arcaneRecoveryUsed) {
+                state.toast = 'Arcane Recovery already used today!';
+                return;
+            }
+
+            const maxRecoveryPoints = Math.ceil(state.level / 2);
+            const { slotsToRecover } = action.payload;
+
+            // Validate: no slot > 5th level
+            const hasInvalidLevel = slotsToRecover.some(s => s.level > 5);
+            if (hasInvalidLevel) {
+                state.toast = 'Cannot recover slots above 5th level!';
+                return;
+            }
+
+            // Validate: sum <= maxRecoveryPoints
+            const totalPoints = slotsToRecover.reduce((sum, s) => sum + (s.level * s.count), 0);
+            if (totalPoints > maxRecoveryPoints) {
+                state.toast = `Exceeds recovery limit (${maxRecoveryPoints} levels)!`;
+                return;
+            }
+
+            // Apply recovery
+            slotsToRecover.forEach(({ level, count }) => {
+                if (state.slots[level]) {
+                    state.slots[level].used = Math.max(0, state.slots[level].used - count);
+                }
+            });
+
+            state.arcaneRecoveryUsed = true;
+            state.toast = `Arcane Recovery: Restored ${totalPoints} levels of slots!`;
         },
 
         // --- LEVEL & ABILITIES ---
@@ -255,12 +297,55 @@ export const characterSlice = createSlice({
         spellUnprepared: (state, action: PayloadAction<string>) => {
             state.preparedSpells = state.preparedSpells.filter(s => s !== action.payload);
         },
+
+        // --- FAMILIAR ACTIONS ---
+        familiarSummoned: (state, action: PayloadAction<Familiar>) => {
+            state.familiar = action.payload;
+        },
+        familiarDismissed: (state) => {
+            if (state.familiar) {
+                state.familiar.isInPocket = true;
+                state.toast = `${state.familiar.name} dismissed to pocket dimension.`;
+            }
+        },
+        familiarRecalled: (state) => {
+            if (state.familiar) {
+                state.familiar.isInPocket = false;
+                state.toast = `${state.familiar.name} recalled from pocket dimension.`;
+            }
+        },
+        familiarKilled: (state) => {
+            if (state.familiar) {
+                state.familiar.isActive = false;
+                state.familiar.hp = 0;
+                state.toast = `${state.familiar.name} has died!`;
+            }
+        },
+        familiarHealed: (state, action: PayloadAction<number>) => {
+            if (state.familiar) {
+                state.familiar.hp = Math.min(state.familiar.maxHp, state.familiar.hp + action.payload);
+            }
+        },
+        familiarDamaged: (state, action: PayloadAction<number>) => {
+            if (state.familiar) {
+                state.familiar.hp = Math.max(0, state.familiar.hp - action.payload);
+                if (state.familiar.hp === 0) {
+                    state.familiar.isActive = false;
+                    state.toast = `${state.familiar.name} has died!`;
+                }
+            }
+        },
+        familiarRenamed: (state, action: PayloadAction<string>) => {
+            if (state.familiar) {
+                state.familiar.name = action.payload;
+            }
+        },
     },
 });
 
 // --- SELECTORS ---
 // Local type to avoid circular dependency with RootState
-interface StateWithCharacter {
+export interface StateWithCharacter {
     character: CharacterState;
 }
 
@@ -269,6 +354,7 @@ export const selectHp = (state: StateWithCharacter) => state.character.hp;
 export const selectSlots = (state: StateWithCharacter) => state.character.slots;
 export const selectConcentration = (state: StateWithCharacter) => state.character.concentration;
 export const selectToast = (state: StateWithCharacter) => state.character.toast;
+export const selectFamiliar = (state: StateWithCharacter) => state.character.familiar;
 
 export const selectAbilityModifier = createSelector(
     [selectCharacter, (_: StateWithCharacter, ability: AbilityKey) => ability],
@@ -314,6 +400,7 @@ export const {
     deathSaveChanged,
     hitDiceSpent,
     longRestCompleted,
+    arcaneRecoveryActivated,
     levelChanged,
     abilityScoreChanged,
     itemAttuned,
@@ -327,6 +414,13 @@ export const {
     spellPrepared,
     spellUnprepared,
     conditionToggled,
+    familiarSummoned,
+    familiarDismissed,
+    familiarRecalled,
+    familiarKilled,
+    familiarHealed,
+    familiarDamaged,
+    familiarRenamed,
 } = characterSlice.actions;
 
 export default characterSlice.reducer;

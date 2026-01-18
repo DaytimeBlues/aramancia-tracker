@@ -7,6 +7,7 @@ import { selectSlots, concentrationSet } from '../../../store/slices/characterSl
 import { castingStarted, slotConfirmed } from '../../../store/slices/combatSlice';
 import { CastModal } from './CastModal';
 import { SpellV3 } from '../../../schemas/spellSchema';
+import { useWizardMode } from '../../../context/WizardModeContext';
 
 export const SpellList: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -35,11 +36,18 @@ export const SpellList: React.FC = () => {
     const [showPreparedOnly, setShowPreparedOnly] = useState(false);
     const [castingSpell, setCastingSpell] = useState<SpellV3 | null>(null);
 
+    // Wizard Mode Context
+    const { isExecutionMode } = useWizardMode();
+
     // Grouping Logic
     const groupedSpells = useMemo(() => {
         let spells = initialSpellsV3;
 
-        if (showPreparedOnly) {
+        // EXECUTION MODE: Always filter to prepared spells only
+        if (isExecutionMode) {
+            spells = spells.filter(s => preparedSpells.includes(s.id));
+        } else if (showPreparedOnly) {
+            // PREPARATION MODE with prepared filter
             spells = spells.filter(s => preparedSpells.includes(s.id));
         }
 
@@ -74,7 +82,7 @@ export const SpellList: React.FC = () => {
         });
 
         return groups;
-    }, [filterLevel, filterSchool, filterDamage, searchQuery, showPreparedOnly, preparedSpells]);
+    }, [filterLevel, filterSchool, filterDamage, searchQuery, showPreparedOnly, preparedSpells, isExecutionMode]);
 
     const handlePrepareToggle = (spellId: string) => {
         if (preparedSpells.includes(spellId)) {

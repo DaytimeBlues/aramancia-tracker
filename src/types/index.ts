@@ -67,6 +67,37 @@ export interface Minion {
     notes?: string;
 }
 
+export interface Familiar {
+    id: string;
+    name: string;
+    form: 'owl' | 'cat' | 'raven' | 'bat' | 'hawk' | 'lizard' | 'snake' | 'octopus' | 'spider' | 'frog' | 'crab' | 'seahorse' | 'fish' | 'rat' | 'weasel';
+    hp: number;
+    maxHp: number;
+    ac: number;
+    speed: number;
+    flySpeed?: number;
+    swimSpeed?: number;
+    senses: string;
+    isActive: boolean;
+    isInPocket: boolean;
+}
+
+export interface SummonPrototype {
+    name: string;
+    cr: string;
+    hp: number;
+    ac: number;
+    speed: number;
+    climbSpeed?: number;
+    flySpeed?: number;
+    swimSpeed?: number;
+    attacks: MinionAttack[];
+    abilities?: string[];
+    duration: number; // in rounds
+    maxCount: number;
+    spellLevel: number;
+}
+
 export interface InventoryItem {
     name: string;
     /**
@@ -125,6 +156,8 @@ export interface CharacterData {
     attunement: string[]; // Max 3 attuned magic items
     inventory: InventoryItem[]; // General inventory items (supports spellcasting items)
     preparedSpells: string[]; // Spell names from SRD that are currently prepared
+    arcaneRecoveryUsed: boolean; // True if Arcane Recovery used today (resets on long rest)
+    familiar: Familiar | null;
 }
 
 export interface Session {

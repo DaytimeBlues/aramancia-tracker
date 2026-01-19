@@ -10,6 +10,7 @@ import { selectCharacter } from '../../store/slices/characterSlice';
 import type { Minion } from '../../types';
 import { ModeToggle, ViewMode } from '../widgets/ModeToggle';
 import { RolePlayView } from './RolePlayView';
+import { SlotAbacus } from '../widgets/SlotAbacus';
 
 export function CombatView() {
     const dispatch = useAppDispatch();
@@ -48,11 +49,17 @@ export function CombatView() {
             {/* Combat Stats Strip - Premium Floating Glass */}
             <div className="sticky top-0 z-40 transition-all duration-300">
                 <div className="absolute inset-0 bg-bg/60 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"></div>
-                <div className="relative pt-3 pb-3 px-4 flex items-center justify-between gap-4">
-                    <div className="flex-1 max-w-2xl mx-auto">
-                        <MathStrip />
+                <div className="relative pt-3 pb-3 px-4 flex flex-col gap-2">
+                    <div className="flex items-center justify-between gap-4">
+                        <div className="flex-1 max-w-2xl mx-auto">
+                            <MathStrip />
+                        </div>
+                        <ModeToggle mode={viewMode} onModeChange={setViewMode} />
                     </div>
-                    <ModeToggle mode={viewMode} onModeChange={setViewMode} />
+                    {/* Compact Spell Abacus Integrated */}
+                    <div className="pb-1 max-w-2xl mx-auto w-full">
+                        <SlotAbacus compact />
+                    </div>
                 </div>
             </div>
 

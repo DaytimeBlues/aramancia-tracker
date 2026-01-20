@@ -24,7 +24,7 @@ describe('concentration middleware', () => {
         store.dispatch(hpChanged(10)); // 32 -> 10 damage = 22
 
         const state = store.getState();
-        expect(state.combat.concentrationCheckDC).toBe(11);
+        expect(state.combat.concentrationDC).toBe(11);
     });
 
     it('keeps only the latest concentration spell when actions are dispatched rapidly', () => {
@@ -42,16 +42,16 @@ describe('concentration middleware', () => {
         const storeHigh = setupStore();
         storeHigh.dispatch(concentrationStarted({ spellId: 'spell-1', spellName: 'Haste' }));
         storeHigh.dispatch(hpChanged(10)); // 32 -> 10 damage = 22
-        expect(storeHigh.getState().combat.concentrationCheckDC).toBe(11);
+        expect(storeHigh.getState().combat.concentrationDC).toBe(11);
 
         const storeLow = setupStore();
         storeLow.dispatch(concentrationStarted({ spellId: 'spell-1', spellName: 'Haste' }));
         storeLow.dispatch(hpChanged(28)); // 32 -> 28 damage = 4
-        expect(storeLow.getState().combat.concentrationCheckDC).toBe(10);
+        expect(storeLow.getState().combat.concentrationDC).toBe(10);
 
         const storeNone = setupStore();
         storeNone.dispatch(concentrationStarted({ spellId: 'spell-1', spellName: 'Haste' }));
         storeNone.dispatch(hpChanged(32)); // 32 -> 32 damage = 0
-        expect(storeNone.getState().combat.concentrationCheckDC).toBeNull();
+        expect(storeNone.getState().combat.concentrationDC).toBeNull();
     });
 });

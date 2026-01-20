@@ -8,6 +8,7 @@ import type {
     CastingState,
     CastingStep
 } from '../../types/combat';
+import type { RootState, AppDispatch } from '../../store';
 
 // We avoid importing RootState/AppDispatch from '../index' to prevent circular dependencies
 // which corrupt type inference for the slice actions and status.
@@ -241,7 +242,7 @@ export const {
  * - `castingCompleted` is a pure reducer; this thunk performs the cross-slice side effect.
  * - This is intentionally conservative: it only spends when `slotLevel > 0`.
  */
-export const castingCompletedWithSlot = () => (dispatch: any, getState: () => any) => {
+export const castingCompletedWithSlot = () => (dispatch: AppDispatch, getState: () => RootState) => {
     const state = getState();
     const slotLevel = state.combat.casting.slotLevel ?? 0;
 
@@ -256,13 +257,9 @@ export const castingCompletedWithSlot = () => (dispatch: any, getState: () => an
 /**
  * Start combat with a set of combatants and initiatives.
  */
-export const startCombatWithInitiative = (playerInitiative: number) => (dispatch: any, getState: () => any) => {
-    const state = getState();
-    const minions = selectAllMinions(state);
-
+export const startCombatWithInitiative = (playerInitiative: number) => (dispatch: AppDispatch) => {
     const combatants = [
         { id: 'player', initiative: playerInitiative },
-        ...minions.map(m => ({ id: m.id, initiative: 10 })), // TODO: Allow custom minion initiatives
     ];
 
     const sortedIds = combatants
@@ -274,9 +271,9 @@ export const startCombatWithInitiative = (playerInitiative: number) => (dispatch
 
 // Selectors
 export const minionSelectors = minionAdapter.getSelectors();
-export const selectAllMinions = (state: any) => minionSelectors.selectAll(state.combat.minions);
-export const selectMinionById = (id: string) => (state: any) =>
+export const selectAllMinions = (state: RootState) => minionSelectors.selectAll(state.combat.minions);
+export const selectMinionById = (id: string) => (state: RootState) =>
     minionSelectors.selectById(state.combat.minions, id);
-export const selectMinionCount = (state: any) => minionSelectors.selectTotal(state.combat.minions);
+export const selectMinionCount = (state: RootState) => minionSelectors.selectTotal(state.combat.minions);
 
 export default combatSlice.reducer;

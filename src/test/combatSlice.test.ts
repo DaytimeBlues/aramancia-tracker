@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { configureStore } from '@reduxjs/toolkit';
 import combatReducer, {
-    concentrationCheckRequired,
+    checkRequired,
     minionAdded,
     minionRemoved,
     allMinionsCleared,
@@ -14,8 +14,8 @@ import spellbookReducer from '../store/slices/spellbookSlice';
 
 describe('combatSlice reducers', () => {
     it('calculates concentration check DC per RAW', () => {
-        const state = combatReducer(undefined, concentrationCheckRequired({ damage: 23 }));
-        expect(state.concentrationCheckDC).toBe(11);
+        const state = combatReducer(undefined, checkRequired({ damage: 23 }));
+        expect(state.concentrationDC).toBe(11);
     });
 
     it('tracks minion entities when added and removed', () => {

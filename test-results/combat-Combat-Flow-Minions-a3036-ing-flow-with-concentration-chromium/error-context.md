@@ -1,0 +1,751 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e2]:
+  - img "Background" [ref=e4]
+  - generic [ref=e9]:
+    - banner [ref=e10]:
+      - generic [ref=e13]:
+        - generic [ref=e14]:
+          - img [ref=e17]
+          - generic [ref=e21]:
+            - heading "Aramancia" [level=1] [ref=e22]
+            - paragraph [ref=e23]: Tracker
+        - generic [ref=e24]:
+          - generic [ref=e25]:
+            - paragraph [ref=e26]: Level 5
+            - paragraph [ref=e27]: Wizard
+          - img [ref=e29]
+    - main [ref=e32]:
+      - generic [ref=e34]:
+        - generic [ref=e35]:
+          - heading "Spellbook" [level=1] [ref=e36]
+          - paragraph [ref=e37]: "\"Words of power, etched in blood and shadow.\""
+        - generic [ref=e38]:
+          - generic [ref=e39]:
+            - generic [ref=e40]:
+              - textbox "Search spells..." [ref=e42]
+              - generic [ref=e43]:
+                - generic [ref=e44]: "Show:"
+                - button "Prepared Only" [ref=e45]
+            - generic [ref=e46]:
+              - combobox [ref=e47]:
+                - option "All Schools" [selected]
+                - option "Abjuration"
+                - option "Conjuration"
+                - option "Divination"
+                - option "Enchantment"
+                - option "Evocation"
+                - option "Illusion"
+                - option "Necromancy"
+                - option "Transmutation"
+              - combobox [ref=e48]:
+                - option "All Damage" [selected]
+                - option "Acid"
+                - option "Bludgeoning"
+                - option "Cold"
+                - option "Fire"
+                - option "Force"
+                - option "Lightning"
+                - option "Necrotic"
+                - option "Piercing"
+                - option "Poison"
+                - option "Psychic"
+                - option "Radiant"
+                - option "Slashing"
+                - option "Thunder"
+            - generic [ref=e50]:
+              - button "All" [ref=e51]
+              - button "Cantrip" [ref=e52]
+              - button "Lvl 1" [ref=e53]
+              - button "Lvl 2" [active] [ref=e54]
+              - button "Lvl 3" [ref=e55]
+              - button "Lvl 4" [ref=e56]
+              - button "Lvl 5" [ref=e57]
+              - button "Lvl 6" [ref=e58]
+              - button "Lvl 7" [ref=e59]
+              - button "Lvl 8" [ref=e60]
+              - button "Lvl 9" [ref=e61]
+          - generic [ref=e63]:
+            - heading "Level 2 Spells 3 Slots Available" [level=3] [ref=e64]:
+              - generic [ref=e65]: Level 2 Spells
+              - generic [ref=e66]: 3 Slots Available
+            - generic [ref=e67]:
+              - generic [ref=e68]:
+                - generic [ref=e69]:
+                  - generic [ref=e70]:
+                    - img [ref=e72]
+                    - generic [ref=e74]:
+                      - heading "Alter Self" [level=3] [ref=e75]
+                      - generic [ref=e76]:
+                        - generic [ref=e77]: Transmutation
+                        - generic [ref=e78]: •
+                        - generic [ref=e79]: Lvl 2
+                  - button "Prepare" [ref=e80]:
+                    - img [ref=e81]
+                - generic [ref=e83]:
+                  - generic [ref=e84]: Concentration
+                  - generic [ref=e85]: 1 action
+                - paragraph [ref=e87]: You alter your physical form. Choose one of the following options. Its effects last for the duration, during which you can take a Magic action to replace the option you chose with a different one. **Aquatic Adaptation.** You sprout gills and grow webs between your fingers. You can breathe underwater and gain a Swim Speed equal to your Speed. **Change Appearance.** You alter your appearance. You decide what you look like, including your height, weight, facial features, sound of your voice, hair length, coloration, and other distinguishing characteristics. You can make yourself appear as a member of another species, though none of your statistics change. You can't appear as a creature of a different size, and your basic shape stays the same; if you're bipedal, you can't use this spell to become quadrupedal, for instance. For the duration, you can take a Magic action to change your appearance in this way again. **Natural Weapons.** You grow claws (Slashing), fangs (Piercing), horns (Piercing), or hooves (Bludgeoning). When you use your Unarmed Strike to deal damage with that new growth, it deals 1d6 damage of the type in parentheses instead of dealing the normal damage for your Unarmed Strike, and you use your spellcasting ability modifier for the attack and damage rolls rather than using Strength.
+              - generic [ref=e88]:
+                - generic [ref=e89]:
+                  - generic [ref=e90]:
+                    - img [ref=e92]
+                    - generic [ref=e94]:
+                      - heading "Arcane Lock" [level=3] [ref=e95]
+                      - generic [ref=e96]:
+                        - generic [ref=e97]: Abjuration
+                        - generic [ref=e98]: •
+                        - generic [ref=e99]: Lvl 2
+                  - button "Prepare" [ref=e100]:
+                    - img [ref=e101]
+                - generic [ref=e104]: 1 action
+                - paragraph [ref=e106]: You touch a closed door, window, gate, container, or hatch and magically lock it for the duration. This lock can't be unlocked by any nonmagical means. You and any creatures you designate when you cast the spell can open and close the object despite the lock. You can also set a password that, when spoken within 5 feet of the object, unlocks it for 1 minute.
+              - generic [ref=e107]:
+                - generic [ref=e108]:
+                  - generic [ref=e109]:
+                    - img [ref=e111]
+                    - generic [ref=e114]:
+                      - heading "Augury" [level=3] [ref=e115]
+                      - generic [ref=e116]:
+                        - generic [ref=e117]: Divination
+                        - generic [ref=e118]: •
+                        - generic [ref=e119]: Lvl 2
+                  - button "Prepare" [ref=e120]:
+                    - img [ref=e121]
+                - generic [ref=e123]:
+                  - generic [ref=e124]: Ritual
+                  - generic [ref=e125]: 1 action
+                - paragraph [ref=e127]: You receive an omen from an otherworldly entity about the results of a course of action that you plan to take within the next 30 minutes. The DM chooses the omen from the Omens table. | **Omen** | **For Results That Will Be...** | | ------------ | ------------------------------- | | | | | Weal | Good | | Woe | Bad | | Weal and woe | Good and bad | | Indifference | Neither good nor bad | The spell doesn't account for circumstances, such as other spells, that might change the results. If you cast the spell more than once before finishing a Long Rest, there is a cumulative 25 percent chance for each casting after the first that you get no answer.
+              - generic [ref=e128]:
+                - generic [ref=e129]:
+                  - generic [ref=e130]:
+                    - img [ref=e132]
+                    - generic [ref=e134]:
+                      - heading "Blur" [level=3] [ref=e135]
+                      - generic [ref=e136]:
+                        - generic [ref=e137]: Illusion
+                        - generic [ref=e138]: •
+                        - generic [ref=e139]: Lvl 2
+                  - button "Prepare" [ref=e140]:
+                    - img [ref=e141]
+                - generic [ref=e143]:
+                  - generic [ref=e144]: Concentration
+                  - generic [ref=e145]: 1 action
+                - paragraph [ref=e147]: Your body becomes blurred. For the duration, any creature has Disadvantage on attack rolls against you. An attacker is immune to this effect if it perceives you with Blindsight or Truesight.
+              - generic [ref=e148]:
+                - generic [ref=e149]:
+                  - generic [ref=e150]:
+                    - img [ref=e152]
+                    - generic [ref=e154]:
+                      - heading "Continual Flame" [level=3] [ref=e155]
+                      - generic [ref=e156]:
+                        - generic [ref=e157]: Evocation
+                        - generic [ref=e158]: •
+                        - generic [ref=e159]: Lvl 2
+                  - button "Prepare" [ref=e160]:
+                    - img [ref=e161]
+                - generic [ref=e164]: 1 action
+                - paragraph [ref=e166]: A flame springs from an object that you touch. The effect casts Bright Light in a 20-foot radius and Dim Light for an additional 20 feet. It looks like a regular flame, but it creates no heat and consumes no fuel. The flame can be covered or hidden but not smothered or quenched.
+              - generic [ref=e167]:
+                - generic [ref=e168]:
+                  - generic [ref=e169]:
+                    - img [ref=e171]
+                    - generic [ref=e173]:
+                      - heading "Darkness" [level=3] [ref=e174]
+                      - generic [ref=e175]:
+                        - generic [ref=e176]: Evocation
+                        - generic [ref=e177]: •
+                        - generic [ref=e178]: Lvl 2
+                  - button "Prepare" [ref=e179]:
+                    - img [ref=e180]
+                - generic [ref=e182]:
+                  - generic [ref=e183]: Concentration
+                  - generic [ref=e184]: 1 action
+                - paragraph [ref=e186]: For the duration, magical Darkness spreads from a point within range and fills a 15-foot-radius Sphere. Darkvision can't see through it, and nonmagical light can't illuminate it. Alternatively, you cast the spell on an object that isn't being worn or carried, causing the Darkness to fill a 15-foot Emanation originating from that object. Covering that object with something opaque, such as a bowl or helm, blocks the Darkness. If any of this spell's area overlaps with an area of Bright Light or Dim Light created by a spell of level 2 or lower, that other spell is dispelled.
+              - generic [ref=e187]:
+                - generic [ref=e188]:
+                  - generic [ref=e189]:
+                    - img [ref=e191]
+                    - generic [ref=e193]:
+                      - heading "Darkvision" [level=3] [ref=e194]
+                      - generic [ref=e195]:
+                        - generic [ref=e196]: Transmutation
+                        - generic [ref=e197]: •
+                        - generic [ref=e198]: Lvl 2
+                  - button "Prepare" [ref=e199]:
+                    - img [ref=e200]
+                - generic [ref=e203]: 1 action
+                - paragraph [ref=e205]: For the duration, a willing creature you touch has Darkvision with a range of 150 feet.
+              - generic [ref=e206]:
+                - generic [ref=e207]:
+                  - generic [ref=e208]:
+                    - img [ref=e210]
+                    - generic [ref=e213]:
+                      - heading "Detect Thoughts" [level=3] [ref=e214]
+                      - generic [ref=e215]:
+                        - generic [ref=e216]: Divination
+                        - generic [ref=e217]: •
+                        - generic [ref=e218]: Lvl 2
+                  - button "Prepare" [ref=e219]:
+                    - img [ref=e220]
+                - generic [ref=e222]:
+                  - generic [ref=e223]: Concentration
+                  - generic [ref=e224]: 1 action
+                - paragraph [ref=e226]: You activate one of the effects below. Until the spell ends, you can activate either effect as a Magic action on your later turns. **Sense Thoughts.** You sense the presence of thoughts within 30 feet of yourself that belong to creatures that know languages or are telepathic. You don't read the thoughts, but you know that a thinking creature is present. The spell is blocked by 1 foot of stone, dirt, or wood; 1 inch of metal; or a thin sheet of lead. **Read Thoughts.** Target one creature you can see within 30 feet of yourself or one creature within 30 feet of yourself that you detected with the Sense Thoughts option. You learn what is most on the target's mind right now. If the target doesn't know any languages and isn't telepathic, you learn nothing. As a Magic action on your next turn, you can try to probe deeper into the target's mind. If you probe deeper, the target makes a Wisdom saving throw. On a failed save, you discern the target's reasoning, emotions, and something that looms large in its mind (such as a worry, love, or hate). On a successful save, the spell ends. Either way, the target knows that you are probing into its mind, and until you shift your attention away from the target's mind, the target can take an action on its turn to make an Intelligence (Arcana) check against your spell save DC, ending the spell on a success.
+              - generic [ref=e227]:
+                - generic [ref=e228]:
+                  - generic [ref=e229]:
+                    - img [ref=e231]
+                    - generic [ref=e233]:
+                      - heading "Dragon's Breath" [level=3] [ref=e234]
+                      - generic [ref=e235]:
+                        - generic [ref=e236]: Transmutation
+                        - generic [ref=e237]: •
+                        - generic [ref=e238]: Lvl 2
+                  - button "Prepare" [ref=e239]:
+                    - img [ref=e240]
+                - generic [ref=e242]:
+                  - generic [ref=e243]: Concentration
+                  - generic [ref=e244]: 1 bonus action
+                - paragraph [ref=e246]: You touch one willing creature, and choose Acid, Cold, Fire, Lightning, or Poison. Until the spell ends, the target can take a Magic action to exhale a 15-foot Cone. Each creature in that area makes a Dexterity saving throw, taking 3d6 damage of the chosen type on a failed save or half as much damage on a successful one.
+              - generic [ref=e247]:
+                - generic [ref=e248]:
+                  - generic [ref=e249]:
+                    - img [ref=e251]
+                    - generic [ref=e253]:
+                      - heading "Enhance Ability" [level=3] [ref=e254]
+                      - generic [ref=e255]:
+                        - generic [ref=e256]: Transmutation
+                        - generic [ref=e257]: •
+                        - generic [ref=e258]: Lvl 2
+                  - button "Prepare" [ref=e259]:
+                    - img [ref=e260]
+                - generic [ref=e262]:
+                  - generic [ref=e263]: Concentration
+                  - generic [ref=e264]: 1 action
+                - paragraph [ref=e266]: You touch a creature and choose Strength, Dexterity, Intelligence, Wisdom, or Charisma. For the duration, the target has Advantage on ability checks using the chosen ability.
+              - generic [ref=e267]:
+                - generic [ref=e268]:
+                  - generic [ref=e269]:
+                    - img [ref=e271]
+                    - generic [ref=e273]:
+                      - heading "Enlarge/Reduce" [level=3] [ref=e274]
+                      - generic [ref=e275]:
+                        - generic [ref=e276]: Transmutation
+                        - generic [ref=e277]: •
+                        - generic [ref=e278]: Lvl 2
+                  - button "Prepare" [ref=e279]:
+                    - img [ref=e280]
+                - generic [ref=e282]:
+                  - generic [ref=e283]: Concentration
+                  - generic [ref=e284]: 1 action
+                - paragraph [ref=e286]: For the duration, the spell enlarges or reduces a creature or an object you can see within range (see the chosen effect below). A targeted object must be neither worn nor carried. If the target is an unwilling creature, it can make a Constitution saving throw. On a successful save, the spell has no effect. Everything that a targeted creature is wearing and carrying changes size with it. Any item it drops returns to normal size at once. A thrown weapon or piece of ammunition returns to normal size immediately after it hits or misses a target. **Enlarge.** The target's size increases by one category—from Medium to Large, for example. The target also has Advantage on Strength checks and Strength saving throws. The target's attacks with its enlarged weapons or Unarmed Strikes deal an extra 1d4 damage on a hit. **Reduce.** The target's size decreases by one category—from Medium to Small, for example. The target also has Disadvantage on Strength checks and Strength saving throws. The target's attacks with its reduced weapons or Unarmed Strikes deal 1d4 less damage on a hit (this can't reduce the damage below 1).
+              - generic [ref=e287]:
+                - generic [ref=e288]:
+                  - generic [ref=e289]:
+                    - img [ref=e291]
+                    - generic [ref=e293]:
+                      - heading "Flaming Sphere" [level=3] [ref=e294]
+                      - generic [ref=e295]:
+                        - generic [ref=e296]: Conjuration
+                        - generic [ref=e297]: •
+                        - generic [ref=e298]: Lvl 2
+                  - button "Prepare" [ref=e299]:
+                    - img [ref=e300]
+                - generic [ref=e302]:
+                  - generic [ref=e303]: Concentration
+                  - generic [ref=e304]: 1 action
+                - paragraph [ref=e306]: You create a 5-foot-diameter sphere of fire in an unoccupied space on the ground within range. It lasts for the duration. Any creature that ends its turn within 5 feet of the sphere makes a Dexterity saving throw, taking 2d6 Fire damage on a failed save or half as much damage on a successful one. As a Bonus Action, you can move the sphere up to 30 feet, rolling it along the ground. If you move the sphere into a creature's space, that creature makes the save against the sphere, and the sphere stops moving for the turn. When you move the sphere, you can direct it over barriers up to 5 feet tall and jump it across pits up to 10 feet wide. Flammable objects that aren't being worn or carried start burning if touched by the sphere, and it sheds Bright Light in a 20-foot radius and Dim Light for an additional 20 feet.
+              - generic [ref=e307]:
+                - generic [ref=e308]:
+                  - generic [ref=e309]:
+                    - img [ref=e311]
+                    - generic [ref=e316]:
+                      - heading "Gentle Repose" [level=3] [ref=e317]
+                      - generic [ref=e318]:
+                        - generic [ref=e319]: Necromancy
+                        - generic [ref=e320]: •
+                        - generic [ref=e321]: Lvl 2
+                  - button "Prepare" [ref=e322]:
+                    - img [ref=e323]
+                - generic [ref=e325]:
+                  - generic [ref=e326]: Ritual
+                  - generic [ref=e327]: 1 action
+                - paragraph [ref=e329]: You touch a corpse or other remains. For the duration, the target is protected from decay and can't become Undead. The spell also effectively extends the time limit on raising the target from the dead, since days spent under the influence of this spell don't count against the time limit of spells such as Raise Dead.
+              - generic [ref=e330]:
+                - generic [ref=e331]:
+                  - generic [ref=e332]:
+                    - img [ref=e334]
+                    - generic [ref=e336]:
+                      - heading "Gust of Wind" [level=3] [ref=e337]
+                      - generic [ref=e338]:
+                        - generic [ref=e339]: Evocation
+                        - generic [ref=e340]: •
+                        - generic [ref=e341]: Lvl 2
+                  - button "Prepare" [ref=e342]:
+                    - img [ref=e343]
+                - generic [ref=e345]:
+                  - generic [ref=e346]: Concentration
+                  - generic [ref=e347]: 1 action
+                - paragraph [ref=e349]: A Line of strong wind 60 feet long and 10 feet wide blasts from you in a direction you choose for the duration. Each creature in the Line must succeed on a Strength saving throw or be pushed 15 feet away from you in a direction following the Line. A creature that ends its turn in the Line must make the same save. Any creature in the Line must spend 2 feet of movement for every 1 foot it moves when moving closer to you. The gust disperses gas or vapor, and it extinguishes candles and similar unprotected flames in the area. It causes protected flames, such as those of lanterns, to dance wildly and has a 50 percent chance to extinguish them. As a Bonus Action on your later turns, you can change the direction in which the Line blasts from you.
+              - generic [ref=e350]:
+                - generic [ref=e351]:
+                  - generic [ref=e352]:
+                    - img [ref=e354]
+                    - generic [ref=e356]:
+                      - heading "Hold Person" [level=3] [ref=e357]
+                      - generic [ref=e358]:
+                        - generic [ref=e359]: Enchantment
+                        - generic [ref=e360]: •
+                        - generic [ref=e361]: Lvl 2
+                  - button "Prepare" [ref=e362]:
+                    - img [ref=e363]
+                - generic [ref=e365]:
+                  - generic [ref=e366]: Concentration
+                  - generic [ref=e367]: 1 action
+                - paragraph [ref=e369]: Choose a Humanoid that you can see within range. The target must succeed on a Wisdom saving throw or have the Paralyzed condition for the duration. At the end of each of its turns, the target repeats the save, ending the spell on itself on a success.
+              - generic [ref=e370]:
+                - generic [ref=e371]:
+                  - generic [ref=e372]:
+                    - img [ref=e374]
+                    - generic [ref=e376]:
+                      - heading "Invisibility" [level=3] [ref=e377]
+                      - generic [ref=e378]:
+                        - generic [ref=e379]: Illusion
+                        - generic [ref=e380]: •
+                        - generic [ref=e381]: Lvl 2
+                  - button "Prepare" [ref=e382]:
+                    - img [ref=e383]
+                - generic [ref=e385]:
+                  - generic [ref=e386]: Concentration
+                  - generic [ref=e387]: 1 action
+                - paragraph [ref=e389]: A creature you touch has the Invisible condition until the spell ends. The spell ends early immediately after the target makes an attack roll, deals damage, or casts a spell.
+              - generic [ref=e390]:
+                - generic [ref=e391]:
+                  - generic [ref=e392]:
+                    - img [ref=e394]
+                    - generic [ref=e396]:
+                      - heading "Knock" [level=3] [ref=e397]
+                      - generic [ref=e398]:
+                        - generic [ref=e399]: Transmutation
+                        - generic [ref=e400]: •
+                        - generic [ref=e401]: Lvl 2
+                  - button "Prepare" [ref=e402]:
+                    - img [ref=e403]
+                - generic [ref=e406]: 1 action
+                - paragraph [ref=e408]: Choose an object that you can see within range. The object can be a door, a box, a chest, a set of manacles, a padlock, or another object that contains a mundane or magical means that prevents access. A target that is held shut by a mundane lock or that is stuck or barred becomes unlocked, unstuck, or unbarred. If the object has multiple locks, only one of them is unlocked. If the target is held shut by Arcane Lock, that spell is suppressed for 10 minutes, during which time the target can be opened and closed. When you cast the spell, a loud knock, audible up to 300 feet away, emanates from the target.
+              - generic [ref=e409]:
+                - generic [ref=e410]:
+                  - generic [ref=e411]:
+                    - img [ref=e413]
+                    - generic [ref=e415]:
+                      - heading "Levitate" [level=3] [ref=e416]
+                      - generic [ref=e417]:
+                        - generic [ref=e418]: Transmutation
+                        - generic [ref=e419]: •
+                        - generic [ref=e420]: Lvl 2
+                  - button "Prepare" [ref=e421]:
+                    - img [ref=e422]
+                - generic [ref=e424]:
+                  - generic [ref=e425]: Concentration
+                  - generic [ref=e426]: 1 action
+                - paragraph [ref=e428]: One creature or loose object of your choice that you can see within range rises vertically up to 20 feet and remains suspended there for the duration. The spell can levitate an object that weighs up to 500 pounds. An unwilling creature that succeeds on a Constitution saving throw is unaffected. The target can move only by pushing or pulling against a fixed object or surface within reach (such as a wall or a ceiling), which allows it to move as if it were climbing. You can change the target's altitude by up to 20 feet in either direction on your turn. If you are the target, you can move up or down as part of your move. Otherwise, you can take a Magic action to move the target, which must remain within the spell's range. When the spell ends, the target floats gently to the ground if it is still aloft.
+              - generic [ref=e429]:
+                - generic [ref=e430]:
+                  - generic [ref=e431]:
+                    - img [ref=e433]
+                    - generic [ref=e436]:
+                      - heading "Locate Object" [level=3] [ref=e437]
+                      - generic [ref=e438]:
+                        - generic [ref=e439]: Divination
+                        - generic [ref=e440]: •
+                        - generic [ref=e441]: Lvl 2
+                  - button "Prepare" [ref=e442]:
+                    - img [ref=e443]
+                - generic [ref=e445]:
+                  - generic [ref=e446]: Concentration
+                  - generic [ref=e447]: 1 action
+                - paragraph [ref=e449]: Describe or name an object that is familiar to you. You sense the direction to the object's location if that object is within 1,000 feet of you. If the object is in motion, you know the direction of its movement. The spell can locate a specific object known to you if you have seen it up close—within 30 feet—at least once. Alternatively, the spell can locate the nearest object of a particular kind, such as a certain kind of apparel, jewelry, furniture, tool, or weapon. This spell can't locate an object if any thickness of lead blocks a direct path between you and the object.
+              - generic [ref=e450]:
+                - generic [ref=e451]:
+                  - generic [ref=e452]:
+                    - img [ref=e454]
+                    - generic [ref=e456]:
+                      - heading "Magic Mouth" [level=3] [ref=e457]
+                      - generic [ref=e458]:
+                        - generic [ref=e459]: Illusion
+                        - generic [ref=e460]: •
+                        - generic [ref=e461]: Lvl 2
+                  - button "Prepare" [ref=e462]:
+                    - img [ref=e463]
+                - generic [ref=e465]:
+                  - generic [ref=e466]: Ritual
+                  - generic [ref=e467]: 1 action
+                - paragraph [ref=e469]: You implant a message within an object in range—a message that is uttered when a trigger condition is met. Choose an object that you can see and that isn't being worn or carried by another creature. Then speak the message, which must be 25 words or fewer, though it can be delivered over as long as 10 minutes. Finally, determine the circumstance that will trigger the spell to deliver your message. When that trigger occurs, a magical mouth appears on the object and recites the message in your voice and at the same volume you spoke. If the object you chose has a mouth or something that looks like a mouth (for example, the mouth of a statue), the magical mouth appears there, so the words appear to come from the object's mouth. When you cast this spell, you can have the spell end after it delivers its message, or it can remain and repeat its message whenever the trigger occurs. The trigger can be as general or as detailed as you like, though it must be based on visual or audible conditions that occur within 30 feet of the object. For example, you could instruct the mouth to speak when any creature moves within 30 feet of the object or when a silver bell rings within 30 feet of it.
+              - generic [ref=e470]:
+                - generic [ref=e471]:
+                  - generic [ref=e472]:
+                    - img [ref=e474]
+                    - generic [ref=e476]:
+                      - heading "Magic Weapon" [level=3] [ref=e477]
+                      - generic [ref=e478]:
+                        - generic [ref=e479]: Transmutation
+                        - generic [ref=e480]: •
+                        - generic [ref=e481]: Lvl 2
+                  - button "Prepare" [ref=e482]:
+                    - img [ref=e483]
+                - generic [ref=e486]: 1 bonus action
+                - paragraph [ref=e488]: You touch a nonmagical weapon. Until the spell ends, that weapon becomes a magic weapon with a +1 bonus to attack rolls and damage rolls. The spell ends early if you cast it again.
+              - generic [ref=e489]:
+                - generic [ref=e490]:
+                  - generic [ref=e491]:
+                    - img [ref=e493]
+                    - generic [ref=e495]:
+                      - heading "Acid Arrow" [level=3] [ref=e496]
+                      - generic [ref=e497]:
+                        - generic [ref=e498]: Evocation
+                        - generic [ref=e499]: •
+                        - generic [ref=e500]: Lvl 2
+                  - button "Prepare" [ref=e501]:
+                    - img [ref=e502]
+                - generic [ref=e505]: 1 action
+                - paragraph [ref=e507]: A shimmering green arrow streaks toward a target within range and bursts in a spray of acid. Make a ranged spell attack against the target. On a hit, the target takes 4d4 Acid damage and 2d4 Acid damage at the end of its next turn. On a miss, the arrow splashes the target with acid for half as much of the initial damage only.
+              - generic [ref=e508]:
+                - generic [ref=e509]:
+                  - generic [ref=e510]:
+                    - img [ref=e512]
+                    - generic [ref=e515]:
+                      - heading "Mind Spike" [level=3] [ref=e516]
+                      - generic [ref=e517]:
+                        - generic [ref=e518]: Divination
+                        - generic [ref=e519]: •
+                        - generic [ref=e520]: Lvl 2
+                  - button "Prepare" [ref=e521]:
+                    - img [ref=e522]
+                - generic [ref=e524]:
+                  - generic [ref=e525]: Concentration
+                  - generic [ref=e526]: 1 action
+                - paragraph [ref=e528]: You drive a spike of psionic energy into the mind of one creature you can see within range. The target makes a Wisdom saving throw, taking 3d8 Psychic damage on a failed save or half as much damage on a successful one. On a failed save, you also always know the target's location until the spell ends, but only while the two of you are on the same plane of existence. While you have this knowledge, the target can't become hidden from you, and if it has the Invisible condition, it gains no benefit from that condition against you.
+              - generic [ref=e529]:
+                - generic [ref=e530]:
+                  - generic [ref=e531]:
+                    - img [ref=e533]
+                    - generic [ref=e535]:
+                      - heading "Mirror Image" [level=3] [ref=e536]
+                      - generic [ref=e537]:
+                        - generic [ref=e538]: Illusion
+                        - generic [ref=e539]: •
+                        - generic [ref=e540]: Lvl 2
+                  - button "Prepare" [ref=e541]:
+                    - img [ref=e542]
+                - generic [ref=e545]: 1 action
+                - paragraph [ref=e547]: Three illusory duplicates of yourself appear in your space. Until the spell ends, the duplicates move with you and mimic your actions, shifting position so it's impossible to track which image is real. Each time a creature hits you with an attack roll during the spell's duration, roll a d6 for each of your remaining duplicates. If any of the d6s rolls a 3 or higher, one of the duplicates is hit instead of you, and the duplicate is destroyed. The duplicates otherwise ignore all other damage and effects. The spell ends when all three duplicates are destroyed. A creature is unaffected by this spell if it has the Blinded condition, Blindsight, or Truesight.
+              - generic [ref=e548]:
+                - generic [ref=e549]:
+                  - generic [ref=e550]:
+                    - img [ref=e552]
+                    - generic [ref=e554]:
+                      - heading "Misty Step" [level=3] [ref=e555]
+                      - generic [ref=e556]:
+                        - generic [ref=e557]: Conjuration
+                        - generic [ref=e558]: •
+                        - generic [ref=e559]: Lvl 2
+                  - button "Unprepare" [ref=e560]:
+                    - img [ref=e561]
+                - generic [ref=e564]: 1 bonus action
+                - paragraph [ref=e566]: Briefly surrounded by silvery mist, you teleport up to 30 feet to an unoccupied space you can see.
+                - button "Cast Spell" [ref=e568]:
+                  - img [ref=e569]
+                  - text: Cast Spell
+              - generic [ref=e571]:
+                - generic [ref=e572]:
+                  - generic [ref=e573]:
+                    - img [ref=e575]
+                    - generic [ref=e577]:
+                      - heading "Arcanist's Magic Aura" [level=3] [ref=e578]
+                      - generic [ref=e579]:
+                        - generic [ref=e580]: Illusion
+                        - generic [ref=e581]: •
+                        - generic [ref=e582]: Lvl 2
+                  - button "Prepare" [ref=e583]:
+                    - img [ref=e584]
+                - generic [ref=e587]: 1 action
+                - paragraph [ref=e589]: With a touch, you place an illusion on a willing creature or an object that isn't being worn or carried. A creature gains the Mask effect below, and an object gains the False Aura effect below. The effect lasts for the duration. If you cast the spell on the same target every day for 30 days, the illusion lasts until dispelled. **Mask (Creature).** Choose a creature type other than the target's actual type. Spells and other magical effects treat the target as if it were a creature of the chosen type. **False Aura (Object).** You change the way the target appears to spells and magical effects that detect magical auras, such as Detect Magic. You can make a nonmagical object appear magical, make a magic item appear nonmagical, or change the object's aura so that it appears to belong to a school of magic you choose.
+              - generic [ref=e590]:
+                - generic [ref=e591]:
+                  - generic [ref=e592]:
+                    - img [ref=e594]
+                    - generic [ref=e596]:
+                      - heading "Phantasmal Force" [level=3] [ref=e597]
+                      - generic [ref=e598]:
+                        - generic [ref=e599]: Illusion
+                        - generic [ref=e600]: •
+                        - generic [ref=e601]: Lvl 2
+                  - button "Prepare" [ref=e602]:
+                    - img [ref=e603]
+                - generic [ref=e605]:
+                  - generic [ref=e606]: Concentration
+                  - generic [ref=e607]: 1 action
+                - paragraph [ref=e609]: You attempt to craft an illusion in the mind of a creature you can see within range. The target makes an Intelligence saving throw. On a failed save, you create a phantasmal object, creature, or other phenomenon that is no larger than a 10-foot Cube and that is perceivable only to the target for the duration. The phantasm includes sound, temperature, and other stimuli. The target can take a Study action to examine the phantasm with an Intelligence (Investigation) check against your spell save DC. If the check succeeds, the target realizes that the phantasm is an illusion, and the spell ends. While affected by the spell, the target treats the phantasm as if it were real and rationalizes any illogical outcomes from interacting with it. For example, if the target steps through a phantasmal bridge and survives the fall, it believes the bridge exists and something else caused it to fall. An affected target can even take damage from the illusion if the phantasm represents a dangerous creature or hazard. On each of your turns, such a phantasm can deal 2d8 Psychic damage to the target if it is in the phantasm's area or within 5 feet of the phantasm. The target perceives the damage as a type appropriate to the illusion.
+              - generic [ref=e610]:
+                - generic [ref=e611]:
+                  - generic [ref=e612]:
+                    - img [ref=e614]
+                    - generic [ref=e619]:
+                      - heading "Ray of Enfeeblement" [level=3] [ref=e620]
+                      - generic [ref=e621]:
+                        - generic [ref=e622]: Necromancy
+                        - generic [ref=e623]: •
+                        - generic [ref=e624]: Lvl 2
+                  - button "Prepare" [ref=e625]:
+                    - img [ref=e626]
+                - generic [ref=e628]:
+                  - generic [ref=e629]: Concentration
+                  - generic [ref=e630]: 1 action
+                - paragraph [ref=e632]: A beam of enervating energy shoots from you toward a creature within range. The target must make a Constitution saving throw. On a successful save, the target has Disadvantage on the next attack roll it makes until the start of your next turn. On a failed save, the target has Disadvantage on Strength-based D20 Tests for the duration. During that time, it also subtracts 1d8 from all its damage rolls. The target repeats the save at the end of each of its turns, ending the spell on a success.
+              - generic [ref=e633]:
+                - generic [ref=e634]:
+                  - generic [ref=e635]:
+                    - img [ref=e637]
+                    - generic [ref=e639]:
+                      - heading "Rope Trick" [level=3] [ref=e640]
+                      - generic [ref=e641]:
+                        - generic [ref=e642]: Transmutation
+                        - generic [ref=e643]: •
+                        - generic [ref=e644]: Lvl 2
+                  - button "Prepare" [ref=e645]:
+                    - img [ref=e646]
+                - generic [ref=e649]: 1 action
+                - paragraph [ref=e651]: You touch a rope. One end of it hovers upward until the rope hangs perpendicular to the ground or the rope reaches a ceiling. At the rope's upper end, an Invisible 3-foot-by-5-foot portal opens to an extradimensional space that lasts until the spell ends. That space can be reached by climbing the rope, which can be pulled into or dropped out of it. The space can hold up to eight Medium or smaller creatures. Attacks, spells, and other effects can't pass into or out of the space, but creatures inside it can see through the portal. Anything inside the space drops out when the spell ends.
+              - generic [ref=e652]:
+                - generic [ref=e653]:
+                  - generic [ref=e654]:
+                    - img [ref=e656]
+                    - generic [ref=e658]:
+                      - heading "Scorching Ray" [level=3] [ref=e659]
+                      - generic [ref=e660]:
+                        - generic [ref=e661]: Evocation
+                        - generic [ref=e662]: •
+                        - generic [ref=e663]: Lvl 2
+                  - button "Prepare" [ref=e664]:
+                    - img [ref=e665]
+                - generic [ref=e668]: 1 action
+                - paragraph [ref=e670]: You hurl three fiery rays. You can hurl them at one target within range or at several. Make a ranged spell attack for each ray. On a hit, the target takes 2d6 Fire damage.
+              - generic [ref=e671]:
+                - generic [ref=e672]:
+                  - generic [ref=e673]:
+                    - img [ref=e675]
+                    - generic [ref=e678]:
+                      - heading "See Invisibility" [level=3] [ref=e679]
+                      - generic [ref=e680]:
+                        - generic [ref=e681]: Divination
+                        - generic [ref=e682]: •
+                        - generic [ref=e683]: Lvl 2
+                  - button "Prepare" [ref=e684]:
+                    - img [ref=e685]
+                - generic [ref=e688]: 1 action
+                - paragraph [ref=e690]: For the duration, you see creatures and objects that have the Invisible condition as if they were visible, and you can see into the Ethereal Plane. Creatures and objects there appear ghostly.
+              - generic [ref=e691]:
+                - generic [ref=e692]:
+                  - generic [ref=e693]:
+                    - img [ref=e695]
+                    - generic [ref=e697]:
+                      - heading "Shatter" [level=3] [ref=e698]
+                      - generic [ref=e699]:
+                        - generic [ref=e700]: Evocation
+                        - generic [ref=e701]: •
+                        - generic [ref=e702]: Lvl 2
+                  - button "Prepare" [ref=e703]:
+                    - img [ref=e704]
+                - generic [ref=e707]: 1 action
+                - paragraph [ref=e709]: A loud noise erupts from a point of your choice within range. Each creature in a 10-foot-radius Sphere centered there makes a Constitution saving throw, taking 3d8 Thunder damage on a failed save or half as much damage on a successful one. A Construct has Disadvantage on the save. A nonmagical object that isn't being worn or carried also takes the damage if it's in the spell's area.
+              - generic [ref=e710]:
+                - generic [ref=e711]:
+                  - generic [ref=e712]:
+                    - img [ref=e714]
+                    - generic [ref=e716]:
+                      - heading "Spider Climb" [level=3] [ref=e717]
+                      - generic [ref=e718]:
+                        - generic [ref=e719]: Transmutation
+                        - generic [ref=e720]: •
+                        - generic [ref=e721]: Lvl 2
+                  - button "Prepare" [ref=e722]:
+                    - img [ref=e723]
+                - generic [ref=e725]:
+                  - generic [ref=e726]: Concentration
+                  - generic [ref=e727]: 1 action
+                - paragraph [ref=e729]: Until the spell ends, one willing creature you touch gains the ability to move up, down, and across vertical surfaces and along ceilings, while leaving its hands free. The target also gains a Climb Speed equal to its Speed.
+              - generic [ref=e730]:
+                - generic [ref=e731]:
+                  - generic [ref=e732]:
+                    - img [ref=e734]
+                    - generic [ref=e736]:
+                      - heading "Suggestion" [level=3] [ref=e737]
+                      - generic [ref=e738]:
+                        - generic [ref=e739]: Enchantment
+                        - generic [ref=e740]: •
+                        - generic [ref=e741]: Lvl 2
+                  - button "Prepare" [ref=e742]:
+                    - img [ref=e743]
+                - generic [ref=e745]:
+                  - generic [ref=e746]: Concentration
+                  - generic [ref=e747]: 1 action
+                - paragraph [ref=e749]: You suggest a course of activity—described in no more than 25 words—to one creature you can see within range that can hear and understand you. The suggestion must sound achievable and not involve anything that would obviously deal damage to the target or its allies. For example, you could say, “Fetch the key to the cult's treasure vault, and give the key to me.” Or you could say, “Stop fighting, leave this library peacefully, and don't return.” The target must succeed on a Wisdom saving throw or have the Charmed condition for the duration or until you or your allies deal damage to the target. The Charmed target pursues the suggestion to the best of its ability. The suggested activity can continue for the entire duration, but if the suggested activity can be completed in a shorter time, the spell ends for the target upon completing it.
+              - generic [ref=e750]:
+                - generic [ref=e751]:
+                  - generic [ref=e752]:
+                    - img [ref=e754]
+                    - generic [ref=e756]:
+                      - heading "Web" [level=3] [ref=e757]
+                      - generic [ref=e758]:
+                        - generic [ref=e759]: Conjuration
+                        - generic [ref=e760]: •
+                        - generic [ref=e761]: Lvl 2
+                  - button "Unprepare" [ref=e762]:
+                    - img [ref=e763]
+                - generic [ref=e765]:
+                  - generic [ref=e766]: Concentration
+                  - generic [ref=e767]: 1 action
+                - paragraph [ref=e769]: You conjure a mass of sticky webbing at a point within range. The webs fill a 20-foot Cube there for the duration. The webs are Difficult Terrain, and the area within them is Lightly Obscured. If the webs aren't anchored between two solid masses (such as walls or trees) or layered across a floor, wall, or ceiling, the web collapses on itself, and the spell ends at the start of your next turn. Webs layered over a flat surface have a depth of 5 feet. The first time a creature enters the webs on a turn or starts its turn there, it must succeed on a Dexterity saving throw or have the Restrained condition while in the webs or until it breaks free. A creature Restrained by the webs can take an action to make a Strength (Athletics) check against your spell save DC. If it succeeds, it is no longer Restrained. The webs are flammable. Any 5-foot Cube of webs exposed to fire burns away in 1 round, dealing 2d4 Fire damage to any creature that starts its turn in the fire.
+                - button "Cast Spell" [ref=e771]:
+                  - img [ref=e772]
+                  - text: Cast Spell
+    - navigation [ref=e774]:
+      - generic [ref=e778]:
+        - button "Stats" [ref=e779]:
+          - img [ref=e781]
+          - generic: Stats
+        - button "Spellbook" [ref=e783]:
+          - img [ref=e785]
+          - generic [ref=e789]: Spellbook
+        - button "Combat" [ref=e791]:
+          - img [ref=e793]
+          - generic: Combat
+        - button "Abilities" [ref=e798]:
+          - img [ref=e800]
+          - generic: Abilities
+        - button "Bio" [ref=e808]:
+          - img [ref=e810]
+          - generic: Bio
+        - button "Inventory" [ref=e813]:
+          - img [ref=e815]
+          - generic: Inventory
+        - button "Settings" [ref=e819]:
+          - img [ref=e821]
+          - generic: Settings
+    - generic [ref=e824]:
+      - generic [ref=e825]:
+        - img [ref=e826]
+        - generic [ref=e829]: Not Concentrating
+      - button "12 14 +7" [ref=e830]:
+        - img [ref=e831]
+        - generic [ref=e840]:
+          - generic "Armor Class" [ref=e841]:
+            - img [ref=e842]
+            - generic [ref=e844]: "12"
+          - generic "Spell Save DC" [ref=e845]:
+            - img [ref=e846]
+            - generic [ref=e850]: "14"
+          - generic "Spell Attack Bonus" [ref=e851]:
+            - img [ref=e852]
+            - generic [ref=e855]: "+7"
+      - button "Open Wand Drawer" [ref=e856]:
+        - img [ref=e857]
+      - button "Find Familiar" [ref=e860]:
+        - img [ref=e861]
+    - generic [ref=e864]:
+      - generic [ref=e867]:
+        - generic [ref=e868]:
+          - img [ref=e869]
+          - heading "Necromancy" [level=2] [ref=e874]
+          - generic [ref=e875]: 0 Active
+        - button "Close" [ref=e877]:
+          - img [ref=e878]
+      - generic [ref=e881]:
+        - generic [ref=e882]:
+          - button "Animate Dead" [ref=e883]
+          - button "Summon Undead" [ref=e884]
+        - generic [ref=e885]:
+          - generic [ref=e886]:
+            - button "Raise Skeleton AC 13 • HP 13" [ref=e887]:
+              - img [ref=e888]
+              - generic [ref=e893]: Raise Skeleton
+              - generic [ref=e894]: AC 13 • HP 13
+            - button "Raise Zombie AC 8 • HP 22" [ref=e895]:
+              - img [ref=e896]
+              - generic [ref=e906]: Raise Zombie
+              - generic [ref=e907]: AC 8 • HP 22
+          - generic [ref=e908]: Requires Level 6 for Undead Thralls
+        - generic [ref=e909]:
+          - heading "Active Servants" [level=3] [ref=e910]
+          - generic [ref=e911]: No undead raised
+    - generic [ref=e912]:
+      - generic [ref=e915]:
+        - generic [ref=e916]:
+          - img [ref=e917]
+          - generic [ref=e920]:
+            - heading "Direstone Runic Wand" [level=2] [ref=e921]
+            - paragraph [ref=e922]: A rigid stone wand from the Direstone mines. Expending the last charge risks crumbling (d20 roll).
+        - button "Close" [ref=e923]:
+          - img [ref=e924]
+      - generic [ref=e927]:
+        - generic [ref=e929]:
+          - generic [ref=e930]:
+            - text: "7"
+            - generic [ref=e931]: / 7
+          - generic [ref=e932]: Charges Remaining
+        - generic [ref=e933]:
+          - heading "Imbued Runes" [level=3] [ref=e934]
+          - button "Algiz (Fire Resist) 3 Charges" [ref=e935]:
+            - generic [ref=e936]:
+              - img [ref=e938]
+              - generic [ref=e940]:
+                - generic [ref=e941]: Algiz (Fire Resist)
+                - generic [ref=e943]: 3 Charges
+            - img [ref=e944]
+          - button "Eihwaz (Arcane Lock) 2 Charges" [ref=e946]:
+            - generic [ref=e947]:
+              - img [ref=e949]
+              - generic [ref=e951]:
+                - generic [ref=e952]: Eihwaz (Arcane Lock)
+                - generic [ref=e954]: 2 Charges
+            - img [ref=e955]
+          - button "Hagalaz (Shatter) 2 Charges" [ref=e957]:
+            - generic [ref=e958]:
+              - img [ref=e960]
+              - generic [ref=e962]:
+                - generic [ref=e963]: Hagalaz (Shatter)
+                - generic [ref=e965]: 2 Charges
+            - img [ref=e966]
+          - button "Kenaz (Burning Hands) 1 Charge" [ref=e968]:
+            - generic [ref=e969]:
+              - img [ref=e971]
+              - generic [ref=e973]:
+                - generic [ref=e974]: Kenaz (Burning Hands)
+                - generic [ref=e976]: 1 Charge
+            - img [ref=e977]
+          - button "Kenaz (Heat Metal) 2 Charges Concentration" [ref=e979]:
+            - generic [ref=e980]:
+              - img [ref=e982]
+              - generic [ref=e984]:
+                - generic [ref=e985]: Kenaz (Heat Metal)
+                - generic [ref=e986]:
+                  - generic [ref=e987]: 2 Charges
+                  - generic [ref=e988]: Concentration
+            - img [ref=e990]
+          - button "Raidho (Stone Shape) 4 Charges" [ref=e992]:
+            - generic [ref=e993]:
+              - img [ref=e995]
+              - generic [ref=e997]:
+                - generic [ref=e998]: Raidho (Stone Shape)
+                - generic [ref=e1000]: 4 Charges
+            - img [ref=e1001]
+          - button "Raidho (Illusory Script) 1 Charge" [ref=e1003]:
+            - generic [ref=e1004]:
+              - img [ref=e1006]
+              - generic [ref=e1008]:
+                - generic [ref=e1009]: Raidho (Illusory Script)
+                - generic [ref=e1011]: 1 Charge
+            - img [ref=e1012]
+```

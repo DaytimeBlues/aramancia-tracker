@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import {
-    concentrationCheckRequired,
-    concentrationCheckResolved,
+    checkRequired,
+    checkResolved,
     concentrationBroken
 } from '../../../store/slices/combatSlice';
 import { slotsRestored } from '../../../store/slices/spellbookSlice';
@@ -23,7 +23,7 @@ import { spells as allSpells } from '../../../data/spells';
 export const QuickActionsWidget: React.FC = () => {
     const dispatch = useAppDispatch();
     const activeConcentration = useAppSelector(state => state.combat.activeConcentration);
-    const concentrationCheckDC = useAppSelector(state => state.combat.concentrationCheckDC);
+    const concentrationDC = useAppSelector(state => state.combat.concentrationDC);
 
     const [showDamageInput, setShowDamageInput] = useState(false);
     const [damageInput, setDamageInput] = useState('');
@@ -63,18 +63,18 @@ export const QuickActionsWidget: React.FC = () => {
     const handleTriggerConcentrationCheck = () => {
         const damage = parseInt(damageInput, 10);
         if (!isNaN(damage) && damage > 0) {
-            dispatch(concentrationCheckRequired({ damage }));
+            dispatch(checkRequired({ damage }));
             setDamageInput('');
             setShowDamageInput(false);
         }
     };
 
     const handleConcentrationPassed = () => {
-        dispatch(concentrationCheckResolved({ passed: true }));
+        dispatch(checkResolved({ passed: true }));
     };
 
     const handleConcentrationFailed = () => {
-        dispatch(concentrationCheckResolved({ passed: false }));
+        dispatch(checkResolved({ passed: false }));
     };
 
     const handleDropConcentration = () => {
@@ -120,7 +120,7 @@ export const QuickActionsWidget: React.FC = () => {
             )}
 
             {/* Concentration Check Modal */}
-            {concentrationCheckDC !== null && (
+            {concentrationDC !== null && (
                 <div className="bg-orange-950/30 border border-orange-800 rounded-lg p-4 space-y-3">
                     <div className="flex items-center gap-2 text-orange-300">
                         <AlertTriangle className="w-5 h-5 animate-pulse" />
@@ -130,7 +130,7 @@ export const QuickActionsWidget: React.FC = () => {
                     <div className="bg-stone-950 rounded-lg p-4 text-center">
                         <div className="text-xs text-stone-500 uppercase tracking-wider mb-2">Roll Constitution Save</div>
                         <div className="text-3xl font-mono font-bold text-white mb-2">
-                            DC {concentrationCheckDC}
+                            DC {concentrationDC}
                         </div>
                         <div className="text-sm text-stone-400">
                             Your modifier: d20 + {conMod + profBonus} (CON {conMod >= 0 ? `+${conMod}` : conMod} + Prof +{profBonus})
@@ -161,7 +161,7 @@ export const QuickActionsWidget: React.FC = () => {
             {/* Quick Action Buttons */}
             <div className="grid grid-cols-2 gap-2">
                 {/* Concentration Check Trigger */}
-                {activeConcentration && !concentrationCheckDC && (
+                {activeConcentration && !concentrationDC && (
                     <div className="col-span-2">
                         {showDamageInput ? (
                             <div className="flex gap-2">

@@ -1,3 +1,7 @@
+---
+description: Refactor test suite infrastructure - folder structure, golden flows, and coverage thresholds
+---
+
 # Testing Infrastructure Refactor Plan
 
 ## Overview

@@ -95,13 +95,14 @@ function App() {
   };
 
   // --- CALLBACKS (dispatch Redux actions) ---
+  // Using nested hp properties as dependencies intentionally for Redux state updates
   const updateHealth = useCallback((newCurrent: number) => {
     const damage = character.hp.current - newCurrent;
     if (damage > 0 && character.concentration) {
       dispatch(checkRequired({ damage }));
     }
     dispatch(hpChanged(newCurrent));
-  }, [dispatch, character.hp.current, character.concentration]);
+  }, [dispatch, character.hp.current, character.concentration]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateTempHP = useCallback((newTemp: number) => {
     const damage = character.hp.temp - newTemp;

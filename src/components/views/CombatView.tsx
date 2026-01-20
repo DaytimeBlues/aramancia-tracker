@@ -5,7 +5,7 @@ import { undeadStats } from '../../data/undeadStats';
 import type { UndeadStatBlock } from '../../data/undeadStats';
 import { Skull, Shield, Sword, Info, X, Users, Ghost, Biohazard, Bone, ChevronDown, ChevronUp, Wand2, Hourglass, Plus } from 'lucide-react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { minionSelectors, minionAdded } from '../../store/slices/combatSlice';
+import { minionSelectors, minionAdded, turnAdvanced, startCombatWithInitiative } from '../../store/slices/combatSlice';
 import { selectCharacter } from '../../store/slices/characterSlice';
 import type { Minion } from '../../types';
 import { ModeToggle, ViewMode } from '../widgets/ModeToggle';
@@ -21,6 +21,12 @@ export function CombatView() {
     const [showCastDrawer, setShowCastDrawer] = useState(false);
     const [viewMode, setViewMode] = useState<ViewMode>('combat');
 
+    const minions = useAppSelector(state => minionSelectors.selectAll(state.combat.minions));
+    const activeActorId = useAppSelector(state => state.combat.currentActorId);
+    const currentRound = useAppSelector(state => state.combat.currentRound);
+    const initiativeOrder = useAppSelector(state => state.combat.initiativeOrder);
+    const isCombatActive = initiativeOrder.length > 0;
+
     // If in roleplay mode, render RolePlayView instead
     if (viewMode === 'roleplay') {
         return (
@@ -32,9 +38,6 @@ export function CombatView() {
             </div>
         );
     }
-
-    // Select minions from Redux
-    const minions = useAppSelector(state => minionSelectors.selectAll(state.combat.minions));
 
     const openStats = (name: string) => {
         const stats = undeadStats.find(s => s.name.includes(name));
@@ -57,8 +60,16 @@ export function CombatView() {
                         <ModeToggle mode={viewMode} onModeChange={setViewMode} />
                     </div>
                     {/* Compact Spell Abacus Integrated */}
-                    <div className="pb-1 max-w-2xl mx-auto w-full">
-                        <SlotAbacus compact />
+                    <div className="pb-1 max-w-2xl mx-auto w-full flex items-center gap-4">
+                        <div className="flex-1">
+                            <SlotAbacus compact />
+                        </div>
+                        {isCombatActive && (
+                            <div className="flex flex-col items-end px-2 border-l border-white/10">
+                                <span className="text-[10px] text-muted uppercase tracking-widest font-bold">Round</span>
+                                <span className="text-xl font-display text-accent leading-none">{currentRound}</span>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -77,9 +88,20 @@ export function CombatView() {
                                 <div className="text-[10px] text-muted/60 uppercase tracking-tighter">Necromantic Servants</div>
                             </div>
                         </div>
-                        <div className="flex items-center gap-2 bg-green-900/30 px-3 py-1 rounded-full border border-green-500/30 shadow-inner">
-                            <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-                            <span className="text-xs text-green-300 font-bold uppercase tracking-wider">{minions.length} Active</span>
+                        <div className="flex items-center gap-2">
+                            {!isCombatActive ? (
+                                <button
+                                    onClick={() => dispatch(startCombatWithInitiative(20))} // Default player initiative for now
+                                    className="text-[10px] bg-accent/20 text-accent px-3 py-1 rounded-full border border-accent/30 hover:bg-accent/30 transition-colors uppercase tracking-widest font-bold"
+                                >
+                                    Start Combat
+                                </button>
+                            ) : (
+                                <div className="flex items-center gap-2 bg-green-900/30 px-3 py-1 rounded-full border border-green-500/30 shadow-inner">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+                                    <span className="text-xs text-green-300 font-bold uppercase tracking-wider">{minions.length} Active</span>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -88,14 +110,17 @@ export function CombatView() {
                             {/* Skeleton Counter */}
                             <div className="relative group">
                                 <button
-                                    className="w-full bg-card-elevated/50 p-4 rounded-xl border border-white/5 relative cursor-pointer hover:border-white/20 transition-all active:scale-95 tap-feedback"
+                                    className={`w-full bg-card-elevated/50 p-4 rounded-xl border relative cursor-pointer hover:border-white/20 transition-all active:scale-95 tap-feedback ${isCombatActive && (activeActorId === 'player' || activeActorId?.startsWith('skeleton'))
+                                        ? 'border-accent shadow-[0_0_15px_rgba(212,175,55,0.2)]'
+                                        : 'border-white/5'
+                                        }`}
                                     onClick={() => openStats('Skeleton')}
                                 >
                                     <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Info size={12} className="text-white/60" />
                                     </div>
                                     <div className="mb-2 p-2 bg-black/30 rounded-full w-12 h-12 flex items-center justify-center mx-auto border border-white/5 shadow-inner">
-                                        <Skull size={20} className="text-parchment group-hover:text-white transition-colors" />
+                                        <Skull size={20} className={`transition-colors ${isCombatActive && (activeActorId === 'player' || activeActorId?.startsWith('skeleton')) ? 'text-accent' : 'text-parchment group-hover:text-white'}`} />
                                     </div>
                                     <div className="text-2xl font-display text-white mb-0.5">{skeletonCount}</div>
                                     <div className="text-[10px] text-muted uppercase tracking-wider font-semibold">Skeletons</div>
@@ -136,14 +161,17 @@ export function CombatView() {
                             {/* Zombie Counter */}
                             <div className="relative group">
                                 <button
-                                    className="w-full bg-card-elevated/50 p-4 rounded-xl border border-white/5 relative cursor-pointer hover:border-white/20 transition-all active:scale-95 tap-feedback"
+                                    className={`w-full bg-card-elevated/50 p-4 rounded-xl border relative cursor-pointer hover:border-white/20 transition-all active:scale-95 tap-feedback ${isCombatActive && activeActorId?.startsWith('zombie')
+                                        ? 'border-green-500 shadow-[0_0_15px_rgba(34,197,94,0.2)]'
+                                        : 'border-white/5'
+                                        }`}
                                     onClick={() => openStats('Zombie')}
                                 >
                                     <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <Info size={12} className="text-white/60" />
                                     </div>
                                     <div className="mb-2 p-2 bg-black/30 rounded-full w-12 h-12 flex items-center justify-center mx-auto border border-white/5 shadow-inner">
-                                        <Biohazard size={20} className="text-green-600/80 group-hover:text-green-400 transition-colors" />
+                                        <Biohazard size={20} className={`transition-colors ${isCombatActive && activeActorId?.startsWith('zombie') ? 'text-green-400' : 'text-green-600/80 group-hover:text-green-400'}`} />
                                     </div>
                                     <div className="text-2xl font-display text-white mb-0.5">{zombieCount}</div>
                                     <div className="text-[10px] text-muted uppercase tracking-wider font-semibold">Zombies</div>
@@ -263,11 +291,15 @@ export function CombatView() {
                 <div className="pointer-events-auto flex flex-col gap-3 items-end">
                     {/* End Turn FAB - Edge Positioning */}
                     <button
-                        className="w-14 h-14 rounded-2xl glass-card flex items-center justify-center text-red-400 border-red-500/40 hover:bg-red-950/40 hover:scale-105 active:scale-95 transition-all shadow-xl tap-feedback elevation-3"
+                        className={`w-14 h-14 rounded-2xl glass-card flex items-center justify-center transition-all shadow-xl tap-feedback elevation-3 ${isCombatActive
+                            ? 'text-red-400 border-red-500/40 hover:bg-red-950/40 hover:scale-105 active:scale-95'
+                            : 'opacity-20 cursor-not-allowed text-muted border-white/5'
+                            }`}
                         title="End Turn"
-                        onClick={() => { /* TODO: Hook up to turn logic */ }}
+                        disabled={!isCombatActive}
+                        onClick={() => dispatch(turnAdvanced())}
                     >
-                        <Hourglass size={24} className="animate-spin-slow-once" />
+                        <Hourglass size={24} className={isCombatActive ? "animate-spin-slow-once" : ""} />
                     </button>
 
                     {/* Cast Spell FAB - Primary Action at Edge */}

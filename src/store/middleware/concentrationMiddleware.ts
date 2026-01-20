@@ -1,6 +1,6 @@
 import { createListenerMiddleware } from '@reduxjs/toolkit';
 import { hpChanged } from '../slices/characterSlice';
-import { concentrationCheckRequired } from '../slices/combatSlice';
+import { checkRequired } from '../slices/combatSlice';
 
 export const createConcentrationMiddleware = () => {
     const listenerMiddleware = createListenerMiddleware();
@@ -29,7 +29,7 @@ export const createConcentrationMiddleware = () => {
                 return;
             }
 
-            listenerApi.dispatch(concentrationCheckRequired({ damage }));
+            listenerApi.dispatch(checkRequired({ damage }));
         },
     });
 

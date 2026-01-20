@@ -1,62 +1,31 @@
 import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { AppDispatch, RootState } from '../index';
 import { slotExpended } from './spellbookSlice';
 import type { Minion } from '../../types';
+import type {
+    CombatSliceState,
+    ConcentrationState,
+    CombatPhase,
+    CastingState,
+    CastingStep
+} from '../../types/combat';
 
-// Re-export Minion type for consumers of this slice
-export type { Minion };
+// We avoid importing RootState/AppDispatch from '../index' to prevent circular dependencies
+// which corrupt type inference for the slice actions and status.
 
-// Concentration state
-export interface ConcentrationState {
-    spellId: string;
-    spellName: string;
-    startRound: number;
-    maxDurationRounds?: number;
-}
-
-// Combat phase for state machine
-export type CombatPhase = 'idle' | 'casting' | 'resolving' | 'minion_turn';
-
-// Casting state machine
-export type CastingStep =
-    | 'idle'
-    | 'select_spell'
-    | 'confirm_slot'
-    | 'choose_targets'
-    | 'resolve'
-    | 'apply_effects'
-    | 'complete';
-
-export interface CastingState {
-    step: CastingStep;
-    spellId: string | null;
-    slotLevel: number | null;
-    resolutionMode: 'attack' | 'save' | 'automatic' | null;
-}
+// Re-export types for consumers
+export type { Minion, CombatSliceState, ConcentrationState, CombatPhase, CastingState, CastingStep };
 
 const minionAdapter = createEntityAdapter<Minion>();
 
-export interface CombatState {
-    phase: CombatPhase;
-    currentRound: number;
-
-    // Concentration tracking
-    activeConcentration: ConcentrationState | null;
-    concentrationCheckDC: number | null; // Set when damage taken
-
-    // Minions (using EntityAdapter)
-    minions: ReturnType<typeof minionAdapter.getInitialState>;
-
-    // Casting state machine
-    casting: CastingState;
-}
-
-const initialState: CombatState = {
+const initialState: CombatSliceState = {
     phase: 'idle',
     currentRound: 1,
+    turn: 0,
+    currentActorId: null,
+    initiativeOrder: [],
 
     activeConcentration: null,
-    concentrationCheckDC: null,
+    concentrationDC: null,
 
     minions: minionAdapter.getInitialState(),
 
@@ -81,25 +50,25 @@ export const combatSlice = createSlice({
                 startRound: state.currentRound,
                 maxDurationRounds: action.payload.maxDurationRounds,
             };
-            state.concentrationCheckDC = null;
+            state.concentrationDC = null;
         },
 
         concentrationBroken: (state) => {
             state.activeConcentration = null;
-            state.concentrationCheckDC = null;
+            state.concentrationDC = null;
         },
 
-        concentrationCheckRequired: (state, action: PayloadAction<{ damage: number }>) => {
+        checkRequired: (state, action: PayloadAction<{ damage: number }>) => {
             // DC = max(10, damage / 2)
             const dc = Math.max(10, Math.floor(action.payload.damage / 2));
-            state.concentrationCheckDC = dc;
+            state.concentrationDC = dc;
         },
 
-        concentrationCheckResolved: (state, action: PayloadAction<{ passed: boolean }>) => {
+        checkResolved: (state, action: PayloadAction<{ passed: boolean }>) => {
             if (!action.payload.passed) {
                 state.activeConcentration = null;
             }
-            state.concentrationCheckDC = null;
+            state.concentrationDC = null;
         },
 
         // === Minion Management ===
@@ -166,20 +135,35 @@ export const combatSlice = createSlice({
         },
 
         // === Turn Management ===
-        combatStarted: (state) => {
+        combatStarted: (state, action: PayloadAction<{ initiativeOrder: string[] }>) => {
             state.phase = 'idle';
             state.currentRound = 1;
+            state.turn = 0;
+            state.initiativeOrder = action.payload.initiativeOrder;
+            state.currentActorId = action.payload.initiativeOrder[0] || null;
         },
 
         turnAdvanced: (state) => {
-            state.currentRound += 1;
+            if (state.initiativeOrder.length === 0) return;
+
+            const nextTurn = state.turn + 1;
+            if (nextTurn >= state.initiativeOrder.length) {
+                state.currentRound += 1;
+                state.turn = 0;
+            } else {
+                state.turn = nextTurn;
+            }
+            state.currentActorId = state.initiativeOrder[state.turn];
         },
 
         combatEnded: (state) => {
             state.phase = 'idle';
             state.currentRound = 1;
+            state.turn = 0;
+            state.currentActorId = null;
+            state.initiativeOrder = [];
             state.activeConcentration = null;
-            state.concentrationCheckDC = null;
+            state.concentrationDC = null;
         },
 
         // === Casting State Machine ===
@@ -246,8 +230,8 @@ export const {
     minionHealed,
     concentrationStarted,
     concentrationBroken,
-    concentrationCheckRequired,
-    concentrationCheckResolved,
+    checkRequired,
+    checkResolved,
 } = combatSlice.actions;
 
 /**
@@ -257,7 +241,7 @@ export const {
  * - `castingCompleted` is a pure reducer; this thunk performs the cross-slice side effect.
  * - This is intentionally conservative: it only spends when `slotLevel > 0`.
  */
-export const castingCompletedWithSlot = () => (dispatch: AppDispatch, getState: () => RootState) => {
+export const castingCompletedWithSlot = () => (dispatch: any, getState: () => any) => {
     const state = getState();
     const slotLevel = state.combat.casting.slotLevel ?? 0;
 
@@ -269,11 +253,30 @@ export const castingCompletedWithSlot = () => (dispatch: AppDispatch, getState: 
     dispatch(castingCompleted());
 };
 
+/**
+ * Start combat with a set of combatants and initiatives.
+ */
+export const startCombatWithInitiative = (playerInitiative: number) => (dispatch: any, getState: () => any) => {
+    const state = getState();
+    const minions = selectAllMinions(state);
+
+    const combatants = [
+        { id: 'player', initiative: playerInitiative },
+        ...minions.map(m => ({ id: m.id, initiative: 10 })), // TODO: Allow custom minion initiatives
+    ];
+
+    const sortedIds = combatants
+        .sort((a, b) => b.initiative - a.initiative)
+        .map(c => c.id);
+
+    dispatch(combatStarted({ initiativeOrder: sortedIds }));
+};
+
 // Selectors
 export const minionSelectors = minionAdapter.getSelectors();
-export const selectAllMinions = (state: RootState) => minionSelectors.selectAll(state.combat.minions);
-export const selectMinionById = (id: string) => (state: RootState) =>
+export const selectAllMinions = (state: any) => minionSelectors.selectAll(state.combat.minions);
+export const selectMinionById = (id: string) => (state: any) =>
     minionSelectors.selectById(state.combat.minions, id);
-export const selectMinionCount = (state: RootState) => minionSelectors.selectTotal(state.combat.minions);
+export const selectMinionCount = (state: any) => minionSelectors.selectTotal(state.combat.minions);
 
 export default combatSlice.reducer;

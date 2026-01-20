@@ -15,7 +15,7 @@ export interface Combatant {
     conditions: string[];
 }
 
-export interface CombatState {
+export interface EngineCombatState {
     round: number;
     turn: number;
     combatants: Combatant[];
@@ -34,9 +34,9 @@ export interface CombatState {
  * - Initiative determines turn order (highest first)
  */
 export class CombatEngine {
-    private state: CombatState;
+    private state: EngineCombatState;
 
-    constructor(initialState?: Partial<CombatState>) {
+    constructor(initialState?: Partial<EngineCombatState>) {
         this.state = {
             round: 1,
             turn: 0,
@@ -187,7 +187,7 @@ export class CombatEngine {
     /**
      * Get a copy of the current combat state.
      */
-    getState(): CombatState {
+    getState(): EngineCombatState {
         return { ...this.state, combatants: [...this.state.combatants] };
     }
 

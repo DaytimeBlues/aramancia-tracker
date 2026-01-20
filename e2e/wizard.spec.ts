@@ -28,10 +28,10 @@ test.describe('Wizard Companion Features', () => {
 
         // We can try valid selectors based on the file.
         // But simplified:
-        const roleplayToggle = page.locator('button:has-text("Roleplay")').or(page.locator('[title="Roleplay"]')).or(page.locator('.lucide-scroll').locator('..'));
         // Since ModeToggle renders two buttons side by side, checking for the inactive one to click.
         // Or maybe it is a single toggle?
         // Let's use a generic selector for now or update ModeToggle to have IDs.
+        // TODO: Implement toggle clicking and verification
     });
 
     test('should quick-add minions in Combat view', async ({ page }) => {

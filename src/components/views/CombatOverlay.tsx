@@ -1,6 +1,10 @@
 import React from 'react';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { castingCancelled, castingCompletedWithSlot } from '../../store/slices/combatSlice';
+import {
+    castingCancelled,
+    castingCompletedWithSlot,
+    checkResolved
+} from '../../store/slices/combatSlice';
 import { ResolutionPanel } from '../features/combat/ResolutionPanel';
 import { spells } from '../../data/spells';
 import { SpellV3 } from '../../schemas/spellSchema';
@@ -97,7 +101,41 @@ type SpellAdapter = Partial<SpellV3> & {
 export const CombatOverlay: React.FC = () => {
     const dispatch = useAppDispatch();
     const combatState = useAppSelector(state => state.combat);
-    const { phase, casting } = combatState;
+    const { phase, casting, concentrationDC, activeConcentration } = combatState;
+
+    if (concentrationDC !== null) {
+        return (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-in fade-in zoom-in duration-200">
+                <div className="glass-card max-w-sm w-full p-6 text-center animate-bounce-subtle">
+                    <div className="mb-4 p-4 bg-purple-900/20 rounded-full w-20 h-20 flex items-center justify-center mx-auto border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                        <span className="text-4xl">🔮</span>
+                    </div>
+                    <h2 className="text-xl font-display text-white mb-2">Concentration Check</h2>
+                    <p className="text-sm text-parchment mb-4">
+                        You took damage while concentrating on <span className="text-purple-300 font-bold">{activeConcentration?.spellName}</span>.
+                    </p>
+                    <div className="bg-black/40 p-4 rounded-xl border border-white/10 mb-6">
+                        <div className="text-[10px] text-muted uppercase tracking-widest mb-1">Required Save</div>
+                        <div className="text-3xl font-display text-accent">DC {concentrationDC}</div>
+                    </div>
+                    <div className="flex gap-4">
+                        <button
+                            onClick={() => dispatch(checkResolved({ passed: false }))}
+                            className="flex-1 py-3 bg-red-900/20 text-red-400 rounded-lg border border-red-500/30 hover:bg-red-900/40 transition-all font-display uppercase tracking-wider"
+                        >
+                            Failed
+                        </button>
+                        <button
+                            onClick={() => dispatch(checkResolved({ passed: true }))}
+                            className="flex-1 py-3 bg-green-900/20 text-green-400 rounded-lg border border-green-500/30 hover:bg-green-900/40 transition-all font-display uppercase tracking-wider"
+                        >
+                            Passed
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     if (phase !== 'resolving') return null;
 

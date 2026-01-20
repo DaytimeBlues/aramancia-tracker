@@ -60,7 +60,12 @@ import {
   toastCleared,
   hydrate,
 } from './store/slices/characterSlice';
-import { castingStarted, slotConfirmed, minionsHydrated } from './store/slices/combatSlice';
+import {
+  castingStarted,
+  slotConfirmed,
+  minionsHydrated,
+  checkRequired
+} from './store/slices/combatSlice';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -91,12 +96,20 @@ function App() {
 
   // --- CALLBACKS (dispatch Redux actions) ---
   const updateHealth = useCallback((newCurrent: number) => {
+    const damage = character.hp.current - newCurrent;
+    if (damage > 0 && character.concentration) {
+      dispatch(checkRequired({ damage }));
+    }
     dispatch(hpChanged(newCurrent));
-  }, [dispatch]);
+  }, [dispatch, character.hp.current, character.concentration]);
 
   const updateTempHP = useCallback((newTemp: number) => {
+    const damage = character.hp.temp - newTemp;
+    if (damage > 0 && character.concentration) {
+      dispatch(checkRequired({ damage }));
+    }
     dispatch(tempHpSet(newTemp));
-  }, [dispatch]);
+  }, [dispatch, character.hp.temp, character.concentration]);
 
   const updateAC = useCallback((key: 'mageArmour' | 'shield') => {
     if (key === 'mageArmour') dispatch(mageArmourToggled());

@@ -6,37 +6,28 @@ updated: 2026-01-20
 
 # Roadmap
 
-> **## Current Position
+> **Current Phase:** 1 - Combat Core & Turn Logic
+> **Status:** planning
 
-- **Phase**: 1 - Combat Core & Turn Logic
-- **Task**: Planning complete
-- **Status**: Ready for execution
+## Must-Haves (from SPEC)
 
-## Last Session Summary
+- [ ] SRD 5.1 Combat Turn Logic (End turn button, initiative integration)
+- [ ] Accurate AC Formula Automation
+- [ ] Automatic Minion Lifecycle Tracking
 
-Codebase mapping and Phase 1 planning complete.
+---
 
-- **10 views** identified.
-- **25 widgets** documented.
-- **2 execution plans** created for Phase 1.
-- **RESEARCH.md** generated for turn logic unification.
+## Phases
 
-## Key Findings
+### Phase 1: Combat Core & Turn Logic
 
-### Architecture Highlights
+**Status:** 🔄 In Progress
+**Objective:** Finalize the combat engine and UI to support full turn-based tracking.
+**Requirements:** Combat Turn Logic, Initiative Order.
 
-- Redux-Engine unification strategy selected.
-- E2E tests identified as primary verification.
+**Plans:**
 
-### Technical Debt Priority
-
-1. Combat turn logic and actor tracking.
-2. Item-based spell casting.
-
-## Next Steps
-
-1. `/execute 1` — execute Phase 1 plans.
-
+- [ ] Plan 1.1: Core Turn Logic Integration
 - [ ] Plan 1.2: Combat HUD & Concentration
 
 ---

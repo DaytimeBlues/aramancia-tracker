@@ -4,44 +4,18 @@
 
 ## Current Position
 
-**Phase:** Mapping Complete
-**Status:** Ready for planning
+- **Phase**: 1 - Combat Core & Turn Logic
+- **Task**: Planning complete
+- **Status**: Ready for execution
 
 ## Last Session Summary
 
-Codebase mapping complete.
+Codebase mapping and Phase 1 planning complete.
 
-- **10 views** identified (CharacterView, CombatView, GrimoireView, etc.)
-- **25 widgets** documented (HealthWidget, SpellSlotsWidget, MinionBubble, etc.)
-- **4 Redux slices** analyzed (character, combat, spellbook, persistence)
-- **5 technical debt** items found (TODOs/FIXMEs)
-- **12 production dependencies** cataloged
-- **21 dev dependencies** cataloged
-
-## Key Findings
-
-### Architecture Highlights
-
-- React 19 + Vite 7 + Redux Toolkit
-- Capacitor for Android support
-- PWA with Workbox
-- SRD 5.1/5.2 compliant D&D rules engine
-
-### Technical Debt Priority
-
-1. `CombatView.tsx:268` — End turn button not hooked up
-2. `InventoryView.tsx:22` — Missing spell selection UI
-3. Warlock feature module empty
-4. Wild Shape tests pending implementation
+- **10 views** identified.
+- **2 execution plans** created for Phase 1.
+- **RESEARCH.md** generated for turn logic unification.
 
 ## Next Steps
 
-Run `/plan` to create execution roadmap for next feature or fix.
-
----
-
-## Files Updated This Session
-
-- `.gsd/ARCHITECTURE.md` — System design documentation
-- `.gsd/STACK.md` — Technology inventory
-- `.gsd/STATE.md` — This file
+1. `/execute 1` — execute Phase 1 plans.

@@ -6,7 +6,7 @@
 
 **Aramancia Tracker** is a D&D 5e character sheet and combat management PWA. It tracks character stats, spell slots, minions (undead summons), familiars, and combat state with strict adherence to SRD 5.1 rules.
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │                      SessionPicker                          │
 │              (Session Management / Hydration)               │
@@ -36,7 +36,7 @@
 ### Views (`src/components/views/`)
 
 | View | Purpose | Size |
-|------|---------|------|
+| :--- | :--- | :--- |
 | `CharacterView` | Main character sheet display | 9.7KB |
 | `CombatView` | Combat management + minion control | 27KB |
 | `GrimoireView` | Spellbook browsing + preparation | 7.7KB |
@@ -52,7 +52,7 @@
 Key UI building blocks (25 total):
 
 | Widget | Purpose |
-|--------|---------|
+| :--- | :--- |
 | `HealthWidget` | HP/THP management with damage/heal controls |
 | `SpellSlotsWidget` | Spell slot tracking with orb indicators |
 | `SlotAbacus` | Multiclass spell slot calculator |
@@ -70,7 +70,7 @@ Key UI building blocks (25 total):
 Domain-specific feature modules:
 
 | Feature | Contents |
-|---------|----------|
+| :--- | :--- |
 | `combat/` | QuickActionsWidget, MinionCard, VirtualMinionList, MathStrip |
 | `spells/` | SpellCard, Spellbook, SpellFilters |
 | `warlock/` | (Empty - future Warlock support) |
@@ -80,7 +80,7 @@ Domain-specific feature modules:
 Redux Toolkit state management:
 
 | Slice | Purpose | Size |
-|-------|---------|------|
+| :--- | :--- | :--- |
 | `characterSlice` | Core character state (HP, AC, abilities, spells, etc.) | 16.6KB |
 | `combatSlice` | Combat state, minions, concentration | 9.2KB |
 | `spellbookSlice` | Spell preparation and filtering | 2.2KB |
@@ -91,7 +91,7 @@ Redux Toolkit state management:
 Business logic separated from UI:
 
 | Module | Purpose |
-|--------|---------|
+| :--- | :--- |
 | `combatEngine.ts` | Turn order, damage/healing, conditions (SRD 5.1 compliant) |
 | `derivedStats.ts` | AC formulas, ability modifier calculations |
 
@@ -100,7 +100,7 @@ Business logic separated from UI:
 Static game data:
 
 | File | Purpose |
-|------|---------|
+| :--- | :--- |
 | `srd-5.2-spells.json` | Complete SRD spell database (354KB) |
 | `undeadStats.ts` | Skeleton/Zombie stat blocks |
 | `familiarStats.ts` | Find Familiar creature stats |
@@ -130,7 +130,7 @@ flowchart TD
 ## Integration Points
 
 | Service | Type | Purpose |
-|---------|------|---------|
+| :--- | :--- | :--- |
 | localStorage | Storage | Session persistence |
 | Capacitor | SDK | Android/iOS native wrapper |
 | GitHub Pages | Hosting | Static deployment target |

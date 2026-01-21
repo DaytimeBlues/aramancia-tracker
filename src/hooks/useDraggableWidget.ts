@@ -10,9 +10,10 @@
 import { useCallback, useRef, useState, useEffect } from 'react';
 import type { WidgetPosition } from '../types';
 
-// Constants from spec
-const LONG_PRESS_THRESHOLD = 500; // ms for touch
-const MOVE_THRESHOLD = 10; // px before canceling long-press
+// Constants from spec (adjusted for better UX)
+const LONG_PRESS_THRESHOLD_TOUCH = 200; // ms for touch (reduced from 500)
+const LONG_PRESS_THRESHOLD_MOUSE = 0; // ms for mouse (immediate drag)
+const MOVE_THRESHOLD = 8; // px before canceling long-press
 const MARGIN = 16; // px from viewport edges
 
 type DragPhase = 'idle' | 'pending' | 'drag_ready' | 'dragging';
@@ -159,6 +160,11 @@ export function useDraggableWidget({
 
     basePositionRef.current = state.currentPosition;
 
+    // Use shorter threshold for mouse (immediate), longer for touch
+    const threshold = e.pointerType === 'mouse'
+      ? LONG_PRESS_THRESHOLD_MOUSE
+      : LONG_PRESS_THRESHOLD_TOUCH;
+
     setState(prev => ({
       ...prev,
       phase: 'pending',
@@ -167,7 +173,7 @@ export function useDraggableWidget({
       pointerDownTime: Date.now(),
     }));
 
-    // Start long-press timer
+    // Start long-press timer (0ms for mouse = immediate drag)
     timerRef.current = setTimeout(() => {
       setState(prev => {
         if (prev.phase === 'pending') {
@@ -178,7 +184,7 @@ export function useDraggableWidget({
         }
         return prev;
       });
-    }, LONG_PRESS_THRESHOLD);
+    }, threshold);
   }, [state.phase, state.currentPosition, widgetId]);
 
   const onPointerMove = useCallback((e: React.PointerEvent) => {

@@ -236,8 +236,6 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                     </DraggableContainer>
                 )}
 
-                {/* Panic Buttons - Bottom Left */}
-                <PanicButtons />
 
                 <MinionDrawer
                     isOpen={isMinionDrawerOpen}

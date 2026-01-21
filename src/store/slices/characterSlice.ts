@@ -24,25 +24,34 @@ export interface CharacterState extends CharacterData {
 
 // --- INITIAL STATE ---
 // Hydrate from sessionStorage if available, otherwise use defaults
+// Merge default widget positions into saved state to ensure new widgets have defaults
+const DEFAULT_WIDGET_POSITIONS = {
+    minionBubble: { xPercent: 92, yPercent: 75, anchorX: 'right' as const, anchorY: 'bottom' as const },
+    combatBubble: { xPercent: 92, yPercent: 65, anchorX: 'right' as const, anchorY: 'bottom' as const },
+    wandBubble: { xPercent: 92, yPercent: 85, anchorX: 'right' as const, anchorY: 'bottom' as const },
+    quickActions: { xPercent: 92, yPercent: 55, anchorX: 'right' as const, anchorY: 'bottom' as const },
+    concentrationToggle: { xPercent: 92, yPercent: 45, anchorX: 'right' as const, anchorY: 'bottom' as const },
+    panicButtons: { xPercent: 8, yPercent: 75, anchorX: 'left' as const, anchorY: 'bottom' as const },
+};
+
 function getInitialState(): CharacterState {
     const session = getActiveSession();
     if (session) {
+        // Merge default widget positions with saved ones to handle new widgets added post-save
+        const savedPositions = session.characterData.widgetPositions || {};
         return {
             ...session.characterData,
             toast: null,
+            widgetPositions: {
+                ...DEFAULT_WIDGET_POSITIONS,
+                ...savedPositions,
+            },
         };
     }
     return {
         ...initialCharacterData,
         toast: null,
-        widgetPositions: {
-            minionBubble: { xPercent: 92, yPercent: 75, anchorX: 'right', anchorY: 'bottom' },
-            combatBubble: { xPercent: 92, yPercent: 65, anchorX: 'right', anchorY: 'bottom' },
-            wandBubble: { xPercent: 92, yPercent: 85, anchorX: 'right', anchorY: 'bottom' },
-            quickActions: { xPercent: 92, yPercent: 55, anchorX: 'right', anchorY: 'bottom' },
-            concentrationToggle: { xPercent: 92, yPercent: 45, anchorX: 'right', anchorY: 'bottom' },
-            panicButtons: { xPercent: 8, yPercent: 75, anchorX: 'left', anchorY: 'bottom' },
-        },
+        widgetPositions: DEFAULT_WIDGET_POSITIONS,
     };
 }
 

@@ -8,21 +8,21 @@ describe('ConcentrationWidget', () => {
     render(
       <ConcentrationWidget
         spell={null}
-        onClear={() => {}}
-        onSet={() => {}}
+        onClear={() => { }}
+        onSet={() => { }}
       />
     );
 
-    expect(screen.getByText('Concentration')).toBeInTheDocument();
-    expect(screen.getByText('Select a spell to track concentration')).toBeInTheDocument();
+    expect(screen.getByText('Neural Concentration')).toBeInTheDocument();
+    expect(screen.getByText('Memory Reserves Idle')).toBeInTheDocument();
   });
 
   it('displays active concentration spell', () => {
     render(
       <ConcentrationWidget
         spell="Mage Armor"
-        onClear={() => {}}
-        onSet={() => {}}
+        onClear={() => { }}
+        onSet={() => { }}
       />
     );
 
@@ -37,7 +37,7 @@ describe('ConcentrationWidget', () => {
       <ConcentrationWidget
         spell="Shield"
         onClear={handleClear}
-        onSet={() => {}}
+        onSet={() => { }}
       />
     );
 
@@ -54,7 +54,7 @@ describe('ConcentrationWidget', () => {
     render(
       <ConcentrationWidget
         spell={null}
-        onClear={() => {}}
+        onClear={() => { }}
         onSet={handleSet}
       />
     );

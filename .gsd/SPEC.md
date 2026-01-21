@@ -6,43 +6,40 @@
 
 ## Vision
 
-**Aramancia Tracker** is a high-fidelity, aesthetic D&D 5e character sheet and combat management PWA. It specializes in tracking complex minion/summon logic (Necromancy) while adhering strictly to SRD 5.1 rules and a "Kyoto Noir" design aesthetic.
+**Aramancia Tracker** is a premium, "Stylish Necromancer" character sheet and combat management tool for D&D 5e Wizards. It focuses on the dark elegance of necromancy, featuring a deep violet/soul-green aesthetic, advanced minion orchestration, and an ML-inspired suggestion engine.
 
 ## Goals
 
-1. **SRD 5.1/5.2 Compliance** — Automate AC formulas, spell slots, and combat rules exactly as written.
-2. **Advanced Minion Management** — Seamlessly track multiple undead/summons, their HP, and control lifecycles.
-3. **Kyoto Noir Aesthetic** — Deliver a premium UI with deep Japanese influence, glassmorphism, and elegant typography.
-4. **Session Persistence** — Ensure character data across sessions is reliable and persistent via localStorage/IndexedDB.
+1. **Stylish Necromancer Aesthetic** — A moody yet elegant UI using obsidian, spectral violet, soul-green, and bone-white accents with premium glassmorphism.
+2. **Advanced Combat Orchestration** — Interactive "Moving Bubbles" (Drag & Drop) for Battle, Minions, Familiars, and Wands.
+3. **Full SRD Spell Intelligence** — Deep integration of SRD 5.1 spell data with collapsible, rich details including roll types, effects, and examples.
+4. **Wizard Mechanics Mastery** — Robust Spell Preparation (Daily selection) and Item Charge tracking (Wands/Staves).
+5. **The Oracle (ML Engine)** — A feature engineering layer to model character state and provide probabilistic suggestions for play.
 
 ## Non-Goals (Out of Scope)
 
-- Homebrew rule automation (focus on SRD strictly).
-- Multiplayer sync (currently a local-first single player tool).
-- Full encounter builder (focus on character-specific combat tracking).
+- Multi-class features for non-Wizard classes (specifically removing Wild Shape).
+- Multi-player synchronization.
+- Complex condition automation (for now).
 
 ## Constraints
 
-- **React 19 / Vite** — Must use the latest web stack provided.
-- **Capacitor** — Must remain compatible with mobile wrapper.
+- **React 19 / Vite / Tailwind 4** — Keep stack modernized.
+- **Draggable Context** — All core combat bubbles must be repositionable.
+- **Data Density Management** — Information-rich views must be minimizable/collapsible to prevent clutter.
 - **No Unit Tests** — Methodology mandates E2E (Playwright) as the primary verification tool.
-
-## Success Criteria
-
-- [ ] 100% pass rate on combat and spellbook E2E tests.
-- [ ] Automatic AC calculation reflecting all equipped items and active spells (Mage Armor).
-- [ ] Minion lifecycle tracking (turn limits, automatic dismissal).
-- [ ] "Kyoto Noir" design language applied across all views.
 
 ## Technical Requirements
 
 | Requirement | Priority | Notes |
 |-------------|----------|-------|
-| Combat Turn Logic | Must-have | End turn, initiative order, round tracking. |
-| Spell Item Support | Must-have | Casting spells from inventory items with charges. |
-| Wild Shape | Should-have | Swap character stats for beast forms. |
-| Multiclass Slots | Must-have | Accurate spell slot calculation for multiclass characters. |
+| Necromancer Theme | Must-have | Global CSS overhaul (Violet/Green/Obsidian). |
+| Moving Bubbles | Must-have | Draggable Dnd-kit implementation for all combat UI elements. |
+| Spell Prep System | Must-have | Daily prepared spell logic and UI. |
+| SRD Rich Spells | Must-have | Collapsible details with rolls/ranges/success-fail logic. |
+| Item Charge Tracking| Must-have | Integration with inventory for limited-use items. |
+| ML Oracle Engine | Should-have | Implementation of the Embedding and Suggestion layer. |
 
 ---
 
-*Last updated: 2026-01-20*
+*Last updated: 2026-01-21 (The Necromancer Update)*

@@ -1,4 +1,4 @@
-import { Shield } from 'lucide-react';
+import { Shield, Ghost } from 'lucide-react';
 
 interface ArmorClassWidgetProps {
     baseAC: number;
@@ -9,81 +9,97 @@ interface ArmorClassWidgetProps {
 }
 
 export function ArmorClassWidget({ baseAC, dexMod, mageArmour, hasShield, onToggle }: ArmorClassWidgetProps) {
-    // RAW: Mage Armor sets base AC to 13 + DEX
-    // Shield (spell) adds +5 AC
     const mageArmorAC = 13 + dexMod;
     const effectiveBaseAC = mageArmour ? mageArmorAC : baseAC;
     const currentAC = effectiveBaseAC + (hasShield ? 5 : 0);
 
     return (
-        <div className="card-parchment p-0 overflow-hidden group hover:border-white/20 transition-colors">
+        <div className="glass-card p-0 overflow-hidden group border-white/5 shadow-2xl relative">
             {/* Header with Visual */}
-            <div className="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-4 border-b border-white/10">
-                <div className="absolute inset-0 opacity-20 bg-[url('/assets/noise.png')]" />
+            <div className="relative bg-gradient-to-r from-bg via-accent/10 to-bg p-5 border-b border-white/5">
                 <div className="relative flex justify-between items-center z-10">
-                    <div className="flex items-center gap-2">
-                        <div className="p-1.5 bg-white/5 rounded border border-white/10">
-                            <Shield size={16} className="text-blue-300" />
+                    <div className="flex items-center gap-3">
+                        <div className="p-2 bg-accent/20 rounded-xl border border-accent/30 shadow-lg">
+                            <Shield size={18} className="text-accent-glow" />
                         </div>
-                        <h3 className="font-display text-sm text-parchment-light tracking-widest uppercase">Defense</h3>
+                        <div>
+                            <h3 className="font-display text-sm text-white tracking-[0.2em] uppercase">Protection</h3>
+                            <p className="text-[9px] text-muted tracking-widest font-bold uppercase">The Spectral Veil</p>
+                        </div>
                     </div>
+                    <Ghost size={16} className="text-muted/20" />
                 </div>
             </div>
 
-            <div className="p-4 flex items-center gap-5">
-                {/* AC Circle - Fitts's Law: 72px center target */}
-                <div className="relative flex-shrink-0 group/ac">
-                    <div className="w-[72px] h-[72px] rounded-full bg-gradient-to-b from-slate-700 to-slate-900 border-2 border-white/20 shadow-[0_4px_16px_rgba(0,0,0,0.6)] flex items-center justify-center relative touch-none pointer-events-none">
-                        <div className="absolute inset-0 rounded-full border border-white/10 group-hover/ac:scale-110 transition-transform duration-500" />
-                        <span className="font-display text-4xl text-white drop-shadow-[0_4px_8px_rgba(0,0,0,1)] z-10 transition-transform group-hover/ac:scale-105">
+            <div className="p-6 flex flex-col sm:flex-row items-center gap-8">
+                {/* AC Circle */}
+                <div className="relative flex-shrink-0 group/ac scale-110">
+                    <div className="absolute inset-0 bg-accent/30 blur-2xl rounded-full opacity-0 group-hover/ac:opacity-40 transition-opacity duration-700" />
+                    <div className="w-[84px] h-[84px] rounded-full bg-gradient-to-b from-white/[0.05] to-black/40 border-2 border-accent/20 shadow-2xl flex items-center justify-center relative z-10">
+                        <span className="font-display text-5xl text-white drop-shadow-[0_0_15px_rgba(139,92,246,0.4)] z-10 transition-transform group-hover/ac:scale-110 duration-500">
                             {currentAC}
                         </span>
-                        <div className="absolute -bottom-1.5 text-[10px] text-accent font-sans font-bold uppercase tracking-widest bg-slate-950 px-2 py-0.5 rounded-full border border-accent/30 shadow-lg">
+                        <div className="absolute -bottom-2 text-[10px] text-accent font-black uppercase tracking-[0.2em] bg-bg px-3 py-1 rounded-full border border-accent/40 shadow-xl">
                             AC
                         </div>
 
-                        {/* Animated pulsing orbit for active protection */}
+                        {/* Pulsing orbit for active protection */}
                         {(mageArmour || hasShield) && (
-                            <div className="absolute inset-[-4px] border border-blue-400/20 rounded-full animate-pulse-glow" />
+                            <div className="absolute inset-[-6px] border border-accent/40 rounded-full animate-ping opacity-20" />
+                        )}
+                        {(mageArmour || hasShield) && (
+                            <div className="absolute inset-[-4px] border border-soul-green/30 rounded-full animate-pulse opacity-40" />
                         )}
                     </div>
                 </div>
 
-                {/* Toggles - Fitts's Law: full width clickable rows */}
-                <div className="flex-1 space-y-2">
+                {/* Toggles */}
+                <div className="flex-1 w-full space-y-3">
                     {/* Mage Armor */}
                     <button
                         onClick={() => onToggle('mageArmour')}
-                        className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all duration-300 group/btn tap-feedback ${mageArmour ? 'bg-blue-900/30 border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.1)]' : 'bg-white/5 border-white/5 hover:border-white/10'}`}
+                        className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all duration-500 group/btn tap-feedback 
+                            ${mageArmour
+                                ? 'bg-accent/10 border-accent/40 shadow-[0_0_20px_rgba(139,92,246,0.1)]'
+                                : 'bg-white/[0.02] border-white/5 hover:border-white/10 hover:bg-white/[0.04]'}`}
                     >
                         <div className="text-left">
-                            <div className={`text-sm font-display tracking-wide transition-colors ${mageArmour ? 'text-blue-300' : 'text-muted group-hover/btn:text-parchment'}`}>Mage Armor</div>
-                            <div className="text-[10px] text-muted/60 lowercase italic">base 13 + dex</div>
+                            <div className={`text-xs font-black uppercase tracking-widest transition-colors ${mageArmour ? 'text-accent-glow' : 'text-phantom'}`}>
+                                Mage Armor
+                            </div>
+                            <div className="text-[10px] text-muted italic mt-0.5">13 + dex mastery</div>
                         </div>
-                        <div className={`w-5 h-5 rounded-lg border flex items-center justify-center transition-all ${mageArmour ? 'border-blue-400 bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]' : 'border-white/20'}`}>
-                            {mageArmour && <div className="w-2 h-2 bg-white rounded-sm animate-scale-in" />}
+                        <div className={`w-6 h-6 rounded-xl border flex items-center justify-center transition-all duration-500 
+                            ${mageArmour ? 'border-accent/60 bg-accent shadow-[0_0_12px_rgba(139,92,246,0.5)]' : 'border-white/10'}`}>
+                            {mageArmour && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                         </div>
                     </button>
 
                     {/* Shield Spell */}
                     <button
                         onClick={() => onToggle('shield')}
-                        className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all duration-300 group/btn tap-feedback ${hasShield ? 'bg-cyan-900/30 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.1)]' : 'bg-white/5 border-white/5 hover:border-white/10'}`}
+                        className={`w-full flex items-center justify-between p-4 rounded-2xl border transition-all duration-500 group/btn tap-feedback 
+                            ${hasShield
+                                ? 'bg-soul-green/10 border-soul-green/40 shadow-[0_0_20px_rgba(16,185,129,0.1)]'
+                                : 'bg-white/[0.02] border-white/5 hover:border-white/10 hover:bg-white/[0.04]'}`}
                     >
                         <div className="text-left">
-                            <div className={`text-sm font-display tracking-wide transition-colors ${hasShield ? 'text-cyan-300' : 'text-muted group-hover/btn:text-parchment'}`}>Shield Spell</div>
-                            <div className="text-[10px] text-muted/60 lowercase italic">+5 bonus</div>
+                            <div className={`text-xs font-black uppercase tracking-widest transition-colors ${hasShield ? 'text-soul-green' : 'text-phantom'}`}>
+                                Spell Shield
+                            </div>
+                            <div className="text-[10px] text-muted italic mt-0.5">+5 spectral ward</div>
                         </div>
-                        <div className={`w-5 h-5 rounded-lg border flex items-center justify-center transition-all ${hasShield ? 'border-cyan-400 bg-cyan-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]' : 'border-white/20'}`}>
-                            {hasShield && <div className="w-2 h-2 bg-white rounded-sm animate-scale-in" />}
+                        <div className={`w-6 h-6 rounded-xl border flex items-center justify-center transition-all duration-500 
+                            ${hasShield ? 'border-soul-green/60 bg-soul-green shadow-[0_0_12px_rgba(16,185,129,0.5)]' : 'border-white/10'}`}>
+                            {hasShield && <div className="w-2.5 h-2.5 bg-white rounded-sm" />}
                         </div>
                     </button>
                 </div>
             </div>
 
             {/* Footer */}
-            <div className="bg-black/20 p-2 text-center border-t border-white/5">
-                <span className="text-[10px] text-muted/50 uppercase tracking-widest">Base Armor Class: {baseAC}</span>
+            <div className="bg-black/40 p-3 text-center border-t border-white/5 mt-2">
+                <span className="text-[10px] text-muted uppercase tracking-[0.3em] font-black">Native Resonance: {baseAC}</span>
             </div>
         </div>
     );

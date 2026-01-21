@@ -8,8 +8,6 @@ import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { minionSelectors, minionAdded, turnAdvanced, startCombatWithInitiative } from '../../store/slices/combatSlice';
 import { selectCharacter } from '../../store/slices/characterSlice';
 import type { Minion } from '../../types';
-import { ModeToggle, ViewMode } from '../widgets/ModeToggle';
-import { RolePlayView } from './RolePlayView';
 import { SlotAbacus } from '../widgets/SlotAbacus';
 
 export function CombatView() {
@@ -19,25 +17,12 @@ export function CombatView() {
     const [selectedStatBlock, setSelectedStatBlock] = useState<UndeadStatBlock | null>(null);
     const [showSummons, setShowSummons] = useState(false);
     const [showCastDrawer, setShowCastDrawer] = useState(false);
-    const [viewMode, setViewMode] = useState<ViewMode>('combat');
 
     const minions = useAppSelector(state => minionSelectors.selectAll(state.combat.minions));
     const activeActorId = useAppSelector(state => state.combat.currentActorId);
     const currentRound = useAppSelector(state => state.combat.currentRound);
     const initiativeOrder = useAppSelector(state => state.combat.initiativeOrder);
     const isCombatActive = initiativeOrder.length > 0;
-
-    // If in roleplay mode, render RolePlayView instead
-    if (viewMode === 'roleplay') {
-        return (
-            <div className="min-h-screen">
-                <div className="sticky top-0 z-40 bg-bg/80 backdrop-blur-xl border-b border-white/10 p-3 flex justify-center">
-                    <ModeToggle mode={viewMode} onModeChange={setViewMode} />
-                </div>
-                <RolePlayView />
-            </div>
-        );
-    }
 
     const openStats = (name: string) => {
         const stats = undeadStats.find(s => s.name.includes(name));
@@ -53,11 +38,8 @@ export function CombatView() {
             <div className="sticky top-0 z-40 transition-all duration-300">
                 <div className="absolute inset-0 bg-bg/60 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"></div>
                 <div className="relative pt-3 pb-3 px-4 flex flex-col gap-2">
-                    <div className="flex items-center justify-between gap-4">
-                        <div className="flex-1 max-w-2xl mx-auto">
-                            <MathStrip />
-                        </div>
-                        <ModeToggle mode={viewMode} onModeChange={setViewMode} />
+                    <div className="flex-1 max-w-2xl mx-auto">
+                        <MathStrip />
                     </div>
                     {/* Compact Spell Abacus Integrated */}
                     <div className="pb-1 max-w-2xl mx-auto w-full flex items-center gap-4">
@@ -76,16 +58,16 @@ export function CombatView() {
 
             <div className="px-4 space-y-6 pt-4">
 
-                {/* Undead Manager Card - Kyoto Ornate Style */}
+                {/* Undead Manager Card - Necromancer Noir Style */}
                 <div className="glass-card p-0 overflow-visible elevation-2 rounded-2xl animate-slide-up stagger-2">
-                    <div className="p-5 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-green-950/40 to-transparent">
+                    <div className="p-5 border-b border-white/10 flex justify-between items-center bg-gradient-to-r from-accent/10 to-transparent">
                         <div className="flex items-center gap-3">
                             <div className="p-2 bg-green-900/30 rounded-lg border border-green-500/30 shadow-[0_0_10px_rgba(34,197,94,0.1)]">
                                 <Users size={18} className="text-green-400" />
                             </div>
                             <div>
-                                <h3 className="font-display text-base text-parchment tracking-widest uppercase">Undead Horde</h3>
-                                <div className="text-[10px] text-muted/60 uppercase tracking-tighter">Necromantic Servants</div>
+                                <h3 className="font-display text-base text-white tracking-widest uppercase">Undead Horde</h3>
+                                <div className="text-[10px] text-muted uppercase tracking-widest">Spectral Legion</div>
                             </div>
                         </div>
                         <div className="flex items-center gap-2">
@@ -228,7 +210,7 @@ export function CombatView() {
                                 <Bone size={16} className="text-indigo-300" />
                             </div>
                             <div className="text-left">
-                                <h3 className="font-display text-sm text-parchment tracking-wider uppercase">Summon Undead</h3>
+                                <h3 className="font-display text-sm text-white tracking-wider uppercase">Summon Undead</h3>
                                 <div className="text-[10px] text-muted">Stat Blocks • Level 3+</div>
                             </div>
                         </div>
@@ -304,13 +286,13 @@ export function CombatView() {
 
                     {/* Cast Spell FAB - Primary Action at Edge */}
                     <button
-                        className="w-18 h-18 rounded-3xl bg-gradient-to-br from-accent-glow via-accent to-accent-dark flex items-center justify-center text-bg-dark hover:scale-110 active:scale-95 transition-all shadow-[0_0_30px_rgba(212,175,55,0.4)] tap-feedback elevation-3 group"
+                        className="w-18 h-18 rounded-3xl bg-gradient-to-br from-accent-glow via-accent to-accent-dark flex items-center justify-center text-white hover:scale-110 active:scale-95 transition-all shadow-[0_0_40px_rgba(139,92,246,0.3)] tap-feedback elevation-3 group"
                         title="Quick Cast"
                         onClick={() => setShowCastDrawer(true)}
                     >
                         <Wand2 size={32} className="group-hover:rotate-12 transition-transform duration-500" />
                         {/* Visual flare */}
-                        <div className="absolute inset-0 rounded-3xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        <div className="absolute inset-0 rounded-3xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
                     </button>
                 </div>
             </div>

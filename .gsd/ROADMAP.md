@@ -1,76 +1,108 @@
 ---
-milestone: Foundation & Combat
-version: 1.0.0
-updated: 2026-01-20
+milestone: The Necromancer Awakening
+version: 2.0.0
+updated: 2026-01-21
 ---
 
 # Roadmap
 
-> **Current Phase:** 1 - Combat Core & Turn Logic
-> **Status:** planning
+> **Current Phase:** 3 - Interactive Movement (Moving Bubbles)
+> **Status:** in-progress
 
 ## Must-Haves (from SPEC)
 
-- [ ] SRD 5.1 Combat Turn Logic (End turn button, initiative integration)
-- [ ] Accurate AC Formula Automation
-- [ ] Automatic Minion Lifecycle Tracking
+- [ ] "Stylish Necromancer" Visual System (CSS & Tokens)
+- [ ] Interactive Drag & Drop "Moving Bubbles"
+- [ ] SRD 5.1 Full Spell Details (Interactive/Collapsible)
+- [ ] Daily Spell Preparation System
 
 ---
 
 ## Phases
 
-### Phase 1: Combat Core & Turn Logic
+### Phase 1: Necromancer Visual Overhaul
 
-**Status:** 🔄 In Progress
-**Objective:** Finalize the combat engine and UI to support full turn-based tracking.
-**Requirements:** Combat Turn Logic, Initiative Order.
+**Status:** ✅ Complete
+**Objective:** Shift the design system from "Kyoto Gold" to "Necromantic Violet/Green".
+**Tasks:**
 
-**Plans:**
-
-- [ ] Plan 1.1: Core Turn Logic Integration
-- [ ] Plan 1.2: Combat HUD & Concentration
-
----
-
-### Phase 2: Inventory & Spell Item Support
-
-**Status:** ⬜ Not Started
-**Objective:** Enable casting spells from inventory items and tracking item charges.
-**Depends on:** Phase 1
-**Requirements:** Spell Item Support.
-
-**Plans:**
-
-- [ ] Plan 2.1: Implement Item Charge Tracking
-- [ ] Plan 2.2: Implement "Cast from Inventory" logic
+- [x] Update `AGENTS.md` with new color palettes and design rules.
+- [x] Rewrite `src/index.css` with Necromantic tokens and Tailwind 4 mappings.
+- [x] Apply glassmorphism and spectral glows to all core components.
 
 ---
 
-### Phase 3: Character Mechanics (Wild Shape & Slots)
+### Phase 2: Structural Cleanup
 
-**Status:** ⬜ Not Started
-**Objective:** Implement Wild Shape and fix multiclass spell slot calculations.
-**Depends on:** Phase 2
-**Requirements:** Wild Shape, Multiclass Slots.
+**Status:** ✅ Complete
+**Objective:** Remove legacy features and consolidate core data.
+**Tasks:**
+
+- [x] [DELETE] `WildShapeWidget.tsx`.
+- [x] [DELETE] `InitiativeWidget.tsx`.
+- [x] [RENAME] Merge Roleplay into `BiographyView.tsx`.
+- [x] Clean up redundant Redux state from deleted features.
 
 ---
 
-### Phase 4: Necromancy & Polish
+### Phase 3: Interactive Movement (Moving Bubbles)
+
+**Status:** ✅ Complete
+**Objective:** Enable drag-and-drop orchestration for all combat elements.
+**Tasks:**
+
+- [x] Extend `DraggableContainer` to all combat bubbles (Battle, Minions, Wand, Familiar, Concentration, Panic).
+- [x] Implement position persistence in Redux.
+- [x] Ensure responsive position handling (percentage-based).
+
+---
+
+### Phase 4: Necromantic Spellbook & Prep
+
+**Status:** ✅ Complete
+**Objective:** Implement rich SRD spell data and the preparation system.
+**Tasks:**
+
+- [x] Integrate full SRD spell data (Rolls, Ranges, Effects).
+- [x] Build the "Prepared Spells" selection logic (Daily Ritual).
+- [x] Create the "Collapsible Detail" view for spell descriptions.
+
+---
+
+### Phase 5: Inventory & Item Charges
 
 **Status:** ⬜ Not Started
-**Objective:** Enhance minion specialized features and final UI/UX polish.
-**Depends on:** Phase 3
+**Objective:** Track usage for limited-use magical items.
+**Tasks:**
+
+- [ ] Add `charges` (current/max) to Inventory schema.
+- [ ] Implement usage logic (Consuming charges on cast).
+- [ ] Add "Recharge" button/logic (Long Rest integration).
+
+---
+
+### Phase 6: The Oracle (ML Engine)
+
+**Status:** ⬜ Not Started
+**Objective:** Implement the feature engineering and suggestion layer.
+**Tasks:**
+
+- [ ] Implement `CharacterEmbedding` type and logic.
+- [ ] Build the probabilistic suggestion engine (DAG-based).
+- [ ] Integrate suggestions into the UI (The Oracle's Whispers).
 
 ---
 
 ## Progress Summary
 
-| Phase | Status | Plans | Complete |
+| Phase | Status | Tasks | Complete |
 |-------|--------|-------|----------|
-| 1 | 🔄 | 0/2 | 0% |
-| 2 | ⬜ | 0/2 | 0% |
-| 3 | ⬜ | 0/2 | 0% |
-| 4 | ⬜ | 0/1 | 0% |
+| 1 | ✅ | 3/3 | 100% |
+| 2 | ✅ | 4/4 | 100% |
+| 3 | ✅ | 3/3 | 100% |
+| 4 | ✅ | 3/3 | 100% |
+| 5 | ⬜ | 0/3 | 0% |
+| 6 | ⬜ | 0/3 | 0% |
 
 ---
 
@@ -78,7 +110,9 @@ updated: 2026-01-20
 
 | Phase | Started | Completed | Duration |
 |-------|---------|-----------|----------|
-| 1 | 2026-01-20 | — | — |
+| 1 | 2026-01-21 | — | — |
 | 2 | — | — | — |
 | 3 | — | — | — |
 | 4 | — | — | — |
+| 5 | — | — | — |
+| 6 | — | — | — |

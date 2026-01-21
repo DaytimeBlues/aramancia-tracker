@@ -9,65 +9,36 @@
 
 ---
 
-## Design Philosophy
+## Design Philosophy (Necromancer Noir)
 
 ### Core Principles
 
-1. **Aesthetic-Usability Effect** (Nielsen Norman): Beautiful designs feel easier to use
-2. **Fitts's Law**: Important actions get larger touch targets, positioned at edges
-3. **Kyoto Minimalism**: Dark void + warm gold, like a moonlit temple
+1. **Aesthetic-Usability Effect**: Premium dark interfaces feel more powerful.
+2. **Spectral Hierarchy**: Use light and color (Bloom/Glow) to guide focus in the void.
+3. **Information "Ma"**: Allow for high data density but keep it hidden behind elegant, collapsible reveals.
 
 ### Visual Rules
 
-- All corners: 8px radius (0.5rem)
-- Card elevation: 3 levels (base, elevated, floating)
-- Touch targets: minimum 44x44px (2.75rem)
-- Animation timing: 200ms ease-out (actions), 300ms ease-in-out (transitions)
+- **Corners**: 8px (standard), 4px (tight widgets).
+- **Glassmorphism**: 0.7 opacity obsidian with 12px blur + 1px spectral stroke.
+- **Accents**:
+  - `Spectrum-Violet`: Primary branding and energy.
+  - `Soul-Green`: Life/Death state and necromantic triggers.
+  - `Bone-White`: Data reading and primary text.
 
-### Color Hierarchy
+### Color Palette
 
-- Primary Action: White (#f5f5f4)
-- Secondary Action: Gold accent (#d4af37)
-- Critical State: Vermillion (#dc2626)
-- Informational: Muted white (rgba(255,255,255,0.7))
+- **Obsidian (BG)**: `#08080a`
+- **Spectral Violet**: `#8b5cf6` (High energy) / `#6d28d9` (Muted)
+- **Soul Green**: `#10b981` (Vibrant life/death)
+- **Bone White**: `#f1f1f1` (Primary text)
+- **Phantom Silver**: `#94a3b8` (Muted details)
 
-### Typography Scale
+### Typography
 
-- Hero: 2rem (32px) - XP, major stats
-- Title: 1.25rem (20px) - section headers
-- Body: 1rem (16px) - content
-- Caption: 0.75rem (12px) - labels, hints
-
----
-
-## Design Philosophy
-
-### Core Principles
-
-1. **Aesthetic-Usability Effect** (Nielsen Norman): Beautiful designs feel easier to use.
-2. **Fitts's Law**: Important actions get larger touch targets, positioned at edges.
-3. **Kyoto Minimalism**: Dark void + warm gold, like a moonlit temple.
-
-### Visual Rules
-
-- All corners: 8px radius (0.5rem)
-- Card elevation: 3 levels (base, elevated, floating)
-- Touch targets: minimum 44x44px (2.75rem)
-- Animation timing: 200ms ease-out (actions), 300ms ease-in-out (transitions)
-
-### Color Hierarchy
-
-- Primary Action: White (#f5f5f4)
-- Secondary Action: Gold accent (#c9a227)
-- Critical State: Vermillion (#c53d3d)
-- Informational: Muted white (rgba(255,255,255,0.7))
-
-### Typography Scale
-
-- Hero: 2rem (32px) - XP, major stats
-- Title: 1.25rem (20px) - section headers
-- Body: 1rem (16px) - content
-- Caption: 0.75rem (12px) - labels, hints
+- **Display (Outfit)**: Used for stats, names, and titles.
+- **Body (Inter)**: Used for descriptions and tooltips.
+- **Serif (Playfair Display - Optional)**: Use for "Occult" flavor text if needed.
 
 ---
 

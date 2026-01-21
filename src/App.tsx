@@ -19,7 +19,7 @@ import { AttunementWidget } from './components/widgets/AttunementWidget';
 import { InventoryWidget } from './components/widgets/InventoryWidget';
 import { MulticlassSpellSlotsWidget } from './components/widgets/MulticlassSpellSlotsWidget';
 import { HitDiceWidget } from './components/widgets/HitDiceWidget';
-import { InitiativeWidget } from './components/widgets/InitiativeWidget';
+
 import { ProficiencyWidget } from './components/widgets/ProficiencyWidget';
 import { SavingThrowsWidget } from './components/widgets/SavingThrowsWidget';
 import { CharacterEditor } from './components/widgets/CharacterEditor';
@@ -268,10 +268,7 @@ function App() {
             onLevelChange={handleLevelChange}
             onAbilityChange={handleAbilityChange}
           />
-          <InitiativeWidget
-            dexMod={character.abilityMods.dex}
-            profBonus={character.profBonus}
-          />
+
           <ProficiencyWidget
             profBonus={character.profBonus}
             level={character.level}

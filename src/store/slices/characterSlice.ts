@@ -9,7 +9,7 @@
  * to sessionStorage on every action.
  */
 import { createSlice, PayloadAction, createSelector } from '@reduxjs/toolkit';
-import type { CharacterData, AbilityKey, InventoryItem, Familiar } from '../../types';
+import type { CharacterData, AbilityKey, InventoryItem, Familiar, WidgetPosition } from '../../types';
 import { initialCharacterData } from '../../data/initialState';
 import { getActiveSession } from '../../utils/sessionStorage';
 import { recalculateDerivedCharacterData } from '../../utils/srdRules';
@@ -19,6 +19,7 @@ import { recalculateDerivedCharacterData } from '../../utils/srdRules';
 export interface CharacterState extends CharacterData {
     // Toast message (ephemeral UI state, OK to keep here for simplicity)
     toast: string | null;
+    // Widget positions for draggable bubbles (inherited from CharacterData)
 }
 
 // --- INITIAL STATE ---
@@ -34,6 +35,14 @@ function getInitialState(): CharacterState {
     return {
         ...initialCharacterData,
         toast: null,
+        widgetPositions: {
+            minionBubble: { xPercent: 92, yPercent: 75, anchorX: 'right', anchorY: 'bottom' },
+            combatBubble: { xPercent: 92, yPercent: 65, anchorX: 'right', anchorY: 'bottom' },
+            wandBubble: { xPercent: 92, yPercent: 85, anchorX: 'right', anchorY: 'bottom' },
+            quickActions: { xPercent: 92, yPercent: 55, anchorX: 'right', anchorY: 'bottom' },
+            concentrationToggle: { xPercent: 92, yPercent: 45, anchorX: 'right', anchorY: 'bottom' },
+            panicButtons: { xPercent: 8, yPercent: 75, anchorX: 'left', anchorY: 'bottom' },
+        },
     };
 }
 
@@ -342,6 +351,20 @@ export const characterSlice = createSlice({
                 state.familiar.name = action.payload;
             }
         },
+        // --- WIDGET POSITIONS (Draggable Bubbles) ---
+        widgetPositionUpdated: (state, action: PayloadAction<{ widgetId: string; position: WidgetPosition }>) => {
+            if (!state.widgetPositions) {
+                state.widgetPositions = {
+                    minionBubble: { xPercent: 92, yPercent: 75, anchorX: 'right', anchorY: 'bottom' },
+                    combatBubble: { xPercent: 92, yPercent: 65, anchorX: 'right', anchorY: 'bottom' },
+                    wandBubble: { xPercent: 92, yPercent: 85, anchorX: 'right', anchorY: 'bottom' },
+                    quickActions: { xPercent: 92, yPercent: 55, anchorX: 'right', anchorY: 'bottom' },
+                    concentrationToggle: { xPercent: 92, yPercent: 45, anchorX: 'right', anchorY: 'bottom' },
+                    panicButtons: { xPercent: 8, yPercent: 75, anchorX: 'left', anchorY: 'bottom' },
+                };
+            }
+            state.widgetPositions[action.payload.widgetId] = action.payload.position;
+        },
     },
 });
 
@@ -356,6 +379,7 @@ export const selectHp = (state: StateWithCharacter) => state.character.hp;
 export const selectSlots = (state: StateWithCharacter) => state.character.slots;
 export const selectConcentration = (state: StateWithCharacter) => state.character.concentration;
 export const selectToast = (state: StateWithCharacter) => state.character.toast;
+export const selectWidgetPositions = (state: StateWithCharacter) => state.character.widgetPositions;
 export const selectFamiliar = (state: StateWithCharacter) => state.character.familiar;
 
 export const selectAbilityModifier = createSelector(
@@ -424,6 +448,7 @@ export const {
     familiarHealed,
     familiarDamaged,
     familiarRenamed,
+    widgetPositionUpdated,
 } = characterSlice.actions;
 
 export default characterSlice.reducer;

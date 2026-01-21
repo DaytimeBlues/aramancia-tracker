@@ -1,4 +1,4 @@
-import { Gem, Plus, X } from 'lucide-react';
+import { Gem, Plus, X, Ghost, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
 interface AttunementWidgetProps {
@@ -9,7 +9,6 @@ interface AttunementWidgetProps {
 
 const MAX_ATTUNEMENT = 3;
 
-// Common magic items for quick selection
 const COMMON_ITEMS = [
     'Cloak of Protection',
     'Ring of Protection',
@@ -34,31 +33,44 @@ export function AttunementWidget({ items, onAdd, onRemove }: AttunementWidgetPro
     };
 
     return (
-        <div className="card-parchment p-4 mb-4">
-            <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                    <Gem size={18} className="text-white" />
-                    <h3 className="font-display text-sm text-parchment tracking-wider">Attunement</h3>
+        <div className="glass-card p-6 border-white/5 shadow-2xl relative overflow-hidden group">
+            <div className="flex items-center justify-between mb-6 relative z-10">
+                <div className="flex items-center gap-3">
+                    <div className="p-2 bg-accent/20 rounded-xl border border-accent/30">
+                        <Gem size={18} className="text-accent-glow" />
+                    </div>
+                    <div>
+                        <h3 className="font-display text-sm text-white tracking-[0.2em] uppercase">Attunement</h3>
+                        <p className="text-[9px] text-muted tracking-widest font-bold uppercase">Soul Harmonization</p>
+                    </div>
                 </div>
-                <span className={`text-xs ${slotsUsed >= MAX_ATTUNEMENT ? 'text-red-400' : 'text-muted'}`}>
-                    {slotsUsed}/{MAX_ATTUNEMENT}
-                </span>
+                <div className={`px-3 py-1 rounded-full border text-[10px] font-black uppercase tracking-widest transition-colors duration-500
+                    ${slotsUsed >= MAX_ATTUNEMENT
+                        ? 'bg-hp-critical/10 border-hp-critical/40 text-hp-critical'
+                        : 'bg-white/5 border-white/10 text-phantom'}`}>
+                    {slotsUsed} / {MAX_ATTUNEMENT}
+                </div>
             </div>
 
             {/* Attuned Items */}
-            <div className="space-y-2 mb-3">
+            <div className="space-y-3 mb-6 relative z-10">
                 {items.length === 0 ? (
-                    <p className="text-xs text-muted italic">No attuned items</p>
+                    <div className="text-center py-6 opacity-20 border-2 border-dashed border-white/5 rounded-2xl">
+                        <p className="text-[10px] uppercase tracking-[0.3em] font-bold">Void of Attunement</p>
+                    </div>
                 ) : (
                     items.map((item, index) => (
                         <div
                             key={index}
-                            className="flex items-center justify-between bg-white/10 border border-white/20 rounded px-3 py-2"
+                            className="flex items-center justify-between bg-white/[0.03] border border-white/5 rounded-2xl p-4 group/item hover:bg-white/[0.06] hover:border-accent/20 transition-all duration-300"
                         >
-                            <span className="text-sm text-white">{item}</span>
+                            <div className="flex items-center gap-3">
+                                <Sparkles size={14} className="text-accent animate-pulse" />
+                                <span className="text-sm font-display text-white tracking-wide">{item}</span>
+                            </div>
                             <button
                                 onClick={() => onRemove(index)}
-                                className="text-red-400 hover:text-red-300"
+                                className="p-1.5 rounded-lg text-muted hover:text-hp-critical hover:bg-hp-critical/10 transition-all opacity-0 group-hover/item:opacity-100"
                             >
                                 <X size={14} />
                             </button>
@@ -69,36 +81,32 @@ export function AttunementWidget({ items, onAdd, onRemove }: AttunementWidgetPro
 
             {/* Add New Item */}
             {canAdd && (
-                <div className="border-t border-white/10 pt-3">
-                    <div className="flex gap-2">
-                        <input
-                            type="text"
-                            value={inputValue}
-                            onChange={(e) => {
-                                setInputValue(e.target.value);
-                                setShowSuggestions(true);
-                            }}
-                            onFocus={() => setShowSuggestions(true)}
-                            placeholder="Add magic item..."
-                            className="flex-1 bg-card-elevated border border-white/10 rounded px-3 py-2 text-sm text-parchment focus:outline-none focus:border-white/30"
-                        />
-                        <button
-                            onClick={() => handleAdd(inputValue)}
-                            disabled={!inputValue.trim()}
-                            className="btn-fantasy px-3 py-2 disabled:opacity-50"
-                        >
-                            <Plus size={16} />
-                        </button>
+                <div className="border-t border-white/5 pt-5 relative z-10">
+                    <div className="flex gap-3">
+                        <div className="relative flex-1 group">
+                            <Plus size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-accent transition-colors" />
+                            <input
+                                type="text"
+                                value={inputValue}
+                                onChange={(e) => {
+                                    setInputValue(e.target.value);
+                                    setShowSuggestions(true);
+                                }}
+                                onFocus={() => setShowSuggestions(true)}
+                                placeholder="Bind magic item..."
+                                className="w-full bg-black/40 border border-white/5 rounded-2xl pl-10 pr-4 py-3 text-sm text-white placeholder-muted/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.05] transition-all"
+                            />
+                        </div>
                     </div>
 
                     {/* Quick Suggestions */}
                     {showSuggestions && (
-                        <div className="flex flex-wrap gap-1 mt-2">
-                            {COMMON_ITEMS.filter(i => !items.includes(i)).slice(0, 3).map(item => (
+                        <div className="flex flex-wrap gap-2 mt-4 animate-slide-up">
+                            {COMMON_ITEMS.filter(i => !items.includes(i)).slice(0, 4).map(item => (
                                 <button
                                     key={item}
                                     onClick={() => handleAdd(item)}
-                                    className="text-[10px] px-2 py-1 bg-card-elevated border border-white/10 rounded text-muted hover:text-white hover:border-white/30 transition-colors"
+                                    className="text-[9px] px-3 py-1.5 bg-white/5 border border-white/10 rounded-xl text-phantom font-black uppercase tracking-widest hover:text-white hover:border-accent/40 hover:bg-accent/10 transition-all"
                                 >
                                     {item}
                                 </button>
@@ -109,9 +117,10 @@ export function AttunementWidget({ items, onAdd, onRemove }: AttunementWidgetPro
             )}
 
             {!canAdd && (
-                <p className="text-[10px] text-red-400 mt-2">
-                    Maximum attunement reached (3 items)
-                </p>
+                <div className="flex items-center gap-2 justify-center py-4 bg-hp-critical/5 rounded-2xl border border-hp-critical/10 text-hp-critical animate-pulse">
+                    <Ghost size={12} />
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em]">Soul Capacity Reached</span>
+                </div>
             )}
         </div>
     );

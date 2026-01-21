@@ -9,13 +9,13 @@ describe('HealthWidget', () => {
         current={25}
         max={35}
         temp={0}
-        onChange={() => {}}
-        onTempChange={() => {}}
+        onChange={() => { }}
+        onTempChange={() => { }}
       />
     );
 
     expect(screen.getByText('25')).toBeInTheDocument();
-    expect(screen.getByText('/35')).toBeInTheDocument();
+    expect(screen.getByText('/35 HP')).toBeInTheDocument();
   });
 
   it('clamps HP to max value', () => {
@@ -29,7 +29,7 @@ describe('HealthWidget', () => {
         max={35}
         temp={0}
         onChange={handleChange}
-        onTempChange={() => {}}
+        onTempChange={() => { }}
       />
     );
   });
@@ -40,12 +40,12 @@ describe('HealthWidget', () => {
         current={25}
         max={35}
         temp={10}
-        onChange={() => {}}
-        onTempChange={() => {}}
+        onChange={() => { }}
+        onTempChange={() => { }}
       />
     );
 
-    expect(screen.getByText('+10 THP')).toBeInTheDocument();
+    expect(screen.getByText('+10 Soul Shield')).toBeInTheDocument();
   });
 
   it('shows critical state at 0 HP', () => {
@@ -54,13 +54,13 @@ describe('HealthWidget', () => {
         current={0}
         max={35}
         temp={0}
-        onChange={() => {}}
-        onTempChange={() => {}}
+        onChange={() => { }}
+        onTempChange={() => { }}
       />
     );
 
-    const statCircle = container.querySelector('.stat-circle');
-    expect(statCircle).toHaveClass('border-red-600');
+    const statCircle = container.querySelector('.group\\/hp');
+    expect(statCircle).toHaveClass('border-hp-critical');
   });
 
   it('shows low HP state at 25% or below', () => {
@@ -69,12 +69,12 @@ describe('HealthWidget', () => {
         current={8}
         max={35}
         temp={0}
-        onChange={() => {}}
-        onTempChange={() => {}}
+        onChange={() => { }}
+        onTempChange={() => { }}
       />
     );
 
-    const statCircle = container.querySelector('.stat-circle');
-    expect(statCircle).toHaveClass('border-orange-500');
+    const statCircle = container.querySelector('.group\\/hp');
+    expect(statCircle).toHaveClass('border-hp-critical/40');
   });
 });

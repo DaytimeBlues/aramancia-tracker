@@ -1,4 +1,4 @@
-import { Backpack, Plus, X, Wand2 } from 'lucide-react';
+import { Backpack, Plus, X, Wand2, Package } from 'lucide-react';
 import { useState } from 'react';
 import type { InventoryItem } from '../../types';
 
@@ -11,10 +11,6 @@ interface InventoryWidgetProps {
 
 function parseInventoryInput(input: string): InventoryItem {
     const trimmed = input.trim();
-
-    // Simple wand syntax helpers:
-    // - "Wand of Magic Missile" => spells: ["Magic Missile"]
-    // - "Wand: Magic Missile, Shield" => spells: ["Magic Missile", "Shield"]
     const wandPrefixMatch = trimmed.match(/^wand\s*:\s*(.+)$/i);
     if (wandPrefixMatch) {
         const spells = wandPrefixMatch[1]
@@ -50,32 +46,43 @@ export function InventoryWidget({ items, onAdd, onRemove, onCastSpell }: Invento
     };
 
     return (
-        <div className="card-parchment p-4 mb-4">
-            <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                    <Backpack size={18} className="text-white" />
-                    <h3 className="font-display text-sm text-parchment tracking-wider">Inventory</h3>
+        <div className="glass-card p-6 border-white/5 shadow-2xl relative overflow-hidden group">
+            <div className="flex items-center justify-between mb-6 relative z-10">
+                <div className="flex items-center gap-3">
+                    <div className="p-2 bg-accent/20 rounded-xl border border-accent/30">
+                        <Backpack size={18} className="text-accent-glow" />
+                    </div>
+                    <div>
+                        <h3 className="font-display text-sm text-white tracking-[0.2em] uppercase">Inventory</h3>
+                        <p className="text-[9px] text-muted tracking-widest font-bold uppercase">Relics & Curios</p>
+                    </div>
                 </div>
-                <span className="text-xs text-muted">
-                    {items.length} Items
-                </span>
+                <div className="flex items-center gap-2 bg-white/5 px-2 py-0.5 rounded-full border border-white/10">
+                    <span className="text-[10px] text-phantom font-black uppercase tracking-widest">{items.length} Slot{items.length !== 1 ? 's' : ''} filled</span>
+                </div>
             </div>
 
             {/* Inventory Items - Scrollable */}
-            <div className="space-y-2 mb-3 max-h-60 overflow-y-auto pr-1">
+            <div className="space-y-3 mb-6 max-h-72 overflow-y-auto pr-2 custom-scrollbar relative z-10">
                 {items.length === 0 ? (
-                    <p className="text-xs text-muted italic">Empty backpack...</p>
+                    <div className="text-center py-10 space-y-3 opacity-30">
+                        <Package size={32} className="mx-auto text-muted" />
+                        <p className="text-xs text-muted uppercase tracking-widest font-bold">Backpack is Empty</p>
+                    </div>
                 ) : (
                     items.map((item, index) => (
                         <div
                             key={index}
-                            className="bg-card-elevated border border-white/10 rounded px-3 py-2 group hover:border-white/30 transition-colors"
+                            className="bg-white/[0.03] border border-white/5 rounded-2xl p-4 group/item hover:bg-white/[0.06] hover:border-white/10 transition-all duration-300"
                         >
-                            <div className="flex items-center justify-between gap-3">
-                                <span className="text-sm text-parchment-light">{item.name}</span>
+                            <div className="flex items-center justify-between gap-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-accent/40 group-hover/item:bg-accent transition-colors" />
+                                    <span className="text-sm font-display text-phantom group-hover/item:text-white transition-colors tracking-wide">{item.name}</span>
+                                </div>
                                 <button
                                     onClick={() => onRemove(index)}
-                                    className="text-muted hover:text-red-400 opacity-60 group-hover:opacity-100 transition-all"
+                                    className="p-1.5 rounded-lg text-muted hover:text-hp-critical hover:bg-hp-critical/10 transition-all opacity-0 group-hover/item:opacity-100"
                                     aria-label="Remove item"
                                 >
                                     <X size={14} />
@@ -83,16 +90,16 @@ export function InventoryWidget({ items, onAdd, onRemove, onCastSpell }: Invento
                             </div>
 
                             {item.spells && item.spells.length > 0 && (
-                                <div className="mt-2 flex flex-wrap gap-2">
+                                <div className="mt-4 pt-3 border-t border-white/5 flex flex-wrap gap-2">
                                     {item.spells.map((spell) => (
                                         <button
                                             key={spell.name}
                                             onClick={() => onCastSpell?.(spell.name)}
-                                            className="text-[10px] px-2 py-1 bg-white/5 border border-white/10 rounded text-parchment-light hover:text-white hover:border-white/30 transition-colors flex items-center gap-1"
+                                            className="px-3 py-1.5 bg-accent/10 border border-accent/30 rounded-xl text-[10px] font-black uppercase tracking-widest text-accent-glow hover:bg-accent/20 hover:scale-105 transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(139,92,246,0.1)]"
                                             title={`Cast ${spell.name} (${spell.cost} charge${spell.cost > 1 ? 's' : ''})`}
                                         >
-                                            <Wand2 size={12} />
-                                            Cast {spell.name}
+                                            <Wand2 size={12} className="animate-pulse" />
+                                            Activate {spell.name}
                                         </button>
                                     ))}
                                 </div>
@@ -103,26 +110,25 @@ export function InventoryWidget({ items, onAdd, onRemove, onCastSpell }: Invento
             </div>
 
             {/* Add New Item */}
-            <div className="border-t border-white/10 pt-3">
-                <div className="flex gap-2">
-                    <input
-                        type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') handleAdd(inputValue);
-                        }}
-                        placeholder="Add item..."
-                        className="flex-1 bg-card-elevated border border-white/10 rounded px-3 py-2 text-sm text-parchment placeholder-muted focus:outline-none focus:border-white/30"
-                    />
-                    <button
-                        onClick={() => handleAdd(inputValue)}
-                        disabled={!inputValue.trim()}
-                        className="btn-fantasy px-3 py-2 disabled:opacity-50"
-                    >
-                        <Plus size={16} />
-                    </button>
+            <div className="relative z-10">
+                <div className="flex gap-3">
+                    <div className="relative flex-1 group">
+                        <Plus size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted group-focus-within:text-accent transition-colors" />
+                        <input
+                            type="text"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') handleAdd(inputValue);
+                            }}
+                            placeholder="Register new relic..."
+                            className="w-full bg-black/40 border border-white/5 rounded-2xl pl-10 pr-4 py-3 text-sm text-white placeholder-muted/50 focus:outline-none focus:border-accent/40 focus:bg-white/[0.05] transition-all"
+                        />
+                    </div>
                 </div>
+                <p className="text-[9px] text-muted/30 uppercase tracking-[0.2em] font-black mt-3 text-center">
+                    Type "Wand: Spell" for magic item binding
+                </p>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
-import { Brain, Star, Zap, Heart, Eye, Sparkles, Dumbbell, ChevronRight } from 'lucide-react';
+import { Brain, Star, Zap, Heart, Eye, Sparkles, Dumbbell, Skull, Ghost, Activity } from 'lucide-react';
 import type { AbilityKey, Skill } from '../../types';
 import { useAppSelector } from '../../store/hooks';
-import { selectConcentration, selectSlots } from '../../store/slices/characterSlice';
+import { selectConcentration } from '../../store/slices/characterSlice';
 
 interface StatsViewProps {
     abilities: Record<AbilityKey, number>;
@@ -10,28 +10,24 @@ interface StatsViewProps {
     profBonus: number;
 }
 
-// Map abilities to their display info
-const abilityInfo: Record<AbilityKey, { name: string; icon: typeof Brain; color: string }> = {
-    str: { name: 'Strength', icon: Dumbbell, color: 'text-red-400' },
-    dex: { name: 'Dexterity', icon: Zap, color: 'text-green-400' },
-    con: { name: 'Constitution', icon: Heart, color: 'text-orange-400' },
-    int: { name: 'Intelligence', icon: Brain, color: 'text-blue-400' },
-    wis: { name: 'Wisdom', icon: Eye, color: 'text-purple-400' },
-    cha: { name: 'Charisma', icon: Sparkles, color: 'text-pink-400' },
+const abilityInfo: Record<AbilityKey, { name: string; icon: typeof Brain; color: string; accent: string }> = {
+    str: { name: 'Strength', icon: Dumbbell, color: 'text-phantom', accent: 'bg-white/5' },
+    dex: { name: 'Dexterity', icon: Zap, color: 'text-phantom', accent: 'bg-white/5' },
+    con: { name: 'Constitution', icon: Heart, color: 'text-hp-critical/80', accent: 'bg-hp-critical/10' },
+    int: { name: 'Intelligence', icon: Brain, color: 'text-accent-glow', accent: 'bg-accent/10' },
+    wis: { name: 'Wisdom', icon: Eye, color: 'text-phantom', accent: 'bg-white/5' },
+    cha: { name: 'Charisma', icon: Sparkles, color: 'text-phantom', accent: 'bg-white/5' },
 };
 
-// Format modifier with sign
 function formatMod(mod: number): string {
     return mod >= 0 ? `+${mod}` : `${mod}`;
 }
 
-// Calculate skill bonus
 function getSkillBonus(skill: Skill, abilityMod: number, profBonus: number): number {
     return abilityMod + (skill.prof ? profBonus : 0);
 }
 
 export function StatsView({ abilities, abilityMods, skills, profBonus }: StatsViewProps) {
-    // Group skills by their parent ability
     const skillsByAbility: Record<AbilityKey, { key: string; skill: Skill }[]> = {
         str: [],
         dex: [],
@@ -48,44 +44,46 @@ export function StatsView({ abilities, abilityMods, skills, profBonus }: StatsVi
     });
 
     const concentration = useAppSelector(selectConcentration);
-    const slots = useAppSelector(selectSlots);
+
 
     return (
-        <div className="space-y-4 animate-fade-in">
-            <div className="text-center mb-6">
-                <h2 className="font-display text-xl text-parchment tracking-wider">Abilities & Skills</h2>
-                <p className="text-xs text-muted mt-1">Proficiency Bonus: {formatMod(profBonus)}</p>
+        <div className="space-y-8 animate-fade-in relative z-10 px-1">
+            {/* Header */}
+            <div className="flex items-center gap-5 mb-10 group">
+                <div className="relative">
+                    <div className="absolute inset-[-15px] bg-soul-green/20 blur-2xl rounded-full group-hover:bg-soul-green/30 transition-all duration-700" />
+                    <div className="p-4 glass-card rounded-2xl border-soul-green/30 shadow-2xl relative z-10 elevation-2">
+                        <Skull className="text-soul-green drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]" size={28} />
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-accent border-2 border-bg-dark animate-pulse shadow-[0_0_8px_rgba(139,92,246,0.8)]" />
+                </div>
+                <div>
+                    <h2 className="font-display text-4xl text-white tracking-widest leading-none">Attributes</h2>
+                    <div className="flex items-center gap-2 mt-2">
+                        <div className="h-px w-8 bg-soul-green/40" />
+                        <p className="text-[10px] text-soul-green font-black uppercase tracking-[0.3em]">Neural Mastery • +{profBonus} PB</p>
+                    </div>
+                </div>
             </div>
 
-            {/* Concentration Indicator */}
+            {/* Concentration & Active Effects */}
             {concentration && (
-                <div className="bg-purple-900/20 border border-purple-500/30 rounded-lg p-3 flex items-center gap-3 animate-pulse">
-                    <Brain className="w-5 h-5 text-purple-400" />
-                    <div className="flex-1">
-                        <p className="text-xs text-purple-300 uppercase tracking-widest font-bold">Concentrating</p>
-                        <p className="text-parchment font-cinzel">{concentration}</p>
+                <div className="glass-card border-accent/30 p-5 flex items-center gap-4 animate-slide-up relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-accent/5 pointer-events-none" />
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent/40" />
+                    <div className="p-3 bg-accent/20 rounded-xl border border-accent/40 shadow-lg">
+                        <Activity className="w-5 h-5 text-accent-glow animate-pulse" />
                     </div>
+                    <div className="flex-1">
+                        <p className="text-[10px] text-accent-glow uppercase tracking-[0.3em] font-black">Active Trance</p>
+                        <p className="text-xl font-display text-white tracking-wider">{concentration}</p>
+                    </div>
+                    <Ghost size={24} className="text-accent/10" />
                 </div>
             )}
 
-            {/* Spell Slots Summary */}
-            <div className="grid grid-cols-3 gap-2">
-                {Object.entries(slots).map(([level, slot]) => (
-                    <div key={level} className="bg-stone-900/50 rounded border border-stone-800 p-2 text-center">
-                        <div className="text-[10px] text-stone-500 uppercase">Lvl {level}</div>
-                        <div className="flex justify-center gap-1 mt-1">
-                            {Array.from({ length: slot.max }).map((_, i) => (
-                                <div
-                                    key={i}
-                                    className={`w-2 h-2 rounded-full ${i < slot.max - slot.used ? 'bg-cyan-500 shadow-[0_0_5px_cyan]' : 'bg-stone-800'}`}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            <div className="grid gap-3">
+            {/* Abilities Grid */}
+            <div className="grid gap-4">
                 {(Object.keys(abilityInfo) as AbilityKey[]).map((abilityKey, index) => {
                     const info = abilityInfo[abilityKey];
                     const Icon = info.icon;
@@ -96,58 +94,60 @@ export function StatsView({ abilities, abilityMods, skills, profBonus }: StatsVi
                     return (
                         <div
                             key={abilityKey}
-                            className={`card-parchment p-4 animate-slide-up`}
+                            className="glass-card p-0 overflow-hidden animate-slide-up hover:border-white/10 transition-all duration-500 group"
                             style={{ animationDelay: `${index * 50}ms` }}
                         >
-                            {/* Ability Header */}
-                            <div className="flex items-center justify-between mb-3">
-                                <div className="flex items-center gap-3">
-                                    <div className={`p-2 rounded-lg bg-white/5 ${info.color}`}>
-                                        <Icon size={20} />
+                            <div className="p-5 flex items-center justify-between relative z-10">
+                                <div className="flex items-center gap-4">
+                                    <div className={`p-3 rounded-2xl border transition-all duration-500 
+                                        ${info.accent} border-white/5 group-hover:border-white/20`}>
+                                        <Icon size={20} className={`${info.color} group-hover:scale-110 transition-transform`} />
                                     </div>
                                     <div>
-                                        <h3 className="font-display text-sm text-parchment tracking-wide">
+                                        <h3 className="font-display text-base text-white tracking-widest uppercase">
                                             {info.name}
                                         </h3>
-                                        <p className="text-[10px] text-muted uppercase tracking-wider">
-                                            {abilityKey.toUpperCase()}
-                                        </p>
+                                        <span className="text-[10px] text-muted/60 font-black uppercase tracking-widest">
+                                            {abilityKey} resonance
+                                        </span>
                                     </div>
                                 </div>
-                                <div className="text-right">
-                                    <div className="text-2xl font-mono text-white font-bold">
-                                        {score}
+                                <div className="flex items-center gap-8">
+                                    <div className="text-center group/score">
+                                        <span className="text-[9px] text-muted font-black uppercase tracking-widest block opacity-40 group-hover/score:opacity-100 transition-opacity">Base</span>
+                                        <span className="text-2xl font-display text-white/40 group-hover:text-white transition-colors">{score}</span>
                                     </div>
-                                    <div className={`text-sm font-mono ${mod >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                        {formatMod(mod)}
+                                    <div className={`w-14 h-14 rounded-2xl border-2 flex flex-col items-center justify-center transition-all duration-500
+                                        ${mod >= 0 ? 'bg-white/5 border-white/10 group-hover:border-accent/40' : 'bg-hp-critical/5 border-hp-critical/20 group-hover:border-hp-critical/40'}`}>
+                                        <span className={`text-2xl font-display ${mod >= 0 ? 'text-white' : 'text-hp-critical'}`}>
+                                            {formatMod(mod)}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Skills Tree */}
+                            {/* Skills Panel */}
                             {relatedSkills.length > 0 && (
-                                <div className="border-t border-white/10 pt-3 mt-3">
-                                    <div className="space-y-2">
+                                <div className="bg-black/20 border-t border-white/5 p-2 px-5 pb-5">
+                                    <div className="space-y-1">
                                         {relatedSkills.map(({ key, skill }) => {
                                             const bonus = getSkillBonus(skill, mod, profBonus);
                                             return (
                                                 <div
                                                     key={key}
-                                                    className="flex items-center justify-between pl-4 py-1.5 rounded-lg bg-white/3 hover:bg-white/5 transition-colors"
+                                                    className={`flex items-center justify-between p-2 rounded-xl border border-transparent hover:border-white/5 hover:bg-white/[0.02] transition-all duration-300
+                                                        ${skill.prof ? 'bg-soul-green/[0.03]' : ''}`}
                                                 >
-                                                    <div className="flex items-center gap-2">
-                                                        <ChevronRight size={12} className="text-muted" />
-                                                        <span className="text-sm text-parchment-light">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={`w-1 h-1 rounded-full ${skill.prof ? 'bg-soul-green animate-pulse shadow-[0_0_5px_rgba(16,185,129,0.8)]' : 'bg-white/10'}`} />
+                                                        <span className={`text-xs tracking-wide ${skill.prof ? 'text-white font-medium' : 'text-phantom/70'}`}>
                                                             {skill.name}
                                                         </span>
                                                         {skill.prof && (
-                                                            <Star
-                                                                size={12}
-                                                                className="text-yellow-500 fill-yellow-500"
-                                                            />
+                                                            <Star size={10} className="text-soul-green/40 fill-soul-green/20" />
                                                         )}
                                                     </div>
-                                                    <div className={`font-mono text-sm font-bold ${bonus >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                                    <div className={`font-display text-sm tracking-widest tabular-nums ${skill.prof ? 'text-soul-green' : 'text-phantom'}`}>
                                                         {formatMod(bonus)}
                                                     </div>
                                                 </div>
@@ -156,23 +156,20 @@ export function StatsView({ abilities, abilityMods, skills, profBonus }: StatsVi
                                     </div>
                                 </div>
                             )}
-
-                            {/* Empty state for CON */}
-                            {relatedSkills.length === 0 && (
-                                <div className="border-t border-white/10 pt-3 mt-3">
-                                    <p className="text-xs text-muted italic pl-4">No associated skills</p>
-                                </div>
-                            )}
                         </div>
                     );
                 })}
             </div>
 
             {/* Legend */}
-            <div className="flex items-center justify-center gap-4 pt-4 text-xs text-muted">
-                <div className="flex items-center gap-1">
-                    <Star size={10} className="text-yellow-500 fill-yellow-500" />
-                    <span>Proficient</span>
+            <div className="py-6 flex items-center justify-center gap-6 opacity-30 group cursor-default">
+                <div className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-soul-green" />
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em]">Soul Connection (Proficiency)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Star size={10} className="text-accent" />
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em]">Ascended State</span>
                 </div>
             </div>
         </div>

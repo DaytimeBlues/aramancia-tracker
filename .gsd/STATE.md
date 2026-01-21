@@ -1,21 +1,31 @@
-# GSD State
-
-> Last updated: 2026-01-19
+# STATE.md — Session Persistence
 
 ## Current Position
 
-- **Phase**: 1 - Combat Core & Turn Logic
-- **Task**: Planning complete
-- **Status**: Ready for execution
+- **Phase**: 3 (Interactive Movement)
+- **Task**: Verification
+- **Status**: IN_PROGRESS
 
-## Last Session Summary
+## Session Overview (2026-01-21)
 
-Codebase mapping and Phase 1 planning complete.
+### Accomplished
 
-- **10 views** identified.
-- **2 execution plans** created for Phase 1.
-- **RESEARCH.md** generated for turn logic unification.
+- ✅ **OhMyOpenCode** installation and configuration complete.
+- ✅ **Necromancer Noir** visual overhaul complete.
+- ✅ **Structural Cleanup** complete.
+- ✅ **Phase 3 Implementation**: All 6 combat widgets (Minions, Familiar, Combat, Wand, Concentration, Panic) are now independently draggable and persistent.
 
-## Next Steps
+### Current Objectives
 
-1. `/execute 1` — execute Phase 1 plans.
+- [x] Implement Draggable Bubbles (Phase 3).
+- [ ] Spell Selection & Preparation System (Phase 4).
+
+### Next Steps
+
+1. Run `./preflight.sh` to ensure no regressions.
+2. Perform manual visual verification of draggable bubbles.
+3. Begin Phase 4: Necromantic Spellbook & Prep.
+
+---
+
+*Last checkpoint: 2026-01-21 08:05*

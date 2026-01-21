@@ -67,6 +67,29 @@ export interface Minion {
     notes?: string;
 }
 
+/**
+ * Widget position stored as percentages for responsive handling.
+ * Converts to absolute pixels at runtime via reconcilePositions().
+ */
+export interface WidgetPosition {
+    xPercent: number;  // Distance from LEFT edge (0-100%)
+    yPercent: number;  // Distance from TOP edge (0-100%)
+    anchorX: 'left' | 'right';
+    anchorY: 'top' | 'bottom';
+}
+
+export interface WidgetPositions {
+    minionBubble?: WidgetPosition;
+    familiarBubble?: WidgetPosition;
+    combatBubble?: WidgetPosition;
+    wandBubble?: WidgetPosition;
+    quickActions?: WidgetPosition;
+    concentrationToggle?: WidgetPosition;
+    panicButtons?: WidgetPosition;
+    // Allow dynamic widget IDs
+    [key: string]: WidgetPosition | undefined;
+}
+
 export interface Familiar {
     id: string;
     name: string;
@@ -159,6 +182,7 @@ export interface CharacterData {
     preparedSpells: string[]; // Spell names from SRD that are currently prepared
     arcaneRecoveryUsed: boolean; // True if Arcane Recovery used today (resets on long rest)
     familiar: Familiar | null;
+    widgetPositions: WidgetPositions; // Positions of draggable widgets
 }
 
 export interface Session {

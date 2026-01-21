@@ -118,4 +118,11 @@ export const initialCharacterData: CharacterData = {
     },
     arcaneRecoveryUsed: false,
     familiar: null,
+    widgetPositions: {
+        minionBubble: { xPercent: 92, yPercent: 75, anchorX: 'right', anchorY: 'bottom' },
+        familiarBubble: { xPercent: 92, yPercent: 65, anchorX: 'right', anchorY: 'bottom' },
+        combatBubble: { xPercent: 92, yPercent: 55, anchorX: 'right', anchorY: 'bottom' },
+        wandBubble: { xPercent: 92, yPercent: 85, anchorX: 'right', anchorY: 'bottom' },
+        quickActions: { xPercent: 92, yPercent: 45, anchorX: 'right', anchorY: 'bottom' },
+    },
 };

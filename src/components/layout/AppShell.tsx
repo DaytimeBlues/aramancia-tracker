@@ -93,7 +93,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                                             <User size={20} className="text-white/30" />
                                         ) : (
                                             <img
-                                                src="/assets/aramancia-portrait.jpg"
+                                                src={`${import.meta.env.BASE_URL}assets/aramancia-portrait.jpg`}
                                                 alt="Aramancia"
                                                 className="w-full h-full object-cover opacity-90 group-hover/avatar:scale-110 transition-transform duration-500"
                                                 onError={() => setImgError(true)}

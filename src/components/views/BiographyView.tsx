@@ -33,7 +33,7 @@ export function BiographyView() {
             {/* Hero Image Section - High Fidelity */}
             <div className="relative h-72 rounded-[2rem] overflow-hidden border border-white/5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group">
                 <img
-                    src="/assets/aramancia-portrait.jpg"
+                    src={`${import.meta.env.BASE_URL}assets/aramancia-portrait.jpg`}
                     alt="Aramancia Vaelithor"
                     className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />

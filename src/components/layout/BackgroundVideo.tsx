@@ -2,7 +2,7 @@ export function BackgroundVideo() {
     return (
         <div className="fixed inset-0 -z-10 w-full h-full overflow-hidden">
             <img
-                src="/assets/aramancia-flame.jpg"
+                src={`${import.meta.env.BASE_URL}assets/aramancia-flame.jpg`}
                 alt="Background"
                 className="absolute top-0 left-0 w-full h-full object-cover"
             />

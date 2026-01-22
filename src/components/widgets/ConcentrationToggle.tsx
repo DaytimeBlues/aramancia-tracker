@@ -13,7 +13,7 @@
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { concentrationSet, selectConcentration } from '../../store/slices/characterSlice';
-import { Eye, X, AlertTriangle } from 'lucide-react';
+import { Brain, X, AlertTriangle } from 'lucide-react';
 
 interface ConcentrationToggleProps {
     className?: string;
@@ -30,33 +30,35 @@ export const ConcentrationToggle: React.FC<ConcentrationToggleProps> = ({ classN
     };
 
     if (!concentration) {
-        // Not concentrating - show inactive state
+        // Not concentrating - show inactive state as a simple bubble
         return (
-            <div className={`flex items-center gap-2 px-3 py-2 rounded-full bg-stone-900/60 border border-stone-700/50 text-stone-500 ${className}`}>
-                <Eye size={16} className="opacity-50" />
-                <span className="text-xs font-medium">Not Concentrating</span>
+            <div
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center bg-stone-900/60 border border-stone-700/50 text-stone-500/40 ${className}`}
+                title="Not Concentrating"
+            >
+                <Brain size={24} />
             </div>
         );
     }
 
     return (
         <>
-            {/* Active Concentration Display */}
+            {/* Active Concentration Display - 56x56 Bubble */}
             <button
                 onClick={() => setShowDropConfirm(true)}
                 className={`
-                    group flex items-center gap-2 px-3 py-2 rounded-full
-                    bg-purple-900/40 border border-purple-500/30
-                    shadow-[0_0_15px_rgba(168,85,247,0.3)]
+                    group w-14 h-14 rounded-2xl flex items-center justify-center
+                    bg-orange-950/40 border border-orange-500/30
+                    shadow-[0_0_20px_rgba(251,146,60,0.3)]
                     hover:scale-105 active:scale-95 transition-all
                     tap-feedback ${className}
                 `}
+                title={`Concentrating on: ${concentration} (Click to drop)`}
             >
-                <Eye size={16} className="text-purple-300 animate-pulse" />
-                <span className="text-xs font-medium text-purple-200 max-w-[120px] truncate">
-                    {concentration}
-                </span>
-                <X size={14} className="text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="relative">
+                    <Brain size={26} className="text-orange-400 animate-pulse" />
+                    <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
+                </div>
             </button>
 
             {/* Drop Confirmation Dialog */}

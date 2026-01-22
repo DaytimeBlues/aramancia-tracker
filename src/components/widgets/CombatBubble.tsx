@@ -1,17 +1,11 @@
 import { useAppSelector } from '../../store/hooks';
-import { Swords, Shield, Sparkles, Target } from 'lucide-react';
-import type { ConcentrationState } from '../../store/slices/combatSlice';
+import { Swords } from 'lucide-react';
 
 interface CombatBubbleProps {
     onClick: () => void;
 }
 
 export function CombatBubble({ onClick }: CombatBubbleProps) {
-    const spellSaveDC = useAppSelector(state => state.character.dc);
-
-    // Inline selector logic to avoid import issues
-    const spellAttackBonus = useAppSelector(state => state.character.profBonus + state.character.abilityMods.int);
-
     const currentAC = useAppSelector(state => {
         const char = state.character;
         let ac = char.mageArmour ? 13 + char.abilityMods.dex : char.baseAC;
@@ -23,41 +17,28 @@ export function CombatBubble({ onClick }: CombatBubbleProps) {
     const activeConcentration = useAppSelector<ConcentrationState | null>(state => state.combat.activeConcentration);
 
     const isConcentrating = !!(concentration || activeConcentration);
-    const attackBonusLabel = spellAttackBonus >= 0 ? `+${spellAttackBonus}` : `${spellAttackBonus}`;
 
     return (
         <button
             onClick={onClick}
             className={`
-                relative flex items-center gap-2 px-4 py-2 rounded-full
-                glass-card backdrop-blur-md transition-all
-                hover:scale-105 active:scale-95 shadow-lg tap-feedback
-                ${isConcentrating
-                    ? 'border-purple-500/30 bg-purple-900/20 shadow-[0_0_15px_rgba(168,85,247,0.3)]'
-                    : 'border-white/20 hover:border-white/40'
-                }
+                relative w-14 h-14 rounded-2xl flex items-center justify-center
+                bg-emerald-950/40 border border-emerald-500/30
+                shadow-[0_0_20px_rgba(16,185,129,0.3)]
+                hover:scale-105 active:scale-95 transition-all
+                tap-feedback
             `}
+            title="Combat Dashboard & Stats"
         >
-            <Swords size={18} className={isConcentrating ? 'text-purple-300' : 'text-parchment'} />
-
-            <div className="flex items-center gap-3 text-xs">
-                <div className="flex items-center gap-1" title="Armor Class">
-                    <Shield size={12} className="text-blue-300" />
-                    <span className="font-display text-parchment-light">{currentAC}</span>
-                </div>
-                <div className="flex items-center gap-1" title="Spell Save DC">
-                    <Target size={12} className="text-amber-300" />
-                    <span className="font-display text-parchment-light">{spellSaveDC}</span>
-                </div>
-                <div className="flex items-center gap-1" title="Spell Attack Bonus">
-                    <Sparkles size={12} className="text-purple-300" />
-                    <span className="font-display text-parchment-light">{attackBonusLabel}</span>
-                </div>
-            </div>
+            <Swords size={26} className="text-emerald-400" />
 
             {isConcentrating && (
-                <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse" />
+                <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-orange-500 animate-pulse shadow-[0_0_8px_rgba(249,115,22,0.8)]" />
             )}
+
+            <div className="absolute -bottom-1 -right-1 bg-emerald-500 text-bg-dark text-[8px] font-black w-4 h-4 flex items-center justify-center rounded-lg border border-bg-dark shadow-sm">
+                {currentAC}
+            </div>
         </button>
     );
 }

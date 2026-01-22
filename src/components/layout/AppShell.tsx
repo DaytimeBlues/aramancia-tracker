@@ -173,7 +173,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                 <DraggableContainer
                     widgetId="concentrationToggle"
                     defaultPosition={{ xPercent: 92, yPercent: 45 }}
-                    bubbleSize={{ width: 150, height: 40 }}
+                    bubbleSize={{ width: 56, height: 56 }}
                 >
                     <ConcentrationToggle />
                 </DraggableContainer>
@@ -199,7 +199,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                         <button
                             aria-label="Open Wand Drawer"
                             title="Open Wand Drawer"
-                            className="w-14 h-14 rounded-2xl glass-card flex items-center justify-center text-accent-glow border-accent/20 hover:bg-accent/10 hover:border-accent/40 hover:scale-105 active:scale-95 transition-all shadow-2xl shadow-black tap-feedback backdrop-blur-xl"
+                            className="w-14 h-14 rounded-2xl flex items-center justify-center text-purple-400 bg-purple-950/40 border border-purple-500/30 shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:scale-110 transition-all tap-feedback backdrop-blur-xl"
                         >
                             <Wand2 size={26} />
                         </button>
@@ -227,7 +227,7 @@ export function AppShell({ children, activeTab, onTabChange }: AppShellProps) {
                         widgetId="minionBubble"
                         onClick={() => setIsMinionDrawerOpen(true)}
                         defaultPosition={{ xPercent: 92, yPercent: 75 }}
-                        bubbleSize={{ width: 64, height: 64 }}
+                        bubbleSize={{ width: 56, height: 56 }}
                     >
                         <MinionBubble
                             minions={activeMinions}

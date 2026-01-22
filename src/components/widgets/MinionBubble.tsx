@@ -39,8 +39,8 @@ export function MinionBubble({ minions, onClick }: MinionBubbleProps) {
                 onClick();
             }}
             className={`
-                relative w-14 h-14 rounded-full flex items-center justify-center 
-                bg-bg-dark/60 backdrop-blur-xl border border-white/10 
+                relative w-14 h-14 rounded-2xl flex items-center justify-center 
+                bg-emerald-950/40 border border-emerald-500/30 
                 hover:scale-105 active:scale-95 transition-all shadow-2xl tap-feedback
                 ${hasCriticalMinion ? 'animate-pulse' : ''}
             `}

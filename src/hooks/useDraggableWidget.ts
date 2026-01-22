@@ -11,10 +11,10 @@ import { useCallback, useRef, useState, useEffect } from 'react';
 import type { WidgetPosition } from '../types';
 
 // Constants from spec (adjusted for better UX)
-const LONG_PRESS_THRESHOLD_TOUCH = 200; // ms for touch (reduced from 500)
+const LONG_PRESS_THRESHOLD_TOUCH = 100; // ms for touch (reduced for snappiness)
 const LONG_PRESS_THRESHOLD_MOUSE = 0; // ms for mouse (immediate drag)
-const MOVE_THRESHOLD = 8; // px before canceling long-press
-const MARGIN = 16; // px from viewport edges
+const MOVE_THRESHOLD = 5; // px before canceling long-press (snappier)
+const MARGIN = 12; // px from viewport edges (slightly tighter)
 
 type DragPhase = 'idle' | 'pending' | 'drag_ready' | 'dragging';
 

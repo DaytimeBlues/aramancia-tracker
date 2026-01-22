@@ -104,16 +104,14 @@ export const PanicButtons: React.FC = () => {
     };
 
     return (
-        <div className="fixed bottom-24 left-4 z-50 flex flex-col-reverse items-start gap-2">
-            {/* Expand/Collapse Toggle */}
+        <div className="flex flex-col-reverse items-center gap-2">
+            {/* Expand/Collapse Toggle - 56x56 Bubble */}
             <button
                 onClick={() => setIsExpanded(!isExpanded)}
                 className={`
-                    w-14 h-14 rounded-full glass-card backdrop-blur-md
-                    flex items-center justify-center
+                    w-14 h-14 rounded-2xl flex items-center justify-center
                     transition-all duration-300 ease-out
-                    border-2 ${isExpanded ? 'border-red-400' : 'border-red-500/50'}
-                    ${isExpanded ? 'bg-red-800/50' : 'bg-red-900/40'}
+                    border-2 ${isExpanded ? 'border-red-400 bg-red-800/50' : 'border-red-500/30 bg-red-950/40'}
                     hover:scale-110 active:scale-95
                     shadow-[0_0_20px_rgba(239,68,68,0.4)]
                     tap-feedback

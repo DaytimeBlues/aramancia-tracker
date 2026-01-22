@@ -131,7 +131,9 @@ export function DraggableContainer({
       }}
       {...handlers}
     >
-      {children}
+      <div className="relative group/bubble">
+        {children}
+      </div>
     </div>
   );
 }

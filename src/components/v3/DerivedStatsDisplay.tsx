@@ -1,6 +1,6 @@
 /**
  * V3.0 Derived Stats Display
- * Shows spell DC and attack bonus computed from selectors
+ * Shows spell DC, attack bonus, AC, and HP computed from selectors
  */
 
 import React from 'react';
@@ -8,73 +8,66 @@ import { useAppSelector } from '../../store/hooks';
 import {
   selectSpellSaveDC,
   selectSpellAttackBonus,
-  selectAbilityModifiers,
-  selectProficiencyBonus,
+  selectArmorClass,
+  selectMaxHP
 } from '../../store/selectors/derivedSelectors';
+import { Shield, Heart, Sparkles, Target } from 'lucide-react';
 
 export const DerivedStatsDisplay: React.FC = () => {
-  const spellSaveDC = useAppSelector(selectSpellSaveDC);
-  const spellAttackBonus = useAppSelector(selectSpellAttackBonus);
-  const abilityMods = useAppSelector(selectAbilityModifiers);
-  const profBonus = useAppSelector(selectProficiencyBonus);
+  const saveDC = useAppSelector(selectSpellSaveDC);
+  const attackBonus = useAppSelector(selectSpellAttackBonus);
+  const ac = useAppSelector(selectArmorClass);
+  const maxHp = useAppSelector(selectMaxHP);
 
   return (
-    <div className="bg-black/40 backdrop-blur-sm border border-white/20 rounded-lg p-4">
-      <h2 className="text-xl font-display uppercase tracking-widest text-white/90 mb-4">
-        Derived Stats
-      </h2>
-      
-      <div className="grid grid-cols-2 gap-4">
-        {/* Spell Save DC */}
-        <div className="bg-white/5 rounded p-3 border border-white/10">
-          <div className="text-xs text-white/60 uppercase tracking-wider mb-1">
-            Spell Save DC
-          </div>
-          <div className="text-2xl font-bold text-white">
-            {spellSaveDC ?? '—'}
-          </div>
-          <div className="text-xs text-white/50 mt-1">
-            8 + Prof ({profBonus}) + INT ({abilityMods.int >= 0 ? '+' : ''}{abilityMods.int})
-          </div>
-        </div>
+    <div className="grid grid-cols-4 gap-2 mb-4">
+      {/* AC */}
+      <StatCard
+        icon={<Shield size={14} className="text-blue-400" />}
+        label="AC"
+        value={ac}
+      />
 
-        {/* Spell Attack Bonus */}
-        <div className="bg-white/5 rounded p-3 border border-white/10">
-          <div className="text-xs text-white/60 uppercase tracking-wider mb-1">
-            Spell Attack
-          </div>
-          <div className="text-2xl font-bold text-white">
-            {spellAttackBonus !== undefined ? (spellAttackBonus >= 0 ? '+' : '') + spellAttackBonus : '—'}
-          </div>
-          <div className="text-xs text-white/50 mt-1">
-            Prof ({profBonus}) + INT ({abilityMods.int >= 0 ? '+' : ''}{abilityMods.int})
-          </div>
-        </div>
+      {/* Max HP */}
+      <StatCard
+        icon={<Heart size={14} className="text-red-400" />}
+        label="Max HP"
+        value={maxHp}
+      />
 
-        {/* Proficiency Bonus */}
-        <div className="bg-white/5 rounded p-3 border border-white/10">
-          <div className="text-xs text-white/60 uppercase tracking-wider mb-1">
-            Proficiency
-          </div>
-          <div className="text-2xl font-bold text-white">
-            +{profBonus}
-          </div>
-        </div>
+      {/* Save DC */}
+      <StatCard
+        icon={<Sparkles size={14} className="text-purple-400" />}
+        label="Save DC"
+        value={saveDC || '--'}
+      />
 
-        {/* INT Modifier */}
-        <div className="bg-white/5 rounded p-3 border border-white/10">
-          <div className="text-xs text-white/60 uppercase tracking-wider mb-1">
-            INT Modifier
-          </div>
-          <div className="text-2xl font-bold text-white">
-            {abilityMods.int >= 0 ? '+' : ''}{abilityMods.int}
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-4 text-xs text-white/40 italic">
-        ✨ Auto-computed from actor state. Change INT to see updates!
-      </div>
+      {/* Attack Bonus */}
+      <StatCard
+        icon={<Target size={14} className="text-yellow-400" />}
+        label="Spell Atk"
+        value={attackBonus !== undefined ? `+${attackBonus}` : '--'}
+      />
     </div>
   );
 };
+
+interface StatCardProps {
+  icon: React.ReactNode;
+  label: string;
+  value: string | number;
+}
+
+const StatCard: React.FC<StatCardProps> = ({ icon, label, value }) => (
+  <div className="bg-black/40 backdrop-blur-sm border border-white/20 rounded p-2 flex flex-col items-center justify-center">
+    <div className="flex items-center gap-1 mb-1">
+      {icon}
+      <span className="text-[9px] text-white/50 uppercase font-display tracking-wider font-bold">
+        {label}
+      </span>
+    </div>
+    <div className="text-lg font-display text-white font-bold leading-none">
+      {value}
+    </div>
+  </div>
+);

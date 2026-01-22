@@ -25,6 +25,7 @@ const initialState: ActorState = {
     cha: 10,
   },
   overrides: {},
+  favoredSpells: [],
 };
 
 export const actorSlice = createSlice({
@@ -52,6 +53,15 @@ export const actorSlice = createSlice({
     },
     unprepareSpell: (state, action: PayloadAction<string>) => {
       state.preparedSpellIds = state.preparedSpellIds.filter(id => id !== action.payload);
+    },
+    toggleFavoredSpell: (state, action: PayloadAction<string>) => {
+      const index = state.favoredSpells?.indexOf(action.payload) ?? -1;
+      if (index === -1) {
+        if (!state.favoredSpells) state.favoredSpells = [];
+        state.favoredSpells.push(action.payload);
+      } else {
+        state.favoredSpells?.splice(index, 1);
+      }
     },
     addActiveEffect: (state, action: PayloadAction<string>) => {
       if (!state.activeEffectIds.includes(action.payload)) {

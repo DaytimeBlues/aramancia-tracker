@@ -8,6 +8,7 @@ import spellsReducer from './slices/spellsSlice';
 import actorReducer from './slices/actorSlice';
 import effectsReducer from './slices/effectsSlice';
 import concentrationReducer from './slices/concentrationSlice';
+import summonsReducer from './slices/summonsSlice';
 import { concentrationMiddleware } from './middleware/concentrationMiddleware';
 
 export const store = configureStore({
@@ -16,6 +17,7 @@ export const store = configureStore({
     actor: actorReducer,
     effects: effectsReducer,
     concentration: concentrationReducer,
+    summons: summonsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(concentrationMiddleware.middleware),

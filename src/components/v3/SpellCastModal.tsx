@@ -4,10 +4,12 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { useAppSelector } from '../../store/hooks';
+import { useAppSelector, useAppDispatch } from '../../store/hooks';
 import { selectSpellById } from '../../store/selectors/derivedSelectors';
+import { addSummon } from '../../store/slices/summonsSlice';
 import { getAvailableSlots, getValidCastLevels, resolveSpellEffect } from '../../store/utils/spellUtils';
 import type { RootState } from '../../store/store';
+import type { SummonForm } from '../../types/v3';
 
 interface SpellCastModalProps {
   spellId: string;
@@ -22,6 +24,7 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
   onCast,
   onClose,
 }) => {
+  const dispatch = useAppDispatch();
   const spell = useAppSelector((state: RootState) => selectSpellById(state, spellId));
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
@@ -55,6 +58,17 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
   const handleCast = () => {
     if (selectedLevel !== null) {
       onCast(spellId, selectedLevel);
+
+      // Special logic for Summon Undead
+      if (spell.name === 'Summon Undead' && selectedVariant) {
+        dispatch(addSummon({
+          id: `summon-${Date.now()}`,
+          name: `Spirit (${selectedVariant})`,
+          form: selectedVariant as SummonForm,
+          slotLevel: selectedLevel,
+        }));
+      }
+
       onClose();
     }
   };
@@ -105,11 +119,10 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
                   <button
                     key={level}
                     onClick={() => setSelectedLevel(level)}
-                    className={`p-3 rounded border-2 transition-all ${
-                      selectedLevel === level
-                        ? 'border-yellow-400 bg-yellow-400/20 text-white'
-                        : 'border-white/20 bg-white/5 text-white/70 hover:border-white/40 hover:bg-white/10'
-                    }`}
+                    className={`p-3 rounded border-2 transition-all ${selectedLevel === level
+                      ? 'border-yellow-400 bg-yellow-400/20 text-white'
+                      : 'border-white/20 bg-white/5 text-white/70 hover:border-white/40 hover:bg-white/10'
+                      }`}
                   >
                     <div className="text-lg font-bold">{level}</div>
                     <div className="text-xs opacity-75">
@@ -133,11 +146,10 @@ export const SpellCastModal: React.FC<SpellCastModalProps> = ({
                 <button
                   key={variant.name}
                   onClick={() => setSelectedVariant(variant.name)}
-                  className={`w-full text-left p-3 rounded border transition-all ${
-                    selectedVariant === variant.name
-                      ? 'border-yellow-400 bg-yellow-400/20'
-                      : 'border-white/20 bg-white/5 hover:border-white/40 hover:bg-white/10'
-                  }`}
+                  className={`w-full text-left p-3 rounded border transition-all ${selectedVariant === variant.name
+                    ? 'border-yellow-400 bg-yellow-400/20'
+                    : 'border-white/20 bg-white/5 hover:border-white/40 hover:bg-white/10'
+                    }`}
                 >
                   <div className="font-semibold text-white">{variant.name}</div>
                   <div className="text-sm text-white/70 mt-1">{variant.effect}</div>

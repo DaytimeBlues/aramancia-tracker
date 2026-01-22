@@ -105,14 +105,14 @@ export interface ActorState {
   proficiencyBonus: number;
   hitDieSize: number;
   spellcastingAbility?: AbilityKey;
-  
+
   // References to normalized entities
   preparedSpellIds: string[];
   activeEffectIds: string[];
-  
+
   // Base attributes
   baseAttributes: AttributeScores;
-  
+
   // Overrides for derived stats (optional)
   overrides?: {
     ac?: number;
@@ -121,6 +121,7 @@ export interface ActorState {
     spellSaveDC?: number;
     spellAttackBonus?: number;
   };
+  favoredSpells?: string[];
 }
 
 // ============================================================================
@@ -138,7 +139,7 @@ export interface PreparationList {
 // ACTIVE EFFECTS
 // ============================================================================
 
-export type EffectTarget = 
+export type EffectTarget =
   | { type: 'ability_score', ability: AbilityKey }
   | { type: 'ac' }
   | { type: 'hp' }
@@ -232,4 +233,32 @@ export interface UpcastResult {
   level: number;
   resolvedEffect: string; // e.g., "3d4+3 force damage" for Magic Missile at level 2
   description: string;
+}
+// ============================================================================
+// SUMMONING ENTITIES (VRGtR / 2024 PHB)
+// ============================================================================
+
+export type SummonForm = 'Ghostly' | 'Putrid' | 'Skeletal';
+
+export interface Summon {
+  id: string;
+  name: string;
+  type: 'Spirit';
+  form: SummonForm;
+  slotLevel: number;
+  currentHp: number;
+  maxHp: number;
+  ac: number;
+  attacks: number;
+  active: boolean;
+}
+
+export interface SummonsState {
+  activeSummons: Summon[];
+}
+
+export interface SpellCastResult {
+  spellId: string;
+  slotLevel: number;
+  summonId?: string;
 }

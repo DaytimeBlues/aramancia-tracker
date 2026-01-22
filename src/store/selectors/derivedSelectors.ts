@@ -161,7 +161,7 @@ export const selectSkillBonuses = createSelector(
 
     Object.entries(SKILLS).forEach(([skill, ability]) => {
       let bonus = abilityMods[ability as keyof typeof abilityMods];
-      
+
       // TODO: Add proficiency tracking per skill
       // For now, assuming some skills have proficiency based on typical wizard
       const proficientSkills = ['arcana', 'history', 'insight', 'investigation'];
@@ -193,8 +193,8 @@ export const selectSkillBonuses = createSelector(
  * Respects overrides
  */
 export const selectSpellSaveDC = createSelector(
-  [selectProficiencyBonus, selectAbilityModifiers, selectSpellcastingAbility, selectOverrides, selectActiveEffects],
-  (profBonus, abilityMods, spellcastingAbility, overrides, effects) => {
+  [selectProficiencyBonus, selectAbilityModifiers, selectSpellcastingAbility, selectOverrides, selectActiveEffects, selectActor],
+  (profBonus, abilityMods, spellcastingAbility, overrides, effects, actor) => {
     if (overrides.spellSaveDC !== undefined) {
       return overrides.spellSaveDC;
     }
@@ -202,6 +202,11 @@ export const selectSpellSaveDC = createSelector(
     if (!spellcastingAbility) return undefined;
 
     let dc = 8 + profBonus + abilityMods[spellcastingAbility];
+
+    // 2024 PHB Favored Spell Bonus (Simplified integration for specific spells)
+    if (actor.favoredSpells && actor.favoredSpells.length > 0) {
+      // General hint bonus logic
+    }
 
     // Apply effects that modify spell save DC
     effects.forEach(effect => {
@@ -238,6 +243,22 @@ export const selectSpellAttackBonus = createSelector(
     });
 
     return bonus;
+  }
+);
+
+/**
+ * Enhanced Selector for Specific Spell Calculation
+ * Applies Favored Spell bonuses to a specific spell ID
+ */
+export const selectSpellResolutionStats = (spellId: string) => createSelector(
+  [selectSpellAttackBonus, selectSpellSaveDC, selectActor],
+  (baseAttack, baseDC, actor) => {
+    const isFavored = actor.favoredSpells?.includes(spellId);
+    return {
+      attackBonus: (baseAttack || 0) + (isFavored ? 0 : 0), // Attack bonus doesn't get the static +1, but DC does.
+      saveDC: (baseDC || 0) + (isFavored ? 1 : 0),
+      isFavored,
+    };
   }
 );
 
@@ -297,10 +318,10 @@ export const selectMaxHP = createSelector(
     }
 
     const conMod = abilityMods.con;
-    
+
     // First level: max hit die + CON mod
     const firstLevelHP = hitDieSize + conMod;
-    
+
     if (level === 1) {
       return Math.max(1, firstLevelHP);
     }
@@ -308,9 +329,9 @@ export const selectMaxHP = createSelector(
     // Subsequent levels: average + CON mod
     const avgHitDie = Math.floor(hitDieSize / 2) + 1;
     const subsequentLevels = level - 1;
-    
+
     const totalHP = firstLevelHP + subsequentLevels * (avgHitDie + conMod);
-    
+
     // RAW: Minimum 1 HP per level
     return Math.max(level, totalHP);
   }
@@ -345,7 +366,7 @@ export const selectInitiativeBonus = createSelector(
 
 export const selectAllSpells = spellsSelectors.selectAll;
 
-export const selectSpellById = (state: RootState, spellId: string) => 
+export const selectSpellById = (state: RootState, spellId: string) =>
   spellsSelectors.selectById(state, spellId);
 
 export const selectPreparedSpells = createSelector(

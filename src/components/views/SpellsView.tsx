@@ -1,10 +1,15 @@
 import { useState } from 'react';
+import { useAppSelector } from '../../store/hooks';
+import { selectSpellResolutionStats } from '../../store/selectors/derivedSelectors';
 import { spells } from '../../data/spells';
 import type { Spell } from '../../types';
-import { X, Scroll, Sparkles, Clock, Target, Hourglass } from 'lucide-react';
+import { X, Scroll, Sparkles, Clock, Target, Hourglass, Star } from 'lucide-react';
 
 export function SpellsView() {
     const [selectedSpell, setSelectedSpell] = useState<Spell | null>(null);
+    const resolution = useAppSelector(state =>
+        selectedSpell ? selectSpellResolutionStats(state, selectedSpell.name) : { attackBonus: 0, saveDC: 0, isFavored: false }
+    );
 
     const cantrips = spells.filter(s => s.lvl === 0);
     const level1 = spells.filter(s => s.lvl === 1);
@@ -84,6 +89,26 @@ export function SpellsView() {
                                     </div>
                                     <div className="text-sm text-parchment-light">{selectedSpell.components}</div>
                                 </div>
+                            </div>
+
+                            {/* Wizard Toolkit */}
+                            <div className="flex gap-2 mb-4">
+                                {selectedSpell.attack && !selectedSpell.attack.includes('Save') ? (
+                                    <button className="flex-1 btn-primary py-2 flex items-center justify-center gap-2 group relative">
+                                        <Target size={14} />
+                                        <span>Atk Roll: +{resolution.attackBonus}</span>
+                                        {resolution.isFavored && <Star size={10} className="absolute top-1 right-1 text-yellow-400 fill-yellow-400" />}
+                                    </button>
+                                ) : (
+                                    <div className="flex-1 bg-white/5 rounded border border-white/10 p-2 text-center relative">
+                                        <div className="text-[10px] text-muted uppercase tracking-wider">Save DC</div>
+                                        <div className="text-lg font-display text-white">{resolution.saveDC}</div>
+                                        {resolution.isFavored && <Star size={10} className="absolute top-1 right-1 text-yellow-400 fill-yellow-400" />}
+                                    </div>
+                                )}
+                                <button className="flex-1 px-4 py-2 bg-purple-600/50 hover:bg-purple-600 border border-purple-400/30 rounded text-xs text-white uppercase tracking-widest transition-all">
+                                    Prepare
+                                </button>
                             </div>
 
                             {/* Description */}

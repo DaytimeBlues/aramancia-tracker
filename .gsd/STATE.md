@@ -2,30 +2,28 @@
 
 ## Current Position
 
-- **Phase**: 3 (Interactive Movement)
-- **Task**: Verification
-- **Status**: IN_PROGRESS
+- **Phase**: 4 (Spellbook & Prep)
+- **Task**: Initialization
+- **Status**: READY
 
-## Session Overview (2026-01-21)
+## Session Overview (2026-01-22)
 
 ### Accomplished
 
-- ✅ **OhMyOpenCode** installation and configuration complete.
-- ✅ **Necromancer Noir** visual overhaul complete.
-- ✅ **Structural Cleanup** complete.
-- ✅ **Phase 3 Implementation**: All 6 combat widgets (Minions, Familiar, Combat, Wand, Concentration, Panic) are now independently draggable and persistent.
+- ✅ **Unified Draggable Bubbles**: All floating widgets (Combat, Wand, Concentration, Minions, Familiar, Panic) now share a consistent 56x56 glass-card style with thematic colors.
+- ✅ **Optimized Responsiveness**: Immediate drag for mouse and 100ms threshold for touch.
+- ✅ **GitHub Sync**: Pushed all changes to origin/master to trigger GitHub Pages deployment.
 
 ### Current Objectives
 
-- [x] Implement Draggable Bubbles (Phase 3).
-- [ ] Spell Selection & Preparation System (Phase 4).
+- [x] Unify Floating UI Widgets (Phase 3).
+- [ ] Implement Necromantic Spellbook & Prep System (Phase 4).
 
 ### Next Steps
 
-1. Run `./preflight.sh` to ensure no regressions.
-2. Perform manual visual verification of draggable bubbles.
-3. Begin Phase 4: Necromantic Spellbook & Prep.
+1. Begin Phase 4: Necromantic Spellbook & Prep implementation.
+2. Verify GitHub Pages live deployment on the new machine.
 
 ---
 
-*Last checkpoint: 2026-01-21 08:05*
+*Last checkpoint: 2026-01-22 11:30*
